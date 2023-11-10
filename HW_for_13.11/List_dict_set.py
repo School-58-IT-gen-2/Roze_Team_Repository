@@ -1,10 +1,52 @@
 # -- часть Ильи --
+import random as r
+class PinkList(list):
+	def __init__(self, *args):
+			super().__init__(args)
+			self.digit_words = ['нуль', 'адын', 'дьва', 'тьри', 'читыри', 'пят', 'шест', 'сем', 'восем', 'девить']
+			self.__replace()
 
-# Это заглушка класса list
-class RedList(list):
-    # подсказка - у класса list есть метод __init__(self, items)
-    def some_method(self):
-        pass
+	def __replace(self):
+			for i in range(len(self)):
+				if isinstance(self[i], str):
+							for j in range(10):
+									self[i] = self[i].replace(str(j), self.digit_words[j])
+
+	def __str__(self):
+		return '--||--'.join(map(str, self))
+
+	def append(self, arg):
+		self.insert(0, arg)
+		self.insert(len(self), arg)
+		self.insert(r.randint(0, len(self) - 1), arg)
+		
+	def pop(self, arg):
+		index = r.randint(0, len(self) - 1)
+		deleted = self[index]
+		del self[index]
+		return deleted
+
+	def remove(self, arg):
+		ind = [i for i in range(len(self)) if self[i] == arg]
+		for i in reversed(ind):
+				del self[i]
+	def randomize(self, arg):
+		r.shuffle(self)
+		if arg <= len(self) and arg >= 0:
+			for i in range(arg):
+				self.pop(0)
+		else:
+			return('Index out of range')
+		
+
+pink_list = PinkList('мне 6 лет', 'я лох', 2, 3, 4, 2)
+print(pink_list)
+pink_list.append('бот')
+print(pink_list)
+pink_list.remove(2)
+print(pink_list)
+pink_list.randomize(8)
+print(pink_list)
 
 # -- часть Веты --
 
