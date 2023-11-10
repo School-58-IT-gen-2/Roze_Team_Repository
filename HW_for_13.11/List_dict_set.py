@@ -39,7 +39,7 @@ class PinkList(list):
 			return('Index out of range')
 		
 
-pink_list = PinkList('мне 6 лет', 'я лох', 2, 3, 4, 2)
+pink_list = PinkList('мне 6 лет', 'pink_team', 2, 3, 4, 2)
 print(pink_list)
 pink_list.append('бот')
 print(pink_list)
