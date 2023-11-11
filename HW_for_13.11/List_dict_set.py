@@ -30,6 +30,7 @@ class PinkList(list):
 		ind = [i for i in range(len(self)) if self[i] == arg]
 		for i in reversed(ind):
 				del self[i]
+	
 	def randomize(self, arg):
 		r.shuffle(self)
 		if arg <= len(self) and arg >= 0:
@@ -50,15 +51,66 @@ print(pink_list)
 
 # -- часть Веты --
 
-# Это заглушка класса dict
-class RedDict(dict):
-    # подсказка - у класса dict есть метод __init__(self)
-    # подсказка - у класса dict есть метод __init__(self, sequence)
-    # подсказка - у класса dict есть метод __init__(self, **kwargs)
-    def some_method(self):
-        pass
+class PinkDict(dict):
+	def __init__(self, *kwargs):
+		super().__init__(kwargs)
+		self.digit_words = ['нуль', 'адын', 'дьва', 'тьри', 'читыри', 'пят', 'шест', 'сем', 'восем', 'девить']
+		self.__replace()
+	
+	def __replace(self):
+			for i in range(1, len(self)+1):
+				if i % 2 == 0:
+					key_list = list(self.keys())
+					self[key_list[i-1]] = self.digit_words[i]
 
-# -- Часть Кого-то --
+	def __str__(self):
+		print('Вы используете кастомный словарь!!')
+		key_items = list(self.items())
+		for i in range(len(key_items)):
+			print(i+1, '.', key_items[i])
+		return('')
+	
+	def get(self, key):
+		if key in self.keys():
+			return self[key]
+		else:
+			return('такого ключа нет, дурачок')
+
+	def pink_values(self):
+		return(tuple(list(self.values())))
+	
+	def pink_keys(self):
+		glued_str = []
+		for i in self.values():
+			glued_str.append(str(i))
+		return(''.join(glued_str))
+	
+	def pink_copy(self):
+		new_self = self
+		for i in new_self.keys():
+			if isinstance(i, str):
+				new_self[i] = None
+		return new_self
+
+	def true_form_of_dict(self, k):
+		for key, value in self.items():
+			for j in range(2, k):
+				self[key*j] = value*j
+			break
+		return self
+
+
+pink = PinkDict([1, 'a'], [2, 'b'], [3, 'c'], ['four', 'd'])
+print(pink)
+print(pink.get(1))
+print(pink.get(8))
+print(pink.pink_values())
+print(pink.pink_keys())
+pink_cop = pink.pink_copy()
+print(pink_cop)
+pink_try = pink.true_form_of_dict(4)
+print(pink_try)
+# -- Часть Маши --
 
 # Это заглушка класса set
 class RedSet(set):
@@ -66,10 +118,11 @@ class RedSet(set):
     def some_method(self):
         pass
 
+# Последний кто будет коммитить, удалите эту часть когда она перестанет быть нужна
 
 # Это вызов конструктора списка с помощью кортежа.
 # То есть на вход при создании экземпляра передается кортеж.
-red_list = RedList((1, 2, 3))
+red_list = PinkList((1, 2, 3))
 # Вывод в консоли должен получится [1, 2, 3], ведь мы ничего не меняли в заглушке класса... пока что=)
 print(red_list)
 # Это вызов конструктора множества с помощью списка.
