@@ -86,18 +86,18 @@ class PinkDict(dict):
 		return(''.join(glued_str))
 	
 	def pink_copy(self):
-		new_self = self
+		new_self = self.copy()
 		for i in new_self.keys():
 			if isinstance(i, str):
 				new_self[i] = None
 		return new_self
 
 	def true_form_of_dict(self, k):
+		new_self = self.copy()
 		for key, value in self.items():
-			for j in range(2, k):
-				self[key*j] = value*j
-			break
-		return self
+			for j in range(2, k+1):
+				new_self[str(key)*j] = value*j
+		return new_self
 
 
 pink = PinkDict([1, 'a'], [2, 'b'], [3, 'c'], ['four', 'd'])
@@ -110,6 +110,7 @@ pink_cop = pink.pink_copy()
 print(pink_cop)
 pink_try = pink.true_form_of_dict(4)
 print(pink_try)
+
 # -- Часть Маши --
 
 # Это заглушка класса set
