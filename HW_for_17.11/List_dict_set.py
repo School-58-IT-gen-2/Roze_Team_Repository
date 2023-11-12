@@ -127,5 +127,5 @@ class RozeSet(set):
             else:
                 new_list.append(item)
         super().__init__(new_list)
-roze_set = RozeSet(['1', 'q', 'wow', '1'])
+roze_set = RozeSet(['1', 'q', 'wow', 'wow', '1', '1'])
 print(roze_set)
