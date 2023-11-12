@@ -118,11 +118,11 @@ class RozeSet(set):
         new_list = []
         for item in list:
             if item in new_list:
-                counter = 2
-                new_item = item * counter
+                item_counter = 2
+                new_item = item * item_counter
                 while new_item in new_list:
-                    counter += 1
-                    new_item = item * counter
+                    item_counter += 1
+                    new_item = item * item_counter
                 new_list.append(new_item)
             else:
                 new_list.append(item)
