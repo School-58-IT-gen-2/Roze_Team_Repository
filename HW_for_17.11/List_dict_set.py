@@ -113,19 +113,19 @@ print(pink_try)
 
 # -- Часть Маши --
 
-# Это заглушка класса set
-class RedSet(set):
-    # подсказка - у класса set есть метод __init__(self, items)
-    def some_method(self):
-        pass
-
-# Последний кто будет коммитить, удалите эту часть когда она перестанет быть нужна
-
-# Это вызов конструктора списка с помощью кортежа.
-# То есть на вход при создании экземпляра передается кортеж.
-red_list = PinkList((1, 2, 3))
-# Вывод в консоли должен получится [1, 2, 3], ведь мы ничего не меняли в заглушке класса... пока что=)
-print(red_list)
-# Это вызов конструктора множества с помощью списка.
-# То есть на вход при создании экземпляра передается список.
-red_set = RedSet(['1', "q", "wow", '1'])
+class RozeSet(set): 
+    def __init__(self, list):
+        new_list = []
+        for item in list:
+            if item in new_list:
+                counter = 2
+                new_item = item * counter
+                while new_item in new_list:
+                    counter += 1
+                    new_item = item * counter
+                new_list.append(new_item)
+            else:
+                new_list.append(item)
+        super().__init__(new_list)
+roze_set = RozeSet(['1', 'q', 'wow', '1'])
+print(roze_set)
