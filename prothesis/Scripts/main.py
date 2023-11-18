@@ -1,6 +1,6 @@
 from Player_class import Player
 from Game_class import Stage
-import database
+import creatures_database
 
 
 player = Player('тип')

@@ -14,12 +14,13 @@ class NPC():
 		print(f'[ВСТРЕЧА] - кажется это {self.name}')
 		choice = None
 		while choice != '':
-			choice = input('Что собираешься делать?\n enter - уйти\n t -  торговаться\n a - напасть')
+			choice = input('Что собираешься делать?\n enter - уйти\n t -  торговаться\n a - напасть\n s - говорить')
 			if choice == '':
 				print('Ты уходишь')
 				break
 			elif choice == 'a' or choice == 'а':
 				self.fight()
+			
 			elif choice == 't':
 				print('вы поторговались')
 				#self.trade(player)
