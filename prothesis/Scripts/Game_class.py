@@ -1,4 +1,4 @@
-from NPC_class import sage
+from database import sage
 
 class Stage():
 

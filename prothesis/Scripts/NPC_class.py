@@ -1,23 +1,29 @@
 import random as rand
 
 class NPC():
-	def __init__(self, name, products = [], money = 0, health = 100, weapons = ['кулак']):
+
+	def __init__(self, name, aggressive = False, products = [], money = 0, health = 100, weapons = ['кулак']):
 		self.name = name
 		self.health = health
 		self.weapons = weapons
 		self.money = money
 		self.products = products
+		self.aggressive = aggressive
+
 	def meeting(self):
 		print(f'[ВСТРЕЧА] - кажется это {self.name}')
 		choice = None
 		while choice != '':
-			choice = input('Что собираешься делать?\n enter - уйти\n t -  торговаться')
+			choice = input('Что собираешься делать?\n enter - уйти\n t -  торговаться\n a - напасть')
 			if choice == '':
-				print('Ты сделал вид что не заметил его')
+				print('Ты уходишь')
 				break
+			elif choice == 'a' or choice == 'а':
+				self.fight()
 			elif choice == 't':
-				print('торговля')
+				print('вы поторговались')
 				#self.trade(player)
+
 	def fight(self, player):
 		global all_weapons
 		enemy_weapon = self.weapons[0]
@@ -48,4 +54,3 @@ class NPC():
 		else:
 			print(self.name, f'погибает, вы получаете {round(self.money * (0.5 + rand.random()), 2)}$')
 
-sage = NPC(name='Мудрец')
