@@ -1,4 +1,4 @@
-from database import sage
+from creatures_database import sage
 
 class Stage():
 
@@ -6,7 +6,7 @@ class Stage():
         self.stage_num = stage_num
         self.stage_prologue = stage_prologue
         print(f'50km [НАЧАЛО] - "{self.stage_prologue}"')  #начальное сообщение
-        self.km = -1
+        self.km = 0
         self.seed = ['void'] * 50  #генерация карты (сначала заполняем все 50 мест пустыми местами)
         self.seed[5] = 'enemy'
         self.seed[10] = 'npc'
