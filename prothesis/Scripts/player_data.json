@@ -4,5 +4,6 @@ data = {
     "health": player.health,
     "inventory": player.inventory,
     "money": player.money,
-    "protez": player.protez
+    "protez": player.protez,
+    "weapons": player.weapons
 }

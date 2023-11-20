@@ -47,7 +47,8 @@ class Player():
 						"health": self.health,
 						"inventory": self.inventory,
 						"money": self.money,
-						"protez": self.protez
+						"protez": self.protez,
+						"weapons": self.weapons
 				}
 
 				with open(filename, "w") as file:
@@ -66,6 +67,7 @@ class Player():
 				player.inventory = data["inventory"]
 				player.money = data["money"]
 				player.protez = data["protez"]
+				player.weapons = data["weapons"]
 
 				print("Переменные игрока успешно загружены из файла", filename)
 				return player
