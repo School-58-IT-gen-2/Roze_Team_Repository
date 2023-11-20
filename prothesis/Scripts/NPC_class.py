@@ -15,16 +15,13 @@ class NPC():
 		print(f'[ВСТРЕЧА] - кажется это {self.name}')
 		choice = None
 		while choice != '':
-			choice = input('Что собираешься делать?\n enter - уйти\n 1 -  торговаться\n 2 - напасть\n 3 - говорить')
+			choice = input('Что собираешься делать?\n enter - уйти\n 1 -  торговаться\n 2 - говорить')
 			if choice == '':
 				print('Ты уходишь')
 				break
-			elif choice == '2':
-				self.fight()
 			elif choice == '1':
-				print('вы поторговались')
-				#self.trade(player)
-			elif choice == '3':
+				self.trade()
+			elif choice == '2':
 				if self.dialogue == {}:
 					print(f'Похоже {self.name} не в настроении говорить')
 				else:
@@ -65,4 +62,23 @@ class NPC():
 			turn = not turn
 		else:
 			print(self.name, f'погибает, вы получаете {round(self.money * (0.5 + rand.random()), 2)}$')
+	
+	def trade(self):
+		products = self.products
+		if products == []:
+			print(f'Кажется {self.name} не в настроении торговать')
+			return
+		print(f'{self.name} показывает свои товары')
+		product = None
+		while len(self.products) != 0:
+			for index in range(len(products)):
+				print(f'{str(index + 1)} {products[index][0]} - {products[index][-1]}$')
+			product = input(' введите номер товара\n enter - конец торговли\n')
+			if product == '':
+				break
+			elif products[int(product) - 1][-1] <= self.player.money:
+				self.player.money -= products[int(product) - 1][-1]
+				self.player.inventory.append(products[int(product) - 1])
+				print(f'Вы купили {products.pop(int(product) - 1)[0]}')
+				print(f'Ваш баланс: {self.player.money}')
 
