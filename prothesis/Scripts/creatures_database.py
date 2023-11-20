@@ -3,9 +3,12 @@ from Enemy_class import Enemy
 from Event_class import Event1
 from Event_class import Event2
 from Event_class import Event3
+from Event_class import Event4
+from Event_class import Event5
+from Event_class import Event6
 import items_database
 #БАЗА ДАННЫХ ДЛЯ СОБЫТИЙ
-events_for_stages = {1:[Event1(), Event2('','','',''), Event3('','','','')]}
+events_for_stages = {1:[Event1(), Event2('','','',''), Event3('','','',''), Event4(), Event5('','','',''), Event6()]}
 
 
 
