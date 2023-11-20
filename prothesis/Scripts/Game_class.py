@@ -31,13 +31,13 @@ class Stage():
 
     def step(self):
         self.km += 1
-        self.air -= rand.randint(1, 8)
-        if self.air <= 0:
+        self.player.air -= rand.randint(1, 8)
+        if self.player.air <= 0:
             print('"Вы судорожно глотаете остатки воздуха..."')
-            self.player.death()
-        elif self.air < 15:
+            self.player.death(self.km)
+        elif self.player.air < 15:
             print('"!Критически мало воздуха, срочно воспользуйтесь ингалятором"')
-        elif self.air < 40:
+        elif self.player.air < 40:
             print('"!Мало воздуха, воспользуйтесь ингалятором"')
         eval(f'self.{self.seed[self.km]}(self.player)') #происходит то, что на текущей позиции в сиде
         self.__cycle()
