@@ -2,28 +2,36 @@ import random as rand
 
 class NPC():
 
-	def __init__(self, name, aggressive = False, products = [], money = 0, health = 100, weapons = ['кулак']):
+	def __init__(self, name, aggressive = False, products = [], money = 0, health = 100, weapons = ['кулак'], dialogue = {}):
 		self.name = name
 		self.health = health
 		self.weapons = weapons
 		self.money = money
 		self.products = products
 		self.aggressive = aggressive
+		self.dialogue = dialogue
 
 	def meeting(self):
 		print(f'[ВСТРЕЧА] - кажется это {self.name}')
 		choice = None
 		while choice != '':
-			choice = input('Что собираешься делать?\n enter - уйти\n t -  торговаться\n a - напасть\n s - говорить')
+			choice = input('Что собираешься делать?\n enter - уйти\n 1 -  торговаться\n 2 - напасть\n 3 - говорить')
 			if choice == '':
 				print('Ты уходишь')
 				break
-			elif choice == 'a' or choice == 'а':
+			elif choice == '2':
 				self.fight()
-			
-			elif choice == 't':
+			elif choice == '1':
 				print('вы поторговались')
 				#self.trade(player)
+			elif choice == '3':
+				if self.dialogue == {}:
+					print(f'Похоже {self.name} не в настроении говорить')
+				else:
+					phrases = self.dialogue.keys()
+					choice = input(phrases)
+
+
 
 	def fight(self, player):
 		global all_weapons

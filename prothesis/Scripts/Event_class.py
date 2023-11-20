@@ -1,5 +1,4 @@
 import random
-from main import Player
 class Event:
     def __init__(self, name, description):
         self.name = name

@@ -106,5 +106,5 @@ class Enemy():
 	def run(self):
 		print('вы успешно сбежали')
 
-Toster = Enemy('хлебоподжариватель', 'сбои', 100, all_weapons['кулак'], 5, 'loot')
-print(Toster.meeting())
+#Toster = Enemy('хлебоподжариватель', 'сбои', 100, all_weapons['кулак'], 5, 'loot')
+#Toster.meeting()
