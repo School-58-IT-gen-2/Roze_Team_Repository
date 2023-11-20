@@ -112,3 +112,22 @@ class Event5(Event):
             print(f"Вы ввели в замок 'Три': {self.option2}")
             print('За простую загадку вы получили приятный бонус, поздравляю!')
             Player.health += 15
+		
+class Event6(Event):
+    def __init__(self):
+        name='Приятного аппетита'
+        description='Вы бродите уже так долго.. вы очень хотите кушать.. стоп. Что это? Вы встретили  добрую вафельницу! Она не против накормить вас, только вот сколько это вафля уже лежит внутри..?'
+        super().__init__(name, description)
+
+    def execute(self, Player):
+        print(self.name)
+        print(self.description)
+
+        choice = random.randint(1,2)
+
+        if choice == "1":
+            print("Она свежая! Вы вкусно покушали и готовы продолжать путь.")
+            Player.health += 15 
+        elif choice == "2":
+            print("Она явно старше вас.. но чувство голода сильнее. Вы съедаете её.. кажется, вам не хорошо.")
+            Player.health -=10
