@@ -72,10 +72,8 @@ class Enemy():
 							block = block * 0.5
 							print('вы подготовили блок на следующую атаку противника!\n')
 						
-						if choice[i] == 'h' and player.health < 100:
-							player.health += 25
-							if player.health > 100:
-								player.health == 100
+						if choice[i] == 'h':
+							player.health = min(100, player.health + 25)
 							print(f'вы успешно воостановили здоровье. ХП = {player.health}\n')
 				else:
 					print('нужно сделать два действия за ход')
