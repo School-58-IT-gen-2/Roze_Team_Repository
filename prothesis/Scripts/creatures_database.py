@@ -15,5 +15,9 @@ sage = NPC(name='Мудрец')
 
 #БАЗА ДАННЫХ ДЛЯ ВРАГОВ
 Toster = Enemy('хлебоподжариватель', 'сбои', 100, items_database.all_weapons['кулак'], 5, 'loot')
+Archives = Enemy('компьютер из библиотеки', 'сбои', 50, items_database.all_weapons['кулак'], 10, 'loot')
+Bandit = Enemy('бандит', 'кровотечение', 100, items_database.all_weapons['кинжал пораженный коррозией'], 15, 'loot')
+Wanderer = Enemy('бродяга','кровотечение', 100, items_database.all_weapons['кинжал пораженный коррозией'], 5, 'loot')
 enemies_for_stages = {1:[Toster]}
+
 
