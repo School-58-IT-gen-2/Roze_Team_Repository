@@ -4,4 +4,4 @@ import creatures_database
 
 
 player = Player('тип')
-stage = Stage(1, 'сюжет')
+stage = Stage(1, 'сюжет', player)

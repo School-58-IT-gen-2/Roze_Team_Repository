@@ -5,12 +5,13 @@ import random as rand
 
 class Stage():
 
-    def __init__(self, stage_num, stage_prologue):
+    def __init__(self, stage_num, stage_prologue, player):
         self.stage_num = stage_num #номер стадии
         self.stage_prologue = stage_prologue
         self.enemies_count = 5 #кол-во врагов на стадии
         self.events_count = 3 #кол-во событий на стадии
         self.km = 0
+        self.player = player
         
         print(f'60km [НАЧАЛО] - "{self.stage_prologue}"')  #начальное сообщение
 
@@ -28,21 +29,21 @@ class Stage():
 
     def step(self):
         self.km += 1
-        eval(f'self.{self.seed[self.km]}()') #происходит то, что на текущей позиции в сиде
+        eval(f'self.{self.seed[self.km]}(self.player)') #происходит то, что на текущей позиции в сиде
         self.__cycle()
 
-    def void(self):
+    def void(self, player):
         print(f'{60 - self.km}km [ПУСТО] - "кажется здесь пусто"')
     
-    def enemy(self):
+    def enemy(self, player):
         print(f'{60 - self.km}km [НАПАДЕНИЕ] - "кажется здесь враг"')
         enemy = rand.choice(enemies_for_stages[self.stage_num])
         enemy.meeting()
     
-    def event(self):
+    def event(self, player):
         print(f'{60 - self.km}km [СОБЫТИЕ] - ', end='')
-        #event = events_for_stages[self.stage_num][0]
-        #event.execute()
+        event = events_for_stages[self.stage_num][0]
+        event.execute(player)
         
-    def npc(self):
+    def npc(self, player):
         sage.meeting()
