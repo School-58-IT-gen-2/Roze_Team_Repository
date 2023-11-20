@@ -6,8 +6,3 @@ data = {
     "money": player.money,
     "protez": player.protez
 }
-
-with open("player_data.json", "w") as file:
-    json.dump(data, file)
-
-print("Переменные игрока сохранены в файле 'player_data.json'.")
