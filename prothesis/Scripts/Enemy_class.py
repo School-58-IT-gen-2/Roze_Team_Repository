@@ -58,7 +58,8 @@ class Enemy():
 							damage = [int(player_weapon[1] * (0.5 + rand.random())* block) for _ in range(player_weapon[2])]
 							health -= sum(damage)
 							print(f'нанесено {' + '.join(map(str, damage))}')
-							print(f'{self.name} имеет {max(0, health)} здоровья')
+							print(f'{self.name} имеет {max(0, health)} здоровья\n')
+							time.sleep(1)
 							if self.dmgtype == player.weapons[0][4] and rand.random() > 0.6:
 								period_dmg_counter = 3
 							if self.dmgtype == player.weapons[0][4] and period_dmg_counter != 0:
@@ -69,18 +70,19 @@ class Enemy():
 						
 						if choice[i] == 'b':
 							block = block * 0.5
-							print('вы подготовили блок на следующую атаку противника!')
+							print('вы подготовили блок на следующую атаку противника!\n')
 						
 						if choice[i] == 'h' and player.health < 100:
 							player.health += 25
 							if player.health > 100:
 								player.health == 100
-							print(f'вы успешно воостановили здоровье. ХП = {player.health}')
+							print(f'вы успешно воостановили здоровье. ХП = {player.health}\n')
 				else:
 					print('нужно сделать два действия за ход')
 			else:
 				time.sleep(1)
 				print(f'\n{self.name} атакует!')
+				time.sleep(1)
 				damage = [int(enemy_weapon[1] * (0.5 + rand.random()) * block) for _ in range(enemy_weapon[2])]
 				print(f'нанесено {' + '.join(map(str, damage))} урона')
 				player.health -= sum(damage)
