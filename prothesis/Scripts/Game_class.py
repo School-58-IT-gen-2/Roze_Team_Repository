@@ -13,13 +13,15 @@ class Stage():
         self.km = 0
         self.player = player
         
-        print(f'60km [НАЧАЛО] - "{self.stage_prologue}"')  #начальное сообщение
+        print(f'"{self.stage_prologue}"\n 60km [НАЧАЛО]')  #начальное сообщение
 
         self.seed = ['void'] * 60  #генерация карты (сначала заполняем все 60 мест пустыми местами)
         for i in range(1, self.enemies_count + 1):
             self.seed[i * rand.randint(1, 60//self.enemies_count - 1)] = 'enemy' #равномерно, рандомно добавляем позиции с врагами
         for i in range(1, self.events_count + 1):
             self.seed[i * rand.randint(1, 60//self.events_count - 1)] = 'event' #равномерно, рандомно добавляем позиции с событиями
+        self.seed[1] = 'npc'
+        self.seed[-1] = 'ending'
         self.__cycle()
 
     def __cycle(self):
@@ -29,6 +31,14 @@ class Stage():
 
     def step(self):
         self.km += 1
+        self.player.air -= rand.randint(1, 8)
+        if self.player.air <= 0:
+            print('"Вы судорожно глотаете остатки воздуха..."')
+            self.player.death(self.km)
+        elif self.player.air < 15:
+            print('"!Критически мало воздуха, срочно воспользуйтесь ингалятором"')
+        elif self.player.air < 40:
+            print('"!Мало воздуха, воспользуйтесь ингалятором"')
         eval(f'self.{self.seed[self.km]}(self.player)') #происходит то, что на текущей позиции в сиде
         self.__cycle()
 
@@ -47,3 +57,6 @@ class Stage():
         
     def npc(self, player):
         sage.meeting()
+    
+    def ending(self, player):
+        print('')
