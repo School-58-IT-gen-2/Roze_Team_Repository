@@ -13,7 +13,7 @@ class Stage():
         self.km = 0
         self.player = player
         
-        print(f'"{self.stage_prologue}"\n 60km [НАЧАЛО]')  #начальное сообщение
+        print(f'"{self.stage_prologue}"\n60km [НАЧАЛО]')  #начальное сообщение
 
         self.seed = ['void'] * 60  #генерация карты (сначала заполняем все 60 мест пустыми местами)
         for i in range(1, self.enemies_count + 1):
@@ -25,9 +25,12 @@ class Stage():
         self.__cycle()
 
     def __cycle(self):
-        choice = input('\nвыбор действия>>> ')
+        choice = input('\nвыбор действия (enter - идти, u - использовать предмет)>>> ')
         if choice == '': # enter - идти
             self.step()
+        elif choice == 'u':
+            self.player.use_item()
+        self.__cycle()
 
     def step(self):
         self.km += 1
@@ -40,7 +43,6 @@ class Stage():
         elif self.player.air < 40:
             print('"!Мало воздуха, воспользуйтесь ингалятором"')
         eval(f'self.{self.seed[self.km]}(self.player)') #происходит то, что на текущей позиции в сиде
-        self.__cycle()
 
     def void(self, player):
         print(f'{60 - self.km}km [ПУСТО] - "кажется здесь пусто"')
@@ -48,11 +50,11 @@ class Stage():
     def enemy(self, player):
         print(f'{60 - self.km}km [НАПАДЕНИЕ] - "кажется здесь враг"')
         enemy = rand.choice(enemies_for_stages[self.stage_num])
-        enemy.meeting()
+        enemy.meeting(self.km)
     
     def event(self, player):
         print(f'{60 - self.km}km [СОБЫТИЕ] - ', end='')
-        event = events_for_stages[self.stage_num][0]
+        event = rand.choice(events_for_stages[self.stage_num])
         event.execute(player)
         
     def npc(self, player):

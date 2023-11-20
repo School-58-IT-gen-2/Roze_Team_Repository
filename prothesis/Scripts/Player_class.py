@@ -13,28 +13,31 @@ class Player():
 				#self.things = {"Аптечка": 12, 10, 'resource', "фильтр для протеза": 100, 20, 'resource', 'арматура': 20, 30, 'weapon', 'бита': 15, 20, 'weapon', 'арбалет': 35, 50, 'weapon','одежда лоха': 30, 40, 'armour', 'кольчуга столяра': 50, 60, 'armour', 'броня ученого', 80, 100, 'armour'}
 
 		def death(self, progress):
-				print(50 - progress, '[СМЕРТЬ] - В глазах темнеет... Кажется это конец...')
+				print(f'{50 - progress}km [СМЕРТЬ] - В глазах темнеет... Кажется это конец...')
 				sys.exit("Вы умерли")
 				
 
 		def inv(self):
 				print('Ваш инвентарь: ', self.inventory)
+
 		def use_item(self):
-			print("ваш инвентарь", self.inventory)
-			inp = input("выберите номер предмета в инвентаре, enter - выйти")
+			if len(self.inventory) == 0:
+				print("В вашем инвентаре нет вещей!")
+				return
+			print("ваш инвентарь:")
+			for i in range(1, len(self.inventory) + 1):
+				print(f'{i} - {self.inventory[i - 1]}')
+			inp = int(input("выберите номер предмета в инвентаре, enter - выйти"))
 			while inp != '':
-				if len(self.inventory) == 0:
-					print("В вашем инвентаре нет вещей!")
-					break
-				elif inp > len(self.inventory) or inp <= 0:
+				if inp > len(self.inventory) or inp <= 0:
 					print('Такого элемента в инвентаре нету!')
 					break
 				else:
 					use_thing = self.inventory[inp-1]
-					for i in range(len(items.keys)):
-						if items.keys()[i] == use_thing:
-							item_params = items.get(items.keys()[i])
-					eval(self.item_params[0]) += item_params[1]
+					for i in range(len(items.keys())):
+						if list(items.keys())[i] == use_thing:
+							item_params = list(items.get(list(items.keys())[i]))
+					eval(f'self.{item_params[0]} += {item_params[1]}')
 
 
 		def save_to_file(self, filename):

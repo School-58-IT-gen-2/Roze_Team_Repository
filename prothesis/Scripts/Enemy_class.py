@@ -19,25 +19,25 @@ class Enemy():
 		self.loot = loot
 		self.aggressive = aggressive
 	
-	def meeting(self):
+	def meeting(self, km):
 		fght_or_frnd = input(f'перед вами {self.name}, что вы будете делать?\n 1. переубеждение\n 2. сражение\n 3. побег\n')
 		if fght_or_frnd == '1':
 			if rand.random() > 0.5:
 				self.spare(player)
 			else:
-				self.fight(player)
+				self.fight(player, km)
 
 		if fght_or_frnd == '2':
-			self.fight(player)
+			self.fight(player, km)
 
 		if fght_or_frnd == '3':
 			if rand.random() > 0.5:
 				self.run()
 			else:
-				self.fight(player)
+				self.fight(player, km)
 		
 			
-	def fight(self, player):
+	def fight(self, player, km):
 		global all_weapons
 		enemy_weapon = self.weapons
 		player_weapon = player.weapons[0]
@@ -89,7 +89,7 @@ class Enemy():
 					print('ваше здоровье -', player.health)
 				else:
 					print('ваше здоровье -', 0)
-					player.death()
+					player.death(km)
 			turn = not turn
 		else:
 			time.sleep(1)

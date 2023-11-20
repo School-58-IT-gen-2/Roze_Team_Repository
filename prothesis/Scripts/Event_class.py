@@ -129,9 +129,9 @@ class Event6(Event):
 
         choice = random.randint(1,2)
 
-        if choice == "1":
+        if choice == 1:
             print("Она свежая! Вы вкусно покушали и готовы продолжать путь.")
             player.health += 15 
-        elif choice == "2":
+        elif choice == 2:
             print("Она явно старше вас.. но чувство голода сильнее. Вы съедаете её.. кажется, вам не хорошо.")
             player.health -=10
