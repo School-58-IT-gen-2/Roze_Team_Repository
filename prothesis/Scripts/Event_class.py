@@ -1,5 +1,5 @@
 import random
-from main import Player
+
 class Event:
     def __init__(self, name, description):
         self.name = name
@@ -18,9 +18,9 @@ class Event1(Event):
         description = "Вы нашли золотую детальку! Но она неного потрепана, вы не хотите её использовать и решаете продать.. Первый попавшийся робот выпукает ее за.."
         super().__init__(name, description)
 
-    def execute(self, Player):
+    def execute(self, player):
         gold_price = random.randint(50,100)
-        Player.money += gold_price
+        player.money += gold_price
         print( gold_price, "Бролларов! Чтож, деньги тут ещё никому не мешали..")
         
 class Event2(Event):
@@ -31,7 +31,7 @@ class Event2(Event):
         self.option1 = option1
         self.option2 = option2
 
-    def execute(self, Player):
+    def execute(self, player):
         print(self.name)
         print(self.description)
         print(f"Согласиться! Кто не рискует тот не пьет детское шампанское. {self.option1}")
@@ -42,8 +42,8 @@ class Event2(Event):
         if choice == "1":
             print(f"Вы решились на сделку.: {self.option1}")
             print('А вы рисковый бро! За смелость змей вознаградил тебя мини-инголятором в виде яблока.')
-            Player.air += 15 #нужно добавить мини-инголятор в инвентарь
-            Player.money -= 25
+            player.air += 15 #нужно добавить мини-инголятор в инвентарь
+            player.money -= 25
         elif choice == "2":
             print(f"Вы ,пожалуй, откажетесь...: {self.option2}")
             print('Безопасность важнее риска, вы уходите, змей исчезает.')
@@ -56,7 +56,7 @@ class Event3(Event):
         self.option1 = option1
         self.option2 = option2
 
-    def execute(self, Player):
+    def execute(self, player):
         print(self.name)
         print(self.description)
         print(f"Подойти, вдруг это мой разлученный брат-близнец!. {self.option1}")
@@ -67,11 +67,11 @@ class Event3(Event):
         if choice == "1":
             print(f"Вы набрались смелости изучить существо.: {self.option1}")
             print('Вы решили не послушать умных людей из интернета и не зря! Существо обладало парочкой недостающих вашему протезу деталей и любезно поделилось.')
-            Player.protez += 20
+            player.protez += 20
         elif choice == "2":
             print(f"Вы ,пожалуй, откажетесь...: {self.option2}")
             print('А мне в ютуб шортс сказали избегать таких.. Вы попытались убежать, но существо догнало вас и от первого же удара вы вырубились. Как только вы пришли в сознание, рядом никого не было') 
-            Player.health -= 35
+            player.health -= 35
             
 class Event4(Event):
     def __init__(self):
@@ -79,14 +79,14 @@ class Event4(Event):
         description ="Упс.. похоже вас угораздило провалиться в текстурки.. к вам кто-то подходит, похоже, это холодно-голодные разрабы, они хотят кушать."
         super().__init__(name, description)
 
-    def execute(self, Player):
+    def execute(self, player):
         print("Разрабы этой игры нацелились на вас как на еду, но увидив у вас в кармане карточку нашли более рациональное решение.")
         print("- Поддержите наш проект, тогда мы поддержим вас. Донаты всегда будут тепло приняты тут 2202203666459724")
         print("Разрабы поверили вам на слово о поддержке проекта и щедро отсыпали плюшек.")
-        Player.air += 7
-	    Player.health += 7
-	    Player.money += 7
-	    Player.protez += 7
+        player.air += 7
+        player.health += 7
+        player.money += 7
+        player.protez += 7
 
 class Event5(Event):
     def __init__(self, name, description, option1, option2):
@@ -96,7 +96,7 @@ class Event5(Event):
         self.option1 = option1
         self.option2 = option2
 
-    def execute(self, Player):
+    def execute(self, player):
         print(self.name)
         print(self.description)
         print(f"Два! Главное, что в рифму. {self.option1}")
@@ -107,11 +107,11 @@ class Event5(Event):
         if choice == "1":
             print(f"Вы ввели в замок 'Два': {self.option1}")
             print('Ваш внутренний ребенок, кончено, порадовался, но мы живем не вмире глупых иллюзий. От замка вас ударило током')
-            Player.health -= 15 
+            player.health -= 15 
         elif choice == "2":
             print(f"Вы ввели в замок 'Три': {self.option2}")
             print('За простую загадку вы получили приятный бонус, поздравляю!')
-            Player.health += 15
+            player.health += 15
 		
 class Event6(Event):
     def __init__(self):
@@ -119,7 +119,7 @@ class Event6(Event):
         description='Вы бродите уже так долго.. вы очень хотите кушать.. стоп. Что это? Вы встретили  добрую вафельницу! Она не против накормить вас, только вот сколько это вафля уже лежит внутри..?'
         super().__init__(name, description)
 
-    def execute(self, Player):
+    def execute(self, player):
         print(self.name)
         print(self.description)
 
@@ -127,7 +127,7 @@ class Event6(Event):
 
         if choice == "1":
             print("Она свежая! Вы вкусно покушали и готовы продолжать путь.")
-            Player.health += 15 
+            player.health += 15 
         elif choice == "2":
             print("Она явно старше вас.. но чувство голода сильнее. Вы съедаете её.. кажется, вам не хорошо.")
-            Player.health -=10
+            player.health -=10
