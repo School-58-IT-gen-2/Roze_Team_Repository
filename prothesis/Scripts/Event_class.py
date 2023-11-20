@@ -19,6 +19,8 @@ class Event1(Event):
         super().__init__(name, description)
 
     def execute(self, player):
+	print(self.name)
+        print(self.description)
         gold_price = random.randint(50,100)
         player.money += gold_price
         print( gold_price, "Бролларов! Чтож, деньги тут ещё никому не мешали..")
@@ -80,6 +82,8 @@ class Event4(Event):
         super().__init__(name, description)
 
     def execute(self, player):
+	print(self.name)
+        print(self.description)
         print("Разрабы этой игры нацелились на вас как на еду, но увидив у вас в кармане карточку нашли более рациональное решение.")
         print("- Поддержите наш проект, тогда мы поддержим вас. Донаты всегда будут тепло приняты тут 2202203666459724")
         print("Разрабы поверили вам на слово о поддержке проекта и щедро отсыпали плюшек.")
