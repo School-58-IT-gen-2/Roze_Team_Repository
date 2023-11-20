@@ -37,7 +37,7 @@ class Player():
 					for i in range(len(items.keys())):
 						if list(items.keys())[i] == use_thing:
 							item_params = list(items.get(list(items.keys())[i]))
-					eval(f'self.{item_params[0]} += {item_params[1]}')
+					eval(f'self.{item_params[1]} += {item_params[2]}')
 
 
 		def save_to_file(self, filename):

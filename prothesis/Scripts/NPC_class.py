@@ -103,7 +103,7 @@ class NPC():
 		product = None
 		while len(self.products) != 0:
 			for index in range(len(products)):
-				print(f'{str(index + 1)} {products[index][0]} - {products[index][-1]}$')
+				print(f'{index + 1} {products[index][0]} - {products[index][-1]}$')
 			product = input(' введите номер товара\n enter - конец торговли\n')
 			if product == '':
 				break
@@ -112,4 +112,6 @@ class NPC():
 				self.player.inventory.append(products[int(product) - 1])
 				print(f'Вы купили {products.pop(int(product) - 1)[0]}')
 				print(f'Ваш баланс: {self.player.money}')
+			else:
+				print('вы не прошли проверку от дурака')
 
