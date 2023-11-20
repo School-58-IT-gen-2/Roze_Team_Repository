@@ -13,7 +13,7 @@ class Stage():
         self.km = 0
         self.player = player
         
-        print(f'60km [НАЧАЛО] - "{self.stage_prologue}"')  #начальное сообщение
+        print(f'"{self.stage_prologue}"\n 60km [НАЧАЛО]')  #начальное сообщение
 
         self.seed = ['void'] * 60  #генерация карты (сначала заполняем все 60 мест пустыми местами)
         for i in range(1, self.enemies_count + 1):
