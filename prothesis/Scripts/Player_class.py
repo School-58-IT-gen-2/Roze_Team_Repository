@@ -71,7 +71,3 @@ class Player():
 
 				print("Переменные игрока успешно загружены из файла", filename)
 				return player
-
-player = Player("Имя игрока")
-player.save_to_file("player_data.json")
-loaded_player = Player.load_from_file("player_data.json")

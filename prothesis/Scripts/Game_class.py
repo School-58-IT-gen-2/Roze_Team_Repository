@@ -25,11 +25,13 @@ class Stage():
         self.__cycle()
 
     def __cycle(self):
-        choice = input('\nвыбор действия (enter - идти, u - использовать предмет)>>> ')
+        choice = input('\nвыбор действия (enter - идти, u - использовать предмет, s - сохранить прогресс)>>> ')
         if choice == '': # enter - идти
             self.step()
         elif choice == 'u':
             self.player.use_item()
+        elif choice == 's':
+            self.player.save_to_file('player_data.json')
         self.__cycle()
 
     def step(self):
