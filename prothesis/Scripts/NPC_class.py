@@ -28,8 +28,11 @@ class NPC():
 				if self.dialogue == {}:
 					print(f'Похоже {self.name} не в настроении говорить')
 				else:
-					phrases = self.dialogue.keys()
-					choice = input(phrases)
+					phrases = list(self.dialogue.keys()) #фразы которые можно сказать
+					for i in range(len(phrases)):
+						print(f'{i + 1} - "{phrases[i]}"') # номер фразы, фраза
+					choice = input('>>>')
+					print(f'{self.name}: "{self.dialogue.get(phrases[int(choice) - 1])}"')
 
 
 
