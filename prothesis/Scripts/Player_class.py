@@ -1,5 +1,6 @@
 import json
-
+import sys
+from items_database import items
 class Player():
 		def __init__(self, name):
 				self.name = name
@@ -13,10 +14,28 @@ class Player():
 
 		def death(self, progress):
 				print(50 - progress, '[СМЕРТЬ] - В глазах темнеет... Кажется это конец...')
-				input('Новая игра - enter')
+				sys.exit("Вы умерли")
+				
 
 		def inv(self):
 				print('Ваш инвентарь: ', self.inventory)
+		def use_item(self):
+			print("ваш инвентарь", self.inventory)
+			inp = input("выберите номер предмета в инвентаре, enter - выйти")
+			while inp != '':
+				if len(self.inventory) == 0:
+					print("В вашем инвентаре нет вещей!")
+					break
+				elif inp > len(self.inventory) or inp <= 0:
+					print('Такого элемента в инвентаре нету!')
+					break
+				else:
+					use_thing = self.inventory[inp-1]
+					for i in range(len(items.keys)):
+						if items.keys()[i] == use_thing:
+							item_params = items.get(items.keys()[i])
+					eval(self.item_params[0]) += item_params[1]
+
 
 		def save_to_file(self, filename):
 				data = {
