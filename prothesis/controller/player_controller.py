@@ -3,7 +3,7 @@ import random as rand
 from model.players.player_info import PlayerInfo
 
 
-class Player_controller():
+class PlayerController():
 
     def __init__(self, player_info:PlayerInfo):
         self.__player_info = player_info
@@ -18,9 +18,9 @@ class Player_controller():
             self.seed[i * rand.randint(1, 60//self.events_count - 1)] = 'event' #равномерно, рандомно добавляем позиции с событиями
         self.seed[1] = 'npc'
         self.seed[-1] = 'ending'
-        self.__cycle()
+        self.act()
 
-    def __cycle(self):
+    def act(self):
         choice = input('\nвыбор действия (enter - идти, u - использовать предмет, s - сохранить прогресс)>>> ')
         if choice == '': # enter - идти
             self.void()
