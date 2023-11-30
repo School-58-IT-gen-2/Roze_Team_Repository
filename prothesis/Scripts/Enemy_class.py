@@ -4,7 +4,6 @@ from items_database import all_weapons
 import time
 import random as rand
 
-player = Player('fgh')
 #сохранение лута
 
 
@@ -18,7 +17,7 @@ class Enemy():
 		self.loot = loot
 		self.aggressive = aggressive
 	
-	def meeting(self, km):
+	def meeting(self, km, player):
 		fght_or_frnd = input(f'перед вами {self.name}, что вы будете делать?\n 1. переубеждение\n 2. сражение\n 3. побег\n')
 		if fght_or_frnd == '1':
 			if rand.random() > 0.5:

@@ -9,7 +9,7 @@ class Player():
 				self.inventory = [['ингалятор', 'air', 25, 30]]
 				self.money = 50
 				self.protez = 100
-				self.weapons = [['микроволновая п-ушка', 15, 1, 300, 'сбои'],['ПМ', 10, 4, 600, 'повреждение']]
+				self.weapons = [['микроволновая п-ушка', 1500, 1, 300, 'сбои'],['ПМ', 10, 4, 600, 'повреждение']]
 				#self.things = {"Аптечка": 12, 10, 'resource', "фильтр для протеза": 100, 20, 'resource', 'арматура': 20, 30, 'weapon', 'бита': 15, 20, 'weapon', 'арбалет': 35, 50, 'weapon','одежда лоха': 30, 40, 'armour', 'кольчуга столяра': 50, 60, 'armour', 'броня ученого', 80, 100, 'armour'}
 
 		def death(self, progress):
@@ -25,10 +25,12 @@ class Player():
 				print("В вашем инвентаре нет вещей!")
 				return
 			print("ваш инвентарь:")
-			for i in range(1, len(self.inventory) + 1):
-				print(f'{i} - {self.inventory[i - 1]}')
-			inp = int(input("выберите номер предмета в инвентаре, enter - выйти"))
+			for i in range(len(self.inventory)):
+				print(f'{i + 1} - {self.inventory[i][0]}')
+			choice = input("выберите номер предмета в инвентаре, enter - выйти")
+			inp = None
 			while inp != '':
+				inp = int(choice)
 				if inp > len(self.inventory) or inp <= 0:
 					print('Такого элемента в инвентаре нету!')
 					break
