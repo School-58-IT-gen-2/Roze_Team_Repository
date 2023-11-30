@@ -53,6 +53,7 @@ class Stage():
         print(f'{60 - self.km}km [НАПАДЕНИЕ] - "кажется здесь враг"')
         enemy = rand.choice(enemies_for_stages[self.stage_num])
         enemy.meeting(self.km)
+
     
     def event(self, player):
         print(f'{60 - self.km}km [СОБЫТИЕ] - ', end='')

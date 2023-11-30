@@ -6,10 +6,10 @@ class Player():
 				self.name = name
 				self.air = 100
 				self.health = 100
-				self.inventory = []
+				self.inventory = [['ингалятор', 'air', 25, 30]]
 				self.money = 50
 				self.protez = 100
-				self.weapons = [['микроволновая п-ушка', 15, 1, 300, 'сбои']]
+				self.weapons = [['микроволновая п-ушка', 15, 1, 300, 'сбои'],['ПМ', 10, 4, 600, 'повреждение']]
 				#self.things = {"Аптечка": 12, 10, 'resource', "фильтр для протеза": 100, 20, 'resource', 'арматура': 20, 30, 'weapon', 'бита': 15, 20, 'weapon', 'арбалет': 35, 50, 'weapon','одежда лоха': 30, 40, 'armour', 'кольчуга столяра': 50, 60, 'armour', 'броня ученого', 80, 100, 'armour'}
 
 		def death(self, progress):

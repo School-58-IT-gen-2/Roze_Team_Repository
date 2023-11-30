@@ -1,13 +1,12 @@
 from Player_class import Player
+from items_database import items
+from items_database import all_weapons
 import time
 import random as rand
 
 player = Player('fgh')
 #сохранение лута
 
-
-weapons = {'cabels': 5}
-all_weapons = {'кулак':['кулак', 7, 3, 0, 'повреждение'], 'когти':['когти', 9, 3, 0, 'кровотечение'], 'ПМ':['ПМ', 10, 4, 600, 'ударного'], 'микроволновая п-ушка': ['микроволновая п-ушка', 15, 1, 300, 'сбои']}
 
 class Enemy():
 	def __init__(self, name, dmgtype, health, weapons, money, loot, aggressive = False):
@@ -35,6 +34,9 @@ class Enemy():
 				self.run()
 			else:
 				self.fight(player, km)
+
+
+
 		
 			
 	def fight(self, player, km):
@@ -46,12 +48,14 @@ class Enemy():
 		period_dmg = 3
 		period_dmg_counter = 0
 		block = 1
+		change_weapon = int(input(f'желаете сменить оружее?{player.weapons}'))
+		player_weapon = player.weapons[change_weapon]
 		print('--------БОЙ--------')
 		time.sleep(1)
 		print(f'{self.name} готовит {enemy_weapon[0]} для атаки...')
 		while health > 0:
 			if turn:
-				choice = list(input(f'\nЧто собираешься делать?(выбери два действия) \n атака({player.weapons[0][0]}) - a\n блок(50%) - b\n лечение(бинты) - h\n'))
+				choice = list(input(f'\nЧто собираешься делать?(выбери два действия) \n атака({player_weapon[0]}) - a\n блок(50%) - b\n лечение(бинты) - h\n'))
 				if len(choice) == 2:
 					for i in range(2):	
 						if choice[i] == 'a':
@@ -60,11 +64,11 @@ class Enemy():
 							print(f'нанесено {' + '.join(map(str, damage))}')
 							print(f'{self.name} имеет {max(0, health)} здоровья\n')
 							time.sleep(1)
-							if self.dmgtype == player.weapons[0][4] and rand.random() > 0.6:
+							if self.dmgtype == player_weapon[4] and rand.random() > 0.6:
 								period_dmg_counter = 3
-							if self.dmgtype == player.weapons[0][4] and period_dmg_counter != 0:
+							if self.dmgtype == player_weapon[4] and period_dmg_counter != 0:
 								health -= period_dmg
-								print(f'вы наложили статус: {player.weapons[0][4]}, периодический урон - 3\n осталось этапов - {period_dmg_counter}')
+								print(f'вы наложили статус: {player_weapon[4]}, периодический урон - 3\n осталось этапов - {period_dmg_counter}')
 								print(f'{self.name} имеет {max(0, health)} здоровья')
 								period_dmg_counter -= 1
 						
@@ -94,8 +98,9 @@ class Enemy():
 		else:
 			time.sleep(1)
 			mny = round(self.money * (0.5 + rand.random()), 2)
-			print(self.name, f'погибает, вы получаете {mny}$')
+			print(self.name, f'погибает, вы получаете {mny}$ и ингалятор')
 			player.money += mny
+			player.inventory.append(items['бинты'])
 		
 	def spare(self, player):
 		mny = round(self.money * (0.5 + rand.random()), 2)
