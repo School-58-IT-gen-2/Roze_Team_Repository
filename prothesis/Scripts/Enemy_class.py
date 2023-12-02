@@ -22,17 +22,14 @@ class Enemy():
 		if fght_or_frnd == '1':
 			if rand.random() > 0.5:
 				self.spare(player)
-			else:
-				self.fight(player, km)
-
-		if fght_or_frnd == '2':
+		elif fght_or_frnd == '2':
 			self.fight(player, km)
 
-		if fght_or_frnd == '3':
+		elif fght_or_frnd == '3':
 			if rand.random() > 0.5:
 				self.run()
-			else:
-				self.fight(player, km)
+		else:
+			self.fight(player, km)
 
 
 
@@ -47,8 +44,11 @@ class Enemy():
 		period_dmg = 3
 		period_dmg_counter = 0
 		block = 1
-		change_weapon = int(input(f'желаете сменить оружее?{player.weapons}'))
-		player_weapon = player.weapons[change_weapon]
+		print(f'желаете сменить оружее?')
+		for index in range(len(player.weapons)):
+				print(f'{index + 1}. {player.weapons[index][0]}')
+		change_weapon = int(input())
+		player_weapon = player.weapons[change_weapon-1]
 		print('--------БОЙ--------')
 		time.sleep(1)
 		print(f'{self.name} готовит {enemy_weapon[0]} для атаки...')
@@ -99,7 +99,7 @@ class Enemy():
 			mny = round(self.money * (0.5 + rand.random()), 2)
 			print(self.name, f'погибает, вы получаете {mny}$ и ингалятор')
 			player.money += mny
-			player.inventory.append(items['бинты'])
+			player.inventory.append(items['ингалятор'])
 		
 	def spare(self, player):
 		mny = round(self.money * (0.5 + rand.random()), 2)

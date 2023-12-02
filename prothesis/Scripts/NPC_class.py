@@ -1,5 +1,6 @@
 import random as rand
 import time
+from Player_class import Player
 
 class NPC():
 
@@ -13,7 +14,7 @@ class NPC():
 		self.dmgtype = 'кровотечение'
 		self.dialogue = dialogue
 
-	def meeting(self):
+	def meeting(self, player):
 		print(f'[ВСТРЕЧА] - кажется это {self.name}')
 		choice = None
 		while choice != '':
@@ -22,7 +23,7 @@ class NPC():
 				print('Ты уходишь')
 				break
 			elif choice == '1':
-				self.trade()
+				self.trade(player)
 			elif choice == '2':
 				if self.dialogue == {}:
 					print(f'Похоже {self.name} не в настроении говорить')
@@ -94,24 +95,37 @@ class NPC():
 			print(self.name, f'погибает, вы получаете {mny}$')
 			player.money += mny
 	
-	def trade(self):
+	def trade(self, player):
 		products = self.products
 		if products == []:
 			print(f'Кажется {self.name} не в настроении торговать')
 			return
 		print(f'{self.name} показывает свои товары')
+		print(f'ваш баланс {player.money}')
 		product = None
-		while len(self.products) != 0:
+		while len(self.products) != 0 and product != '':
 			for index in range(len(products)):
 				print(f'{index + 1} {products[index][0]} - {products[index][-1]}$')
 			product = input(' введите номер товара\n enter - конец торговли\n')
 			if product == '':
 				break
-			elif products[int(product) - 1][-1] <= self.player.money:
-				self.player.money -= products[int(product) - 1][-1]
-				self.player.inventory.append(products[int(product) - 1])
-				print(f'Вы купили {products.pop(int(product) - 1)[0]}')
-				print(f'Ваш баланс: {self.player.money}')
+			elif int(product) > len(products)+1:
+				print('такого предмета нет')
+			elif products[int(product) - 1][-1] <= player.money:
+				if products[int(product)-1][3] == 'item':
+					player.money -= products[int(product) - 1][-1]
+					player.inventory.append(products[int(product) - 1])
+					print(f'Вы купили {products.pop(int(product) - 1)[0]}')
+					print(f'Ваш баланс: {player.money}')
+					product = ''
+				elif products[int(product)-1][3] == 'weapon':
+					player.money -= products[int(product) - 1][-1]
+					player.weapons.append(products[int(product) - 1])
+					print(f'Вы купили {products.pop(int(product) - 1)[0]}')
+					print(f'Ваш баланс: {player.money}')
+					product = ''
+				else:
+					print('недостаточно денег')
 			else:
 				print('вы не прошли проверку от дурака')
 

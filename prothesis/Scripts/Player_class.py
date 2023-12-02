@@ -9,7 +9,7 @@ class Player():
 				self.inventory = [['ингалятор', 'air', 25, 30]]
 				self.money = 50
 				self.protez = 100
-				self.weapons = [['микроволновая п-ушка', 1500, 1, 300, 'сбои'],['ПМ', 10, 4, 600, 'повреждение']]
+				self.weapons = [['микроволновая п-ушка', 15, 1, 300, 'сбои'],['ПМ', 10, 4, 600, 'повреждение']]
 				#self.things = {"Аптечка": 12, 10, 'resource', "фильтр для протеза": 100, 20, 'resource', 'арматура': 20, 30, 'weapon', 'бита': 15, 20, 'weapon', 'арбалет': 35, 50, 'weapon','одежда лоха': 30, 40, 'armour', 'кольчуга столяра': 50, 60, 'armour', 'броня ученого', 80, 100, 'armour'}
 
 		def death(self, progress):
@@ -21,6 +21,7 @@ class Player():
 				print('Ваш инвентарь: ', self.inventory)
 
 		def use_item(self):
+			item_params = [0, 1, 2]
 			if len(self.inventory) == 0:
 				print("В вашем инвентаре нет вещей!")
 				return
@@ -29,17 +30,19 @@ class Player():
 				print(f'{i + 1} - {self.inventory[i][0]}')
 			choice = input("выберите номер предмета в инвентаре, enter - выйти")
 			inp = None
-			while inp != '':
+			while choice != '':
 				inp = int(choice)
 				if inp > len(self.inventory) or inp <= 0:
 					print('Такого элемента в инвентаре нету!')
 					break
 				else:
-					use_thing = self.inventory[inp-1]
-					for i in range(len(items.keys())):
-						if list(items.keys())[i] == use_thing:
-							item_params = list(items.get(list(items.keys())[i]))
-					eval(f'self.{item_params[1]} += {item_params[2]}')
+					use_thing = self.inventory[inp-1][0]
+					item_params = items.get(use_thing)
+					s = f"self.{item_params[1]} += {item_params[2]}"
+					exec(s)
+					print(f'вы пополнили {item_params[1]}')
+					self.inventory.pop(inp-1)
+					choice = ''
 
 
 		def save_to_file(self, filename):
