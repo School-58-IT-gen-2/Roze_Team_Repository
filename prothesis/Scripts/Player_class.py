@@ -13,7 +13,7 @@ class Player():
 				#self.things = {"Аптечка": 12, 10, 'resource', "фильтр для протеза": 100, 20, 'resource', 'арматура': 20, 30, 'weapon', 'бита': 15, 20, 'weapon', 'арбалет': 35, 50, 'weapon','одежда лоха': 30, 40, 'armour', 'кольчуга столяра': 50, 60, 'armour', 'броня ученого', 80, 100, 'armour'}
 
 		def death(self, progress):
-				print(f'{50 - progress}km [СМЕРТЬ] - В глазах темнеет... Кажется это конец...')
+				print(f'{60 - progress}km [СМЕРТЬ] - В глазах темнеет... Кажется это конец...')
 				sys.exit("Вы умерли")
 				
 
@@ -76,3 +76,4 @@ class Player():
 
 				print("Переменные игрока успешно загружены из файла", filename)
 				return player
+
