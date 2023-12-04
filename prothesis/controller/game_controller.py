@@ -14,8 +14,8 @@ class GameController():
         self.act()
 
     def act(self):
-        choice = input('\nвыбор действия (enter - идти, u - использовать предмет, s - сохранить прогресс)>>> ')
-        if choice == '':  # enter - идти
+        choice = self.__player_view.get_request_from_player('выбор действия:', ['идти', 'использовать предмет', 'сохранить прогресс'])
+        if choice == '1':  # enter - идти
             self.step()
 
     def step(self):
