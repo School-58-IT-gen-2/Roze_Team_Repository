@@ -1,22 +1,16 @@
 import random as rand
 
-from prothesis.model.games.game_info import GameInfo
 from prothesis.model.players.player_info import PlayerInfo
+from prothesis.model.stages.stage_info import StageInfo
 
 
 class GameController():
 
-    def __init__(self, player_info: PlayerInfo, game_info: GameInfo):
+    def __init__(self, player_info: PlayerInfo, stage_info: StageInfo):
         self.__player_info = player_info
-        self.__game_info = game_info
-        print('''"вы просыпаетесь посреди пустоты. 
-песок, металлические обломки, все это вы 
-уже видели однажды. вы чувствуете как горячий воздух наполняет ваше горло...
-горло? вы осматриваете себя и замечаете странные трубки в вашей груди и шее.
-дотронувшись до лица вы понимаетечто на лице респиратор. кажется вы теперь 
-киборг... надо добраться до ближайшего населенного пункта как можно скорее, 
-вы чувствуете что ваш кислород на исходе. путешествие начинается."
-\n60km [НАЧАЛО]''')  #начальное сообщение
+        self.__stage_info = stage_info
+        print(f'{self.__stage_info.stage_prologue}\n60km [НАЧАЛО]'
+              )  #начальное сообщение
         self.act()
 
     def act(self):
