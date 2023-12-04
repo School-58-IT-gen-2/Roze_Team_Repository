@@ -1,4 +1,4 @@
-from player_view import PlayerView
+from prothesis.view.player_view import PlayerView
 
 class PlayerConsoleView(PlayerView):
     def __init__(self, locale="RU"):
@@ -14,3 +14,6 @@ class PlayerConsoleView(PlayerView):
         request = input()
         response = self.__send_request_from_player_to_controller(request)
         return response
+
+    def way_report(self, km, place, text):
+        print(f'{60 - km}km [{place}] - {text}')
