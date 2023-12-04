@@ -9,3 +9,6 @@ class PlayerView():
 
     def get_request_from_player(self):
         pass
+    
+    def way_report(self, km, place, text):
+        print(f'{60 - km}km [{place}] - {text}')
