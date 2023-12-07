@@ -7,6 +7,7 @@ class PlayerInfo():
         self.money = 50
         self.protez = 100
         self.weapons = [['микроволновая п-ушка', 15, 1, 300, 'сбои'],['ПМ', 10, 4, 600, 'повреждение']]
+        self.save = False #для проверки сейвов
         self.km = 0
 
     def get_inventory(self):

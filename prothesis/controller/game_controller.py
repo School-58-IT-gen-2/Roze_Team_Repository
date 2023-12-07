@@ -1,4 +1,5 @@
 import random as rand
+import json
 
 from prothesis.model.players.player_info import PlayerInfo
 from prothesis.model.stages.stage_info import StageInfo
@@ -11,7 +12,7 @@ class GameController():
         self.__player_info = player_info
         self.__stage_info = stage_info
         self.__player_view = player_view
-        self.act()
+        print(123)
 
     def act(self):
         choice = self.__player_view.get_request_from_player('выбор действия:', ['идти', 'использовать предмет', 'сохранить прогресс'])
@@ -29,8 +30,15 @@ class GameController():
             self.__player_view.send_response_to_player('"!Мало воздуха, воспользуйтесь ингалятором"')
         eval(f'self.{self.__stage_info.seed[self.__player_info.km]}()') #происходит то, что на текущей позиции в сиде
         self.act()
+    
+    def save_to_file(self, filename):
+        with open(filename, "w") as file:
+            json.dump('True', file)
 
-
+    def load_from_file(self, filename):
+        with open(filename, "r") as file:
+            data = bool(json.load(file))
+        self.__player_info.save = data
 
     def void(self):
         self.__player_view.way_report(self.__player_info.km, 'ПУСТО', '"кажется здесь пусто"')
