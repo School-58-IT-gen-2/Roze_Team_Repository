@@ -25,12 +25,9 @@ new_game_info = StageInfo(stage_prologue='''"вы просыпаетесь по�
 
 
 player_controller = GameController(new_player_info, new_game_info, player_view)
-print(player_controller.__player_view)
-choice = player_controller.__player_view.get_request_from_player('Добро пожаловать!', ['Загрузить игру', 'Новая игра'])
+choice = player_controller.player_view.get_request_from_player('Добро пожаловать!', ['Загрузить игру', 'Новая игра'])
 if choice == '1':
     player_controller.load_from_file('save_test.json')
-elif choice == '2':
-    player_controller.save_to_file('save_test.json')
 
 '''
 def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -73,7 +70,7 @@ def main() -> None:
     application.run_polling(allowed_updates=Update.ALL_TYPES)'''
 
 
-
+player_controller.act()
 
 class PlayerTGView(PlayerView):
     def __switch_locale(self, locale):
@@ -90,5 +87,5 @@ class PlayerTGView(PlayerView):
     def way_report(self, km, place, text):
         print(f'{60 - km}km [{place}] - {text}')
 
-if __name__ == "__main__":
-    main()
+#if __name__ == "__main__":
+    #main()

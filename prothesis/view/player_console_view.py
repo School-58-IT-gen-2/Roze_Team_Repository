@@ -19,3 +19,6 @@ class PlayerConsoleView(PlayerView):
             request = input(text)
         response = self.__send_request_from_player_to_controller(request)
         return response
+    
+    def way_report(self, km, place, text):
+        print(f'{61 - km}km [{place}] - {text}')

@@ -26,7 +26,7 @@ class Enemy():
         self.player_controller = player_controller
 
     def meeting(self, km, player):
-        fght_or_frnd = player_controller.__player_view.get_request_from_player(f'перед вами {self.name}, что вы будете делать?',  ['переубеждение', 'сражение', 'побег'])
+        fght_or_frnd = player_controller.player_view.get_request_from_player(f'перед вами {self.name}, что вы будете делать?',  ['переубеждение', 'сражение', 'побег'])
         if fght_or_frnd == '1':
             if rand.random() > 0.5:
                 self.spare(player)

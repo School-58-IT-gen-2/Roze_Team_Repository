@@ -11,47 +11,58 @@ class GameController():
     def __init__(self, player_info: PlayerInfo, stage_info: StageInfo, player_view: PlayerView):
         self.__player_info = player_info
         self.__stage_info = stage_info
-        self.__player_view = player_view
-        print(123)
+        self.player_view = player_view
 
     def act(self):
-        choice = self.__player_view.get_request_from_player('выбор действия:', ['идти', 'использовать предмет', 'сохранить прогресс'])
+        choice = self.player_view.get_request_from_player('выбор действия:', ['идти', 'использовать предмет', 'сохранить прогресс'])
         if choice == '1':  # enter - идти
             self.step()
+        elif choice == '2':
+            self.show_inventory()
+            self.act()
+        elif choice == '3':
+            self.save_to_file('save_test.json')
+            self.act()
 
     def step(self):
         self.__player_info.km += 1
-        self.__player_info.air -= rand.randint(1, 8)
+        self.__player_info.air -= rand.randint(1, 5)
         if self.__player_info.air <= 0:
-            self.__player_view.send_response_to_player('"Вы судорожно глотаете остатки воздуха..."')
+            self.player_view.send_response_to_player('"Вы судорожно глотаете остатки воздуха..."')
         elif self.__player_info.air < 15:
-            self.__player_view.send_response_to_player('"!Критически мало воздуха, срочно воспользуйтесь ингалятором"')
+            self.player_view.send_response_to_player('"!Критически мало воздуха, срочно воспользуйтесь ингалятором"')
         elif self.__player_info.air < 40:
-            self.__player_view.send_response_to_player('"!Мало воздуха, воспользуйтесь ингалятором"')
+            self.player_view.send_response_to_player('"!Мало воздуха, воспользуйтесь ингалятором"')
         eval(f'self.{self.__stage_info.seed[self.__player_info.km]}()') #происходит то, что на текущей позиции в сиде
         self.act()
+
+    def show_inventory(self):
+        self.player_view.send_response_to_player(f'Ваш запас воздуха: {self.__player_info.air}%')
     
     def save_to_file(self, filename):
+        data = self.__player_info.get_data()
         with open(filename, "w") as file:
-            json.dump('True', file)
+            json.dump(data, file)
 
     def load_from_file(self, filename):
         with open(filename, "r") as file:
-            data = bool(json.load(file))
-        self.__player_info.save = data
+            data = json.load(file)
+        self.__player_info.set_info(data)
 
     def void(self):
-        self.__player_view.way_report(self.__player_info.km, 'ПУСТО', '"кажется здесь пусто"')
+        self.player_view.way_report(self.__player_info.km, 'ПУСТО', '"кажется здесь пусто"')
         
     def npc(self):
-        self.__player_view.way_report(self.__player_info.km, 'ВСТРЕЧА', '"кажется кто-то здесь"')
+        self.player_view.way_report(self.__player_info.km, 'ВСТРЕЧА', '"кажется кто-то здесь"')
 
     def enemy(self):
-        self.__player_view.way_report(self.__player_info.km, 'НАПАДЕНИЕ', '"кажется на вас напали!"')
+        self.player_view.way_report(self.__player_info.km, 'НАПАДЕНИЕ', '"кажется на вас напали!"')
 
     def event(self):
-        self.__player_view.way_report(self.__player_info.km, 'СОБЫТИЕ', 'текст события')
+        self.player_view.way_report(self.__player_info.km, 'СОБЫТИЕ', 'текст события')
 
     def ending(self):
-        self.__player_view.way_report(self.__player_info.km, 'КОНЕЦ', '...')
+        self.player_view.way_report(self.__player_info.km, 'КОНЕЦ', '...')
 
+    def start(self):
+        self.player_view.way_report(self.__player_info.km, 'НАЧАЛО', self.__stage_info.stage_prologue)
