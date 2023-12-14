@@ -1,9 +1,11 @@
 import random as rand
+import sys
 import json
 
 from prothesis.model.players.player_info import PlayerInfo
 from prothesis.model.stages.stage_info import StageInfo
 from prothesis.view.player_view import PlayerView
+from prothesis._databases.creatures_database import enemies_for_stages
 
 
 class GameController():
@@ -57,6 +59,8 @@ class GameController():
 
     def enemy(self):
         self.player_view.way_report(self.__player_info.km, 'НАПАДЕНИЕ', '"кажется на вас напали!"')
+        enemy = rand.choice(enemies_for_stages[self.__stage_info.stage_num])
+        enemy.meeting(self.player_view, self.__player_info)
 
     def event(self):
         self.player_view.way_report(self.__player_info.km, 'СОБЫТИЕ', 'текст события')
@@ -66,3 +70,7 @@ class GameController():
 
     def start(self):
         self.player_view.way_report(self.__player_info.km, 'НАЧАЛО', self.__stage_info.stage_prologue)
+
+    def death(self):
+        self.player_view.way_report(self.__player_info.km, 'СМЕРТЬ', 'В глазах темнеет... Кажется это конец....')
+        sys.exit("Вы умерли")

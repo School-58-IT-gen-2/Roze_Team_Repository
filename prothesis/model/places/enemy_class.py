@@ -1,7 +1,10 @@
 import time
 import random as rand
 
-from main import player_controller
+from prothesis._databases.items_database import all_weapons
+from prothesis._databases.items_database import items
+from prothesis.model.players.player_info import PlayerInfo
+from prothesis.view.player_view import PlayerView
 
 
 class Enemy():
@@ -22,23 +25,117 @@ class Enemy():
         self.money = money
         self.loot = loot
         self.aggressive = aggressive
+        self.player_view = PlayerView()
+        self.player_info = PlayerInfo()
 
-        self.player_controller = player_controller
-
-    def meeting(self, km, player):
-        fght_or_frnd = player_controller.player_view.get_request_from_player(f'перед вами {self.name}, что вы будете делать?',  ['переубеждение', 'сражение', 'побег'])
+    def meeting(self, player_view, player_info):
+        self.player_info = player_info
+        self.player_view = player_view
+        fght_or_frnd = self.player_view.get_request_from_player(f'перед вами {self.name}, что вы будете делать?',  ['переубеждение', 'сражение', 'побег'])
         if fght_or_frnd == '1':
-            if rand.random() > 0.5:
-                self.spare(player)
-            else:
-                self.fight(player, km)
+            self.spare()
         elif fght_or_frnd == '2':
-            self.fight(player, km)
+            self.fight()
 
         elif fght_or_frnd == '3':
-            if rand.random() > 0.5:
-                self.run()
+            self.escape()
+
+    def fight(self):
+
+        enemy_weapon = self.weapons
+        player_weapon = self.player_info.weapons[0]
+        turn = True
+        health = self.health
+        period_dmg = 3
+        period_dmg_counter = 0
+        block = 1
+        for index in range(len(self.player_info.weapons)):
+            self.player_view.send_response_to_player(f'{index + 1}. {self.player_info.weapons[index][0]}')
+        change_weapon = int(self.player_view.get_request_from_player('желаете сменить оружее?', range(1, len(self.weapons) + 1)))
+        player_weapon = self.player_info.weapons[change_weapon - 1]
+        self.player_view.send_response_to_player('--------БОЙ--------')
+        time.sleep(1)
+        self.player_view.send_response_to_player(f'{self.name} готовит {enemy_weapon[0]} для атаки...')
+        while health > 0:
+            if turn:
+                choice = list(
+                    self.player_view.get_request_from_player(
+                        f'\nЧто собираешься делать?(выбери два действия)',
+                        [f'атака({player_weapon[0]})', 'блок(50%)', 'лечение(бинты)'],
+                        test=False
+                    ))
+                if len(choice) == 2:
+                    for i in range(2):
+                        if choice[i] == '1':
+                            damage = [
+                                int(player_weapon[1] * (0.5 + rand.random()) *
+                                    block) for _ in range(player_weapon[2])
+                            ]
+                            health -= sum(damage)
+                            self.player_view.send_response_to_player(f'нанесено {' + '.join(map(str, damage))}')
+                            self.player_view.send_response_to_player(
+                                f'{self.name} имеет {max(0, health)} здоровья\n'
+                            )
+                            time.sleep(1)
+                            if self.dmgtype == player_weapon[
+                                    4] and rand.random() > 0.6:
+                                period_dmg_counter = 3
+                            if self.dmgtype == player_weapon[
+                                    4] and period_dmg_counter != 0:
+                                health -= period_dmg
+                                self.player_view.send_response_to_player(
+                                    f'вы наложили статус: {player_weapon[4]}, периодический урон - 3\n осталось этапов - {period_dmg_counter}'
+                                )
+                                self.player_view.send_response_to_player(
+                                    f'{self.name} имеет {max(0, health)} здоровья'
+                                )
+                                period_dmg_counter -= 1
+
+                        if choice[i] == '2':
+                            block = block * 0.5
+                            self.player_view.send_response_to_player(
+                                'вы подготовили блок на следующую атаку противника!\n'
+                            )
+
+                        if choice[i] == '3':
+                            self.player_info.health = min(100, self.player_info.health + 25)
+                            self.player_view.send_response_to_player(
+                                f'вы успешно воостановили здоровье. ХП = {self.player_info.health}\n'
+                            )
             else:
-                self.fight(player, km)
+                time.sleep(1)
+                self.player_view.send_response_to_player(f'\n{self.name} атакует!')
+                time.sleep(1)
+                damage = [
+                    int(enemy_weapon[1] * (0.5 + rand.random()) * block)
+                    for _ in range(enemy_weapon[2])
+                ]
+                self.player_view.send_response_to_player(f'нанесено {' + '.join(map(str, damage))} урона')
+                self.player_info.health -= sum(damage)
+                block = 1
+                if self.player_info.health > 0:
+                    self.player_view.send_response_to_player(f'ваше здоровье - {self.player_info.health}')
+                else:
+                    self.player_view.send_response_to_player('ваше здоровье - 0')
+            turn = not turn
         else:
-            self.fight(player, km)
+            time.sleep(1)
+            mny = round(self.money * (0.5 + rand.random()), 2)
+            self.player_view.send_response_to_player(f'{self.name}, погибает, вы получаете {mny}$ и ингалятор')
+            self.player_info.money += mny
+            self.player_info.inventory.append(items['ингалятор'])
+
+    def escape(self):
+        if rand.randint(1, 2) > 0.5:
+            self.player_view.send_response_to_player('Вы успешно сбежали')
+        else:
+            self.fight()
+    
+    def spare(self):
+        if rand.randint(1, 2) == 1:
+            mny = round(self.money * (0.5 + rand.random()), 2)
+            self.player_view.send_response_to_player(f'поздравляю, вы успешно закорешились с {self.name}, он поделился с вами {mny}$')
+            self.player_info.money += mny
+            self.player_view.send_response_to_player(f'ваш баланс: {self.player_info.money}')
+        else:
+            self.fight()
