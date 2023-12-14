@@ -49,9 +49,7 @@ class Enemy():
         period_dmg = 3
         period_dmg_counter = 0
         block = 1
-        for index in range(len(self.player_info.weapons)):
-            self.player_view.send_response_to_player(f'{index + 1}. {self.player_info.weapons[index][0]}')
-        change_weapon = int(self.player_view.get_request_from_player('желаете сменить оружее?', range(1, len(self.weapons) + 1)))
+        change_weapon = int(self.player_view.get_request_from_player('желаете сменить оружее?', [self.player_info.weapons[i][0] for i in range(len(self.player_info.weapons))]))
         player_weapon = self.player_info.weapons[change_weapon - 1]
         self.player_view.send_response_to_player('--------БОЙ--------')
         time.sleep(1)
