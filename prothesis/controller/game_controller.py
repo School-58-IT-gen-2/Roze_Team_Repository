@@ -6,6 +6,7 @@ from prothesis.model.players.player_info import PlayerInfo
 from prothesis.model.stages.stage_info import StageInfo
 from prothesis.view.player_view import PlayerView
 from prothesis._databases.creatures_database import enemies_for_stages
+from prothesis._databases.creatures_database import npcs_for_stages
 
 
 class GameController():
@@ -56,6 +57,18 @@ class GameController():
         
     def npc(self):
         self.player_view.way_report(self.__player_info.km, 'ВСТРЕЧА', '"кажется кто-то здесь"')
+        sage = npcs_for_stages[self.__stage_info.stage_num][0]
+        sage.meeting(self.player_view, self.__player_info)
+
+    def trader(self):
+        self.player_view.way_report(self.__player_info.km, 'ВСТРЕЧА', '"кажется кто-то здесь"')
+        trader = npcs_for_stages[self.__stage_info.stage_num][1]
+        trader.meeting(self.player_view, self.__player_info)
+
+    def trader2(self):
+        self.player_view.way_report(self.__player_info.km, 'ВСТРЕЧА', '"кажется кто-то здесь"')
+        trader2 = npcs_for_stages[self.__stage_info.stage_num][2]
+        trader2.meeting(self.player_view, self.__player_info)
 
     def enemy(self):
         self.player_view.way_report(self.__player_info.km, 'НАПАДЕНИЕ', '"кажется на вас напали!"')

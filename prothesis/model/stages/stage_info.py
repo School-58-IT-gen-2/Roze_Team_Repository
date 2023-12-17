@@ -16,4 +16,6 @@ class StageInfo():
             self.seed[i * rand.randint(1, 60 // self.events_count - 1)] = 'event'  #равномерно, рандомно добавляем позиции с событиями
         self.seed[1] = 'start'
         self.seed[2] = 'npc'
+        self.seed[20] = 'trader'
+        self.seed[40] = 'trader2'
         self.seed[-1] = 'ending'
