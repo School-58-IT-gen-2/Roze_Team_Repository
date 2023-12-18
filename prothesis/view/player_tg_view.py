@@ -1,70 +1,58 @@
+from telegram import ReplyKeyboardMarkup
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from telegram import Update
+from telegram.ext import CallbackContext
+from typing import List
 
-from telegram import ForceReply, Update
-from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
+button_names = ["ннн", "777"]
 
-from player_view import PlayerView
+def create_buttons(update: Update, context: CallbackContext, button_names: List[str]):
+                custom_keyboard = [button_names]
+                reply_markup = ReplyKeyboardMarkup(custom_keyboard)
+                update.message.reply_text('Выберите опцию:', reply_markup=reply_markup)
 
-def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Send a message when the command /start is issued."""
-    user = update.effective_user
-    print("AAA")
-    return update.message.reply_html(
-        rf"Hi {user.mention_html()}!",
-        reply_markup=ForceReply(selective=True),
-    )
+def start(update: Update, context: CallbackContext):
+                create_buttons(update, context, button_names)
 
+def button_click(update: Update, context: CallbackContext):
+                text = update.message.text
+                if text in button_names:
+                                update.message.reply_text(f"Вы выбрали {text}")
+                else:
+                                update.message.reply_text("Пожалуйста, выберите опцию из предложенных кнопок.")
 
-def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Send a message when the command /help is issued."""
-    return update.message.reply_text("Help!")
+updater = Updater("6068101345:AAGr0hpElzAEBwfoc7-yoUhd-QRD9Sd8vr4", use_context=True)  # Замените "YOUR_BOT_TOKEN" на реальный токен вашего бота
+dispatcher = updater.dispatcher
 
+dispatcher.add_handler(CommandHandler("start", start))
 
-def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Echo the user message."""
-    return update.message.reply_text(update.message.text)
+dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, button_click))
 
-
-def main() -> None:
-    """Start the bot."""
-    # Create the Application and pass it your bot's token.
-    application = Application.builder().token("6712575033:AAFi3-Juz0w3dlOSBNU4AAZDtYxwOAqrRTA").build()
-
-    # on different commands - answer in Telegram
-    application.add_handler(CommandHandler("start", start))
-    application.add_handler(CommandHandler("help", help_command))
-
-    # on non command i.e message - echo the message on Telegram
-    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, echo))
-
-    # Run the bot until the user presses Ctrl-C
-    application.run_polling(allowed_updates=Update.ALL_TYPES)
-
-
-
-
-
-
-
-
-
-
+updater.start_polling()
 
 
 class PlayerTGView(PlayerView):
-    def __switch_locale(self, locale):
-        pass
     def __init__(self, locale="RU"):
         self.__switch_locale(locale)
 
-    def send_response_to_player(self, response):
-        pass
+    def send_response_to_player(update, context, self, response):
+        update.message.reply_text(response)
 
-    def get_request_from_player(self):
-        pass
+    def get_request_from_player(update, context, self, button_func, button_names: List[str]):
+        def create_buttons(update: Update, context: CallbackContext, button_names: List[str]):
+            custom_keyboard = [button_names]
+            reply_markup = ReplyKeyboardMarkup(custom_keyboard)
+            update.message.reply_text('Выберите опцию:', reply_markup=reply_markup)
+        def button_click(update: Update, context: CallbackContext, button_func):
+            text = update.message.text
+            keys = button_func.keys()
+            if text in keys:
+                for i in range(len(keys)):
+                    if keys[i] == text:
+                        eval(button_func[keys[i]])
+            else:
+                update.message.reply_text("Пожалуйста, выберите опцию из предложенных кнопок.")
     
-    def way_report(self, km, place, text):
-        print(f'{60 - km}km [{place}] - {text}')
 
 
 if __name__ == "__main__":
