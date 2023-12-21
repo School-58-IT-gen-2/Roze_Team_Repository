@@ -5,8 +5,8 @@ import json
 from prothesis.model.players.player_info import PlayerInfo
 from prothesis.model.stages.stage_info import StageInfo
 from prothesis.view.player_view import PlayerView
-from prothesis._databases.creatures_database import enemies_for_stages
-from prothesis._databases.creatures_database import npcs_for_stages
+from prothesis._databases.main_database import enemies_for_stages
+from prothesis._databases.main_database import npcs_for_stages
 
 
 class GameController():
