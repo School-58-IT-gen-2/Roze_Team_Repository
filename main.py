@@ -1,7 +1,7 @@
-from telegram import Update
+#from telegram import Update
 
-from telegram import ForceReply, Update
-from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
+#from telegram import ForceReply, Update
+#from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
 
 from prothesis.view.player_view import PlayerView
 from prothesis.controller.game_controller import GameController

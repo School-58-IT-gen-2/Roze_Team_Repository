@@ -1,3 +1,5 @@
+from prothesis.view.player_view import PlayerView
+
 class PlayerInfo():
     def __init__(self):
         self.air = 100
@@ -14,11 +16,10 @@ class PlayerInfo():
         return data 
     
     def set_info(self, data):
-        print(data.keys())
         for key in list(data.keys()):
             exec(f'self.{key} = data[key]')
 
-        def set_money(self, count, player_view: PlayerView):
+    def set_money(self, count, player_view: PlayerView):
         symbol = '+' if count > 0 else '-'
         self.money = max(self.money + count, 0)
         player_view.send_response_to_player(
