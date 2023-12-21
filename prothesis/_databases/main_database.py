@@ -66,4 +66,4 @@ Wafle_event = Common_event('Приятного аппетита.', 'Вы бро�
                                                     })
                             ])
 
-events_for_stages = {1:[Snake_event]}
+events_for_stages = {1:[Snake_event, Wafle_event]}
