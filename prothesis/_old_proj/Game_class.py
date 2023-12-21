@@ -1,8 +1,8 @@
-from creatures_database import sage
-from creatures_database import trader
-from creatures_database import trader2
-from creatures_database import events_for_stages
-from creatures_database import enemies_for_stages
+from main_database import sage
+from main_database import trader
+from main_database import trader2
+from main_database import events_for_stages
+from main_database import enemies_for_stages
 import random as rand
 
 class Stage():

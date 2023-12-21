@@ -1,6 +1,6 @@
 from Player_class import Player
 from Game_class import Stage
-import creatures_database
+import main_database
 
 choice = input('Добро пожаловать в игру!\nenter - новая игра\nl - загрузить игру\n')
 player = Player('тип')
