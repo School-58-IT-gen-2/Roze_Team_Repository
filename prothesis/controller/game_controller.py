@@ -7,6 +7,7 @@ from prothesis.model.stages.stage_info import StageInfo
 from prothesis.view.player_view import PlayerView
 from prothesis._databases.main_database import enemies_for_stages
 from prothesis._databases.main_database import npcs_for_stages
+from prothesis._databases.main_database import events_for_stages
 
 
 class GameController():
@@ -76,7 +77,9 @@ class GameController():
         enemy.meeting(self.player_view, self.__player_info)
 
     def event(self):
-        self.player_view.way_report(self.__player_info.km, 'СОБЫТИЕ', 'текст события')
+        event = rand.choice(events_for_stages[self.__stage_info.stage_num])
+        self.player_view.way_report(self.__player_info.km, 'СОБЫТИЕ', event.name)
+        event.execute(self.player_view, self.__player_info)
 
     def ending(self):
         self.player_view.way_report(self.__player_info.km, 'КОНЕЦ', '...')
