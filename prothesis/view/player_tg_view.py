@@ -51,7 +51,7 @@ class PlayerTGView(PlayerView):
                     if get_id:
                         return update.message.chat_id, message
                     if message in variants:
-                        return message
+                        return str(variants.index(message) + 1)
     
     
     def way_report(self, km, place, text):
