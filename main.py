@@ -8,10 +8,11 @@ from prothesis.controller.game_controller import GameController
 from prothesis.model.stages.stage_info import StageInfo
 from prothesis.model.players.player_info import PlayerInfo
 from prothesis.view.player_console_view import PlayerConsoleView
+from prothesis.view.player_tg_view import PlayerTGView
 
 new_player_info = PlayerInfo()
 
-player_view = PlayerConsoleView()
+player_view = PlayerTGView()
 
 new_game_info = StageInfo(stage_prologue='''"вы просыпаетесь посреди пустоты. 
 песок, металлические обломки, все это вы уже видели однажды. 
