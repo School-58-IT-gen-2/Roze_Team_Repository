@@ -1,6 +1,6 @@
 import random as rand
 import time
-from typing import Self
+import sys
 from prothesis._databases.items_database import all_weapons
 from prothesis._databases.items_database import items
 from prothesis.model.players.player_info import PlayerInfo
@@ -11,7 +11,7 @@ class NPC():
     def __init__(self, name, aggressive = False, products = [], money = 0, health = 100, weapons = ['кулак'], dialogue = {}):
         self.name = name
         self.health = health
-        self.weapons = weapons
+        self.weapons = 'кинжал пораженный коррозией'
         self.money = money
         self.products = products
         self.aggressive = aggressive
@@ -24,24 +24,27 @@ class NPC():
     def meeting(self, player_view, player_info):
         self.player_view = player_view
         self.player_info = player_info
-        print(f'[ВСТРЕЧА] - кажется это {self.name}')
+        self.player_view.send_response_to_player(f'[ВСТРЕЧА] - кажется это {self.name}')
         choice = None
         while choice != '':
-            choice = self.player_view.get_request_from_player('Что собираешься делать?', ['уйти', 'торговаться', 'говорить'])
+            choice = self.player_view.get_request_from_player('Что собираешься делать?', ['уйти', 'торговаться', 'говорить', 'напасть'])
             if choice == '1':
-                print('Ты уходишь')
+                self.player_view.send_response_to_player('Ты уходишь')
                 break
             elif choice == '2':
                 self.trade(player_info)
             elif choice == '3':
                 if self.dialogue == {}:
-                    print(f'Похоже {self.name} не в настроении говорить')
+                    self.player_view.send_response_to_player(f'Похоже {self.name} не в настроении говорить')
                 else:
                     phrases = list(self.dialogue.keys()) #фразы которые можно сказать
                     for i in range(len(phrases)):
-                        print(f'{i + 1} - "{phrases[i]}"') # номер фразы, фраза
+                        self.player_view.send_response_to_player(f'{i + 1} - "{phrases[i]}"') # номер фразы, фраза
                     choice = input('>>>')
-                    print(f'{self.name}: "{self.dialogue.get(phrases[int(choice) - 1])}"')
+                    self.player_view.send_response_to_player(f'{self.name}: "{self.dialogue.get(phrases[int(choice) - 1])}"')
+            elif choice == '4':
+                print('')
+                self.fight()
 
     def fight(self):
         enemy_weapon = self.weapons
@@ -72,7 +75,7 @@ class NPC():
                                     block) for _ in range(player_weapon[2])
                             ]
                             health -= sum(damage)
-                            self.player_view.send_response_to_player(f'нанесено {' + '.join(map(str, damage))}')
+                            self.player_view.send_response_to_player(f'нанесено {" + ".join(map(str, damage))}')
                             self.player_view.send_response_to_player(
                                 f'{self.name} имеет {max(0, health)} здоровья\n'
                             )
@@ -110,20 +113,21 @@ class NPC():
                     int(enemy_weapon[1] * (0.5 + rand.random()) * block)
                     for _ in range(enemy_weapon[2])
                 ]
-                self.player_view.send_response_to_player(f'нанесено {' + '.join(map(str, damage))} урона')
+                self.player_view.send_response_to_player(f'нанесено {" + ".join(map(str, damage))} урона')
                 self.player_info.health -= sum(damage)
                 block = 1
                 if self.player_info.health > 0:
                     self.player_view.send_response_to_player(f'ваше здоровье - {self.player_info.health}')
                 else:
                     self.player_view.send_response_to_player('ваше здоровье - 0')
+                    sys.exit()
             turn = not turn
         else:
             time.sleep(1)
             mny = round(self.money * (0.5 + rand.random()), 2)
-            self.player_view.send_response_to_player(f'{self.name}, погибает, вы получаете {mny}$ и ингалятор')
+            self.player_view.send_response_to_player(f'{self.name}, погибает, вы получаете {mny}$ и не предметы что уцелели после вашей атаки')
             self.player_info.money += mny
-            self.player_info.inventory.append(items['ингалятор'])
+            self.player_info.inventory.append(rand.choice(self.products))
 	
     def trade(self, player_info):
         products = self.products

@@ -31,3 +31,36 @@ dispatcher.add_handler(CommandHandler("start", start))
 dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, button_click))
 
 updater.start_polling()
+
+
+
+#ПРИМЕР МИШИ
+'''
+from telegram import Bot
+
+
+token = "6068101345:AAGr0hpElzAEBwfoc7-yoUhd-QRD9Sd8vr4"
+bot = Bot(token=token)
+
+class TelegramView:
+    def __init__(self) -> None:
+        self.update_id = None
+
+    def request(self, chat_id: int = None, text: str = None):
+        if text is not None:
+            bot.send_message(chat_id, text)
+        
+        while True:
+            updates = bot.get_updates(offset=self.update_id, timeout=10000)
+            for update in updates:
+                if update.message is not None and update.message.text is not None:
+                    self.update_id = update.update_id + 1
+                    return update.message.text
+
+
+
+a = TelegramView()
+while True:
+    print(a.request())
+
+'''

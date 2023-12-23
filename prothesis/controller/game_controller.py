@@ -7,8 +7,7 @@ from prothesis.model.stages.stage_info import StageInfo
 from prothesis.view.player_view import PlayerView
 from prothesis._databases.main_database import enemies_for_stages
 from prothesis._databases.main_database import npcs_for_stages
-from prothesis._databases.main_database import events_for_stages
-
+from prothesis._databases.main_database import npcs_random
 
 class GameController():
 
@@ -33,6 +32,7 @@ class GameController():
         self.__player_info.air -= rand.randint(1, 5)
         if self.__player_info.air <= 0:
             self.player_view.send_response_to_player('"Вы судорожно глотаете остатки воздуха..."')
+            self.death()
         elif self.__player_info.air < 15:
             self.player_view.send_response_to_player('"!Критически мало воздуха, срочно воспользуйтесь ингалятором"')
         elif self.__player_info.air < 40:
@@ -58,18 +58,13 @@ class GameController():
         
     def npc(self):
         self.player_view.way_report(self.__player_info.km, 'ВСТРЕЧА', '"кажется кто-то здесь"')
-        sage = npcs_for_stages[self.__stage_info.stage_num][0]
+        sage = rand.choice(npcs_random[self.__stage_info.stage_num])
         sage.meeting(self.player_view, self.__player_info)
 
     def trader(self):
         self.player_view.way_report(self.__player_info.km, 'ВСТРЕЧА', '"кажется кто-то здесь"')
-        trader = npcs_for_stages[self.__stage_info.stage_num][1]
+        trader = rand.choice(npcs_for_stages[self.__stage_info.stage_num])
         trader.meeting(self.player_view, self.__player_info)
-
-    def trader2(self):
-        self.player_view.way_report(self.__player_info.km, 'ВСТРЕЧА', '"кажется кто-то здесь"')
-        trader2 = npcs_for_stages[self.__stage_info.stage_num][2]
-        trader2.meeting(self.player_view, self.__player_info)
 
     def enemy(self):
         self.player_view.way_report(self.__player_info.km, 'НАПАДЕНИЕ', '"кажется на вас напали!"')
@@ -77,9 +72,7 @@ class GameController():
         enemy.meeting(self.player_view, self.__player_info)
 
     def event(self):
-        event = rand.choice(events_for_stages[self.__stage_info.stage_num])
-        self.player_view.way_report(self.__player_info.km, 'СОБЫТИЕ', event.name)
-        event.execute(self.player_view, self.__player_info)
+        self.player_view.way_report(self.__player_info.km, 'СОБЫТИЕ', 'текст события')
 
     def ending(self):
         self.player_view.way_report(self.__player_info.km, 'КОНЕЦ', '...')
