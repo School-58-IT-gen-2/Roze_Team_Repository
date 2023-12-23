@@ -8,10 +8,10 @@ from prothesis.view.player_view import PlayerView
 
 class NPC():
 
-    def __init__(self, name, aggressive = False, products = [], money = 0, health = 100, weapons = ['кулак'], dialogue = {}):
+    def __init__(self, name, aggressive = False, products = [], money = 0, health = 100, weapons = [all_weapons['кулак']], dialogue = {}):
         self.name = name
         self.health = health
-        self.weapons = 'кинжал пораженный коррозией'
+        self.weapons = weapons
         self.money = money
         self.products = products
         self.aggressive = aggressive
@@ -26,11 +26,10 @@ class NPC():
         self.player_info = player_info
         self.player_view.send_response_to_player(f'[ВСТРЕЧА] - кажется это {self.name}')
         choice = None
-        while choice != '':
+        while choice != '1':
             choice = self.player_view.get_request_from_player('Что собираешься делать?', ['уйти', 'торговаться', 'говорить', 'напасть'])
             if choice == '1':
-                self.player_view.send_response_to_player('Ты уходишь')
-                break
+                self.leave()
             elif choice == '2':
                 self.trade(player_info)
             elif choice == '3':
@@ -45,9 +44,10 @@ class NPC():
             elif choice == '4':
                 print('')
                 self.fight()
+                choice = '1'
 
     def fight(self):
-        enemy_weapon = self.weapons
+        enemy_weapon = self.weapons[0]
         player_weapon = self.player_info.weapons[0]
         turn = True
         health = self.health
@@ -125,9 +125,12 @@ class NPC():
         else:
             time.sleep(1)
             mny = round(self.money * (0.5 + rand.random()), 2)
-            self.player_view.send_response_to_player(f'{self.name}, погибает, вы получаете {mny}$ и не предметы что уцелели после вашей атаки')
+            self.player_view.send_response_to_player(f'{self.name}, погибает, вы получаете {mny}$')
             self.player_info.money += mny
-            self.player_info.inventory.append(rand.choice(self.products))
+            if len(self.products) != 0:
+                self.player_view.send_response_to_player('также вы подбираете предметы что уцелели после вашей атаки')
+                self.player_info.inventory.append(rand.choice(self.products))
+            self.leave()
 	
     def trade(self, player_info):
         products = self.products
@@ -162,4 +165,8 @@ class NPC():
                     print('недостаточно денег')
             else:
                 print('вы не прошли проверку от дурака')
+    
+    def leave(self):
+        self.player_view.send_response_to_player('Ты уходишь')
+
 
