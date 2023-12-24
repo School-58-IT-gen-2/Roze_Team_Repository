@@ -17,11 +17,11 @@ class NPC():
         self.aggressive = aggressive
         self.dmgtype = 'кровотечение'
         self.dialogue = dialogue
-        self.player_view = PlayerView()
-        self.player_info = PlayerInfo()
+        self.player_view = None
+        self.player_info = None
 
 	
-    def meeting(self, player_view, player_info):
+    def meeting(self, player_view: PlayerView, player_info: PlayerInfo):
         self.player_view = player_view
         self.player_info = player_info
         self.player_view.send_response_to_player(f'[ВСТРЕЧА] - кажется это {self.name}')
@@ -36,13 +36,9 @@ class NPC():
                 if self.dialogue == {}:
                     self.player_view.send_response_to_player(f'Похоже {self.name} не в настроении говорить')
                 else:
-                    phrases = list(self.dialogue.keys()) #фразы которые можно сказать
-                    for i in range(len(phrases)):
-                        self.player_view.send_response_to_player(f'{i + 1} - "{phrases[i]}"') # номер фразы, фраза
-                    choice = input('>>>')
-                    self.player_view.send_response_to_player(f'{self.name}: "{self.dialogue.get(phrases[int(choice) - 1])}"')
+                    choice = self.player_view.get_request_from_player('Выберете фразу:', list(self.dialogue.keys()))
+                    self.player_view.send_response_to_player(f'{self.name}: "{self.dialogue.get(list(self.dialogue.keys())[int(choice) - 1])}"')
             elif choice == '4':
-                print('')
                 self.fight()
                 choice = '1'
 
@@ -61,12 +57,17 @@ class NPC():
         self.player_view.send_response_to_player(f'{self.name} готовит {enemy_weapon[0]} для атаки...')
         while health > 0:
             if turn:
-                choice = list(
-                    self.player_view.get_request_from_player(
-                        f'\nЧто собираешься делать?(выбери два действия)',
+                choice1 = self.player_view.get_request_from_player(
+                        f'\nЧто собираешься делать?(выбери первое действие)',
                         [f'атака({player_weapon[0]})', 'блок(50%)', 'лечение(бинты)'],
                         test=False
-                    ))
+                    )
+                choice2 = self.player_view.get_request_from_player(
+                        f'\nЧто собираешься делать?(выбери второе действие)',
+                        [f'атака({player_weapon[0]})', 'блок(50%)', 'лечение(бинты)'],
+                        test=False
+                    )
+                choice = list({choice1, choice2})
                 if len(choice) == 2:
                     for i in range(2):
                         if choice[i] == '1':

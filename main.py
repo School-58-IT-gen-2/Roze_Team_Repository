@@ -2,6 +2,7 @@
 
 #from telegram import ForceReply, Update
 #from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
+#id: 1827810009
 
 from prothesis.view.player_view import PlayerView
 from prothesis.controller.game_controller import GameController
@@ -24,7 +25,7 @@ new_game_info = StageInfo(stage_prologue='''"вы просыпаетесь по�
 вы чувствуете что ваш кислород на исходе. путешествие начинается."''')
 
 
-
+print(player_view.chat_id)
 game_controller = GameController(new_player_info, new_game_info, player_view)
 choice = game_controller.player_view.get_request_from_player('Добро пожаловать!', ['Загрузить игру', 'Новая игра'])
 if choice == '1':
