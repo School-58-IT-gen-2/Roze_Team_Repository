@@ -17,7 +17,7 @@ from prothesis.view.player_tg_view import PlayerTGView
 
 new_player_info = PlayerInfo()
 
-player_view = PlayerTGView()
+player_view = PlayerTGView(id=1827810009)
 
 new_game_info = StageInfo(stage_prologue='''"вы просыпаетесь посреди пустоты. 
 песок, металлические обломки, все это вы уже видели однажды. 

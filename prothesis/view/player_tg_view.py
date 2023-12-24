@@ -56,7 +56,8 @@ class PlayerTGView(PlayerView):
                         return str(variants.index(message) + 1)
     
     def send_photo(self, image, text=''):
-        bot.send_photo(chat_id=self.chat_id, photo=open('prothesis/_databases/photos_database/Hero.png', 'rb'), timeout=10000)
+        im = open(image, 'rb')
+        bot.send_photo(chat_id=self.chat_id, photo=im)
     
     
     def way_report(self, km, place, text):

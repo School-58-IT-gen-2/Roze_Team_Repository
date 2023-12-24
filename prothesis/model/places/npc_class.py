@@ -36,8 +36,8 @@ class NPC():
                 if self.dialogue == {}:
                     self.player_view.send_response_to_player(f'Похоже {self.name} не в настроении говорить')
                 else:
-                    choice = self.player_view.get_request_from_player('Выберете фразу:', list(self.dialogue.keys()))
-                    self.player_view.send_response_to_player(f'{self.name}: "{self.dialogue.get(list(self.dialogue.keys())[int(choice) - 1])}"')
+                    choice1 = self.player_view.get_request_from_player('Выберете фразу:', list(self.dialogue.keys()))
+                    self.player_view.send_response_to_player(f'{self.name}: "{self.dialogue.get(list(self.dialogue.keys())[int(choice1) - 1])}"')
             elif choice == '4':
                 self.fight()
                 choice = '1'
