@@ -148,7 +148,7 @@ class NPC():
         product = None
         while len(self.products) != 0 and product != '':
             for index in range(len(products)):
-                self.player_view.send_response_to_player(f'{products[index][0]} - {products[index][-1]}$')
+                self.player_view.send_response_to_player(f'{products[index][0]} - {products[index][-1]}k')
             variants = [self.products[index][0] for index in range(len(self.products))]
             variants.append('конец торговли')
             product = self.player_view.get_request_from_player('Что желаете приобрести?', variants)

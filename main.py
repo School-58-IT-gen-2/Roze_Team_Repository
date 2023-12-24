@@ -17,7 +17,7 @@ from prothesis.view.player_tg_view import PlayerTGView
 
 new_player_info = PlayerInfo()
 
-player_view = PlayerTGView(id=1827810009)#PlayerTGView(id=1309198139)
+player_view = PlayerTGView()#PlayerTGView(id=1827810009)
 
 new_game_info = StageInfo(stage_prologue='''"вы просыпаетесь посреди пустоты. 
 песок, металлические обломки, все это вы уже видели однажды. 
@@ -27,7 +27,7 @@ new_game_info = StageInfo(stage_prologue='''"вы просыпаетесь по�
 кажется вы теперь киборг... 
 надо добраться до ближайшего населенного пункта как можно скорее, 
 вы чувствуете что ваш кислород на исходе. путешествие начинается."''',
-custom_seed=True)
+custom_seed=False)
 
 
 print(player_view.chat_id)

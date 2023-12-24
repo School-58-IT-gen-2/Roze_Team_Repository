@@ -58,7 +58,6 @@ class GameController():
         self.player_view.way_report(self.__player_info.km, 'ПУСТО', '"кажется здесь пусто"')
         
     def npc(self):
-        self.player_view.way_report(self.__player_info.km, 'ВСТРЕЧА', '"кажется кто-то здесь"')
         sage = rand.choice(npcs_random[self.__stage_info.stage_num])
         sage.meeting(self.player_view, self.__player_info)
 
