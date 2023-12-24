@@ -8,7 +8,7 @@ from prothesis.view.player_view import PlayerView
 
 class NPC():
 
-    def __init__(self, name, aggressive = False, products = [], money = 0, health = 100, weapons = [all_weapons['кулак']], dialogue = {}):
+    def __init__(self, name, aggressive = False, products = [], money = 0, health = 100, weapons = [all_weapons['кулак']], dialogue = {}, texture=None):
         self.name = name
         self.health = health
         self.weapons = weapons
@@ -19,12 +19,15 @@ class NPC():
         self.dialogue = dialogue
         self.player_view = None
         self.player_info = None
+        self.texture = texture
 
 	
     def meeting(self, player_view: PlayerView, player_info: PlayerInfo):
         self.player_view = player_view
         self.player_info = player_info
         self.player_view.send_response_to_player(f'[ВСТРЕЧА] - кажется это {self.name}')
+        if self.texture != None:
+            self.player_view.send_photo(self.texture)
         choice = None
         while choice != '1':
             choice = self.player_view.get_request_from_player('Что собираешься делать?', ['уйти', 'торговаться', 'говорить', 'напасть'])
@@ -44,7 +47,7 @@ class NPC():
 
     def fight(self):
 
-        enemy_weapon = self.weapons
+        enemy_weapon = self.weapons[0]
         player_weapon = self.player_info.weapons[0]
         turn = True
         health = self.health
