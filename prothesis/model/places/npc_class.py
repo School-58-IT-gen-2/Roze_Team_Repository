@@ -43,7 +43,8 @@ class NPC():
                 choice = '1'
 
     def fight(self):
-        enemy_weapon = self.weapons[0]
+
+        enemy_weapon = self.weapons
         player_weapon = self.player_info.weapons[0]
         turn = True
         health = self.health
@@ -57,6 +58,7 @@ class NPC():
         self.player_view.send_response_to_player(f'{self.name} готовит {enemy_weapon[0]} для атаки...')
         while health > 0:
             if turn:
+                choice = []
                 choice1 = self.player_view.get_request_from_player(
                         f'\nЧто собираешься делать?(выбери первое действие)',
                         [f'атака({player_weapon[0]})', 'блок(50%)', 'лечение(бинты)'],
@@ -67,7 +69,8 @@ class NPC():
                         [f'атака({player_weapon[0]})', 'блок(50%)', 'лечение(бинты)'],
                         test=False
                     )
-                choice = list({choice1, choice2})
+                choice.append(choice1)
+                choice.append(choice2)
                 if len(choice) == 2:
                     for i in range(2):
                         if choice[i] == '1':
@@ -76,7 +79,7 @@ class NPC():
                                     block) for _ in range(player_weapon[2])
                             ]
                             health -= sum(damage)
-                            self.player_view.send_response_to_player(f'нанесено {" + ".join(map(str, damage))}')
+                            self.player_view.send_response_to_player(f'нанесено {' + '.join(map(str, damage))}')
                             self.player_view.send_response_to_player(
                                 f'{self.name} имеет {max(0, health)} здоровья\n'
                             )
@@ -114,14 +117,13 @@ class NPC():
                     int(enemy_weapon[1] * (0.5 + rand.random()) * block)
                     for _ in range(enemy_weapon[2])
                 ]
-                self.player_view.send_response_to_player(f'нанесено {" + ".join(map(str, damage))} урона')
+                self.player_view.send_response_to_player(f'нанесено {' + '.join(map(str, damage))} урона')
                 self.player_info.health -= sum(damage)
                 block = 1
                 if self.player_info.health > 0:
                     self.player_view.send_response_to_player(f'ваше здоровье - {self.player_info.health}')
                 else:
                     self.player_view.send_response_to_player('ваше здоровье - 0')
-                    sys.exit()
             turn = not turn
         else:
             time.sleep(1)
