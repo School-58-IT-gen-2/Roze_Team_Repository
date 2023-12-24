@@ -12,3 +12,6 @@ class PlayerView():
     
     def way_report(self, km, place, text):
         pass
+
+    def send_photo(self, photo, text=''):
+        pass

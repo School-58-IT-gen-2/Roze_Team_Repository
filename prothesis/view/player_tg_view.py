@@ -15,7 +15,6 @@ token = "6712575033:AAFi3-Juz0w3dlOSBNU4AAZDtYxwOAqrRTA"
 bot = Bot(token=token)
 
 
-
 class PlayerTGView(PlayerView):
     def __init__(self, locale="RU"):
         super().__init__(locale)
@@ -51,6 +50,9 @@ class PlayerTGView(PlayerView):
                         if get_id:
                             return update.message.chat_id, message
                         return str(variants.index(message) + 1)
+    
+    def send_photo(self, image, text=''):
+        bot.send_photo(chat_id=self.chat_id, photo=open('prothesis/_databases/photos_database/Hero.png', 'rb'), timeout=10000)
     
     
     def way_report(self, km, place, text):

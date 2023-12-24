@@ -56,6 +56,7 @@ class Enemy():
         self.player_view.send_response_to_player(f'{self.name} готовит {enemy_weapon[0]} для атаки...')
         while health > 0:
             if turn:
+                choice = []
                 choice1 = self.player_view.get_request_from_player(
                         f'\nЧто собираешься делать?(выбери первое действие)',
                         [f'атака({player_weapon[0]})', 'блок(50%)', 'лечение(бинты)'],
@@ -66,7 +67,8 @@ class Enemy():
                         [f'атака({player_weapon[0]})', 'блок(50%)', 'лечение(бинты)'],
                         test=False
                     )
-                choice = list({choice1, choice2})
+                choice.append(choice1)
+                choice.append(choice2)
                 if len(choice) == 2:
                     for i in range(2):
                         if choice[i] == '1':

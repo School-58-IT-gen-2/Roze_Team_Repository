@@ -136,36 +136,36 @@ class NPC():
     def trade(self, player_info):
         products = self.products
         if products == []:
-            print(f'Кажется {self.name} не в настроении торговать')
+            self.player_view.send_response_to_player(f'Кажется {self.name} не в настроении торговать')
             return
-        print(f'{self.name} показывает свои товары')
-        print(f'ваш баланс {player_info.money}')
+        self.player_view.send_response_to_player(f'{self.name} показывает свои товары')
+        self.player_view.send_response_to_player(f'ваш баланс {player_info.money}')
         product = None
         while len(self.products) != 0 and product != '':
             for index in range(len(products)):
-                print(f'{index + 1} {products[index][0]} - {products[index][-1]}$')
+                self.player_view.send_response_to_player(f'{index + 1} {products[index][0]} - {products[index][-1]}$')
             product = input(' введите номер товара\n enter - конец торговли\n')
             if product == '':
                 break
             elif int(product) > len(products)+1:
-                print('такого предмета нет')
+                self.player_view.send_response_to_player('такого предмета нет')
             elif products[int(product) - 1][-1] <= player_info.money:
                 if products[int(product)-1][3] == 'item':
                     player_info.money -= products[int(product) - 1][-1]
                     player_info.inventory.append(products[int(product) - 1])
-                    print(f'Вы купили {products.pop(int(product) - 1)[0]}')
-                    print(f'Ваш баланс: {player_info.money}')
+                    self.player_view.send_response_to_player(f'Вы купили {products.pop(int(product) - 1)[0]}')
+                    self.player_view.send_response_to_player(f'Ваш баланс: {player_info.money}')
                     product = ''
                 elif products[int(product)-1][3] == 'weapon':
                     player_info.money -= products[int(product) - 1][-1]
                     player_info.weapons.append(products[int(product) - 1])
-                    print(f'Вы купили {products.pop(int(product) - 1)[0]}')
-                    print(f'Ваш баланс: {player_info.money}')
+                    self.player_view.send_response_to_player(f'Вы купили {products.pop(int(product) - 1)[0]}')
+                    self.player_view.send_response_to_player(f'Ваш баланс: {player_info.money}')
                     product = ''
                 else:
-                    print('недостаточно денег')
+                    self.player_view.send_response_to_player('недостаточно денег')
             else:
-                print('вы не прошли проверку от дурака')
+                self.player_view.send_response_to_player('вы не прошли проверку от дурака')
     
     def leave(self):
         self.player_view.send_response_to_player('Ты уходишь')
