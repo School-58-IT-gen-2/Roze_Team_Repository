@@ -63,7 +63,6 @@ class GameController():
         sage.meeting(self.player_view, self.__player_info)
 
     def trader(self):
-        self.player_view.way_report(self.__player_info.km, 'ВСТРЕЧА', '"кажется кто-то здесь"')
         trader = rand.choice(npcs_for_stages[self.__stage_info.stage_num])
         trader.meeting(self.player_view, self.__player_info)
 
