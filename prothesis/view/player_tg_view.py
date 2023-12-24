@@ -16,15 +16,19 @@ bot = Bot(token=token)
 
 
 class PlayerTGView(PlayerView):
-    def __init__(self, locale="RU"):
+    def __init__(self, locale="RU", id=None):
         super().__init__(locale)
         self.update_id = None
-        self.chat_id = None
-        while True:
-            chat_id, text = self.get_request_from_player(variants=['/start'], get_id=True, create_buttons=False)
-            if text == '/start':
-                self.chat_id = chat_id
-                break
+        if id == None:
+            self.chat_id = None
+            while True:
+                chat_id, text = self.get_request_from_player(variants=['/start'], get_id=True, create_buttons=False)
+                if text == '/start':
+                    self.chat_id = chat_id
+                    break
+        else:
+            self.chat_id = id
+        
 
     def send_response_to_player(self, response):
         bot.send_message(self.chat_id, response)
