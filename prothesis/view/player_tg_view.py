@@ -6,12 +6,13 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from telegram import Update
 from telegram.ext import CallbackContext
 from typing import List
+from prothesis.configuratons.net_config import NetConfig
 
 
 
+my_config = NetConfig()
 
-#ПРИМЕР МИШИ
-token = "6712575033:AAFi3-Juz0w3dlOSBNU4AAZDtYxwOAqrRTA"
+token = my_config.get_token()
 bot = Bot(token=token)
 
 

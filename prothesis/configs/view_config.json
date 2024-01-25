@@ -1,0 +1,13 @@
+{
+    "view_type": "console",
+    "allowed_answers_poll": [
+      "Good",
+      "Really good",
+      "Fantastic",
+      "Great",
+      "Bad",
+      "Very bad",
+      "Work after new year holidays"
+    ],
+    "locale": "RU"
+  }
