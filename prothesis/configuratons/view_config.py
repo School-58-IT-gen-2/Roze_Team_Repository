@@ -9,10 +9,10 @@ class ViewConfig:
             raise Exception("Config is empty, you maggot")
 
         self.view_type = config["view_type"]
-        self.__allowed_answers_poll = config["allowed_answers_poll"]
+        self.greeting = config["greeting"]
 
     def get_view_type(self):
         return self.view_type
 
-    def get_allowed_answers_poll(self):
-        return self.__allowed_answers_poll
+    def get_greeting(self):
+        return self.greeting

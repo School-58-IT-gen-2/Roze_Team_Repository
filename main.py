@@ -35,7 +35,10 @@ custom_seed=False)
 if my_config.get_view_type() == 'tg' :
     print(player_view.chat_id)
 game_controller = GameController(new_player_info, new_game_info, player_view)
-choice = game_controller.player_view.get_request_from_player('Добро пожаловать!', ['Загрузить игру', 'Новая игра'])
+
+
+
+choice = game_controller.player_view.get_request_from_player(my_config.get_greeting(), ['Загрузить игру', 'Новая игра'])
 if choice == '1':
     game_controller.load_from_file('save_test.json')
 
