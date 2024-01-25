@@ -14,11 +14,14 @@ from prothesis.model.stages.stage_info import StageInfo
 from prothesis.model.players.player_info import PlayerInfo
 from prothesis.view.player_console_view import PlayerConsoleView
 from prothesis.view.player_tg_view import PlayerTGView
-
+from prothesis.configuratons.view_config import ViewConfig
 new_player_info = PlayerInfo()
 
-player_view = PlayerTGView()#PlayerTGView(id=1827810009)
-
+my_config = ViewConfig()
+if my_config.get_view_type() == 'tg' :
+    player_view = PlayerTGView()#PlayerTGView(id=1827810009)
+else:
+    player_view = PlayerConsoleView()
 new_game_info = StageInfo(stage_prologue='''"вы просыпаетесь посреди пустоты. 
 песок, металлические обломки, все это вы уже видели однажды. 
 вы чувствуете как горячий воздух наполняет ваше горло...горло? 
@@ -29,10 +32,13 @@ new_game_info = StageInfo(stage_prologue='''"вы просыпаетесь по�
 вы чувствуете что ваш кислород на исходе. путешествие начинается."''',
 custom_seed=False)
 
-
-print(player_view.chat_id)
+if my_config.get_view_type() == 'tg' :
+    print(player_view.chat_id)
 game_controller = GameController(new_player_info, new_game_info, player_view)
-choice = game_controller.player_view.get_request_from_player('Добро пожаловать!', ['Загрузить игру', 'Новая игра'])
+
+
+
+choice = game_controller.player_view.get_request_from_player(my_config.get_greeting(), ['Загрузить игру', 'Новая игра'])
 if choice == '1':
     game_controller.load_from_file('save_test.json')
 
