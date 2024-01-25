@@ -77,7 +77,7 @@ class Enemy():
                                     block) for _ in range(player_weapon[2])
                             ]
                             health -= sum(damage)
-                            self.player_view.send_response_to_player(f'нанесено {' + '.join(map(str, damage))}')
+                            self.player_view.send_response_to_player(f'нанесено {" + ".join(map(str, damage))}')
                             self.player_view.send_response_to_player(
                                 f'{self.name} имеет {max(0, health)} здоровья\n'
                             )
@@ -115,7 +115,7 @@ class Enemy():
                     int(enemy_weapon[1] * (0.5 + rand.random()) * block)
                     for _ in range(enemy_weapon[2])
                 ]
-                self.player_view.send_response_to_player(f'нанесено {' + '.join(map(str, damage))} урона')
+                self.player_view.send_response_to_player(f'нанесено {" + ".join(map(str, damage))} урона')
                 self.player_info.health -= sum(damage)
                 block = 1
                 if self.player_info.health > 0:
