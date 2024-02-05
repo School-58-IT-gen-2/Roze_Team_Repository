@@ -1,9 +1,11 @@
-FROM python:3.12-slim
+FROM python:3.11-slim
+WORKDIR /src
 
-
-COPY mainv2.py ./mainv2.py
-COPY requirements.txt ./requirements.txt
-COPY .env ./.env
+COPY ../main.py ./main.py
+COPY docker/requirements.txt ./requirements.txt
+RUN pip install -r requirements.txt
+COPY docker/.env ./.env
+COPY . /src/ 
 
 
 CMD python main.py

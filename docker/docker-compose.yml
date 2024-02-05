@@ -1,0 +1,6 @@
+version: '3'
+services:
+  tg: 
+    image: tester_tg
+    container_name: tester_tg
+    command: 'python main.py'

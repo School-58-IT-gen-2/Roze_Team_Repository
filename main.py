@@ -8,7 +8,7 @@
 #бот PyZone: 6712575033:AAFi3-Juz0w3dlOSBNU4AAZDtYxwOAqrRTA
 #бот NoAir: 6068101345:AAGr0hpElzAEBwfoc7-yoUhd-QRD9Sd8vr4
 
-from prothesis.view.player_view import PlayerView
+from prothesis.view.player_view  import PlayerView
 from prothesis.controller.game_controller import GameController
 from prothesis.model.stages.stage_info import StageInfo
 from prothesis.model.players.player_info import PlayerInfo
@@ -100,5 +100,5 @@ class PlayerTGView(PlayerView):
     def way_report(self, km, place, text):
         print(f'{60 - km}km [{place}] - {text}')
 
-#if __name__ == "__main__":
-    #main()
+if __name__ == "__main__":
+    pass
