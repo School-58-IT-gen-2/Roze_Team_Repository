@@ -55,7 +55,7 @@ class NPC():
 						if choice[i] == 'a':
 							damage = [int(player_weapon[1] * (0.5 + rand.random())* block) for _ in range(player_weapon[2])]
 							health -= sum(damage)
-							print(f'нанесено {' + '.join(map(str, damage))}')
+							print(f'нанесено {" + ".join(map(str, damage))}')
 							print(f'{self.name} имеет {max(0, health)} здоровья\n')
 							time.sleep(1)
 							if self.dmgtype == player.weapons[0][4] and rand.random() > 0.6:
@@ -80,7 +80,7 @@ class NPC():
 				print(f'\n{self.name} атакует!')
 				time.sleep(1)
 				damage = [int(enemy_weapon[1] * (0.5 + rand.random()) * block) for _ in range(enemy_weapon[2])]
-				print(f'нанесено {' + '.join(map(str, damage))} урона')
+				print(f'нанесено {" + ".join(map(str, damage))} урона')
 				player.health -= sum(damage)
 				block = 1
 				if player.health > 0:
