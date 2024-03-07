@@ -37,3 +37,15 @@ class AdapterDB:
         cursor.execute(request)
         data = cursor.fetchall()
         return data
+    def get_by_any(self,select):
+        request = select
+        cursor = self.conn.cursor()
+        cursor.execute(request)
+        data = cursor.fetchall()
+        return data
+    
+a = AdapterDB()
+
+
+
+print(a.get_by_any('SELECT "star type","name" FROM "Roze_Galactic_Empire"."Systems" WHERE "Allegiance" = \'Empire\' and lower("name") = "name"  LIMIT 100'))
