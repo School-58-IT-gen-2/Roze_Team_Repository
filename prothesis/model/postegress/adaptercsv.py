@@ -46,4 +46,4 @@ class AdapterCSV:
 
 
 a = AdapterCSV()
-a.insert_all("Ships.csv")
+#a.insert_all("Items.csv")
