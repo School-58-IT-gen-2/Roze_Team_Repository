@@ -25,27 +25,56 @@ class AdapterDB:
 
     def get_all(self, table_name: str):
         """посылаем запрос на подключение к конкретной таблице"""
-        request = f'SELECT * FROM "Galactic Empire"."{table_name}"'
+        request = f'SELECT * FROM "Roze_Galactic_Empire"."{table_name}"'
         cursor = self.conn.cursor()
         cursor.execute(request)
         data = cursor.fetchall()
         return data
 
     def get_by_id(self, table_name: str, id: int):
-        request = f'SELECT * FROM "Galactic Empire"."{table_name}" WHERE id = {id}'
+        request = f'SELECT * FROM "Roze_Galactic_Empire"."{table_name}" WHERE id = {id}'
         cursor = self.conn.cursor()
         cursor.execute(request)
         data = cursor.fetchall()
         return data
+    def delete_by_id(self, table_name: str, id: int):
+        request_select = f'SELECT * FROM "Roze_Galactic_Empire"."{table_name}"'
+        request = f'DELETE FROM "Roze_Galactic_Empire"."{table_name}" WHERE id = {id}'
+        cursor = self.conn.cursor()
+        cursor.execute(request)
+        cursor.execute(request_select)
+        self.conn.commit()
+        data = cursor.fetchall()
+        return data
+    
+    def update(self, table, request, id):
+        request = f'UPDATE "Roze_Galactic_Empire"."{table}" SET {request} WHERE id={id}'
+        cursor = self.conn.cursor()
+        cursor.execute(request)
+        data = cursor.fetchall()
+        return data
+
+    def insert(self, table, values):
+        
+        print( f'INSERT INTO "Roze_Galactic_Empire"."{table}" ({", ".join([i for i in values.keys()])}) VALUES ({", ".join([i for i in values.values()])})')
+        request = f'INSERT INTO "Roze_Galactic_Empire"."{table}" ({", ".join([i for i in values.keys()])}) VALUES ({", ".join([i for i in values.values()])})'
+        request_select = f'SELECT * FROM "Roze_Galactic_Empire"."{table}" '
+        cursor = self.conn.cursor()
+        cursor.execute(request)
+        cursor.execute(request_select)
+        self.conn.commit()
+        data = cursor.fetchall()
+        return data
+
     def get_by_any(self,select):
         request = select
         cursor = self.conn.cursor()
         cursor.execute(request)
+        self.conn.commit()
         data = cursor.fetchall()
         return data
     
 a = AdapterDB()
-
-
-
-print(a.get_by_any('SELECT "star type","name" FROM "Roze_Galactic_Empire"."Systems" WHERE "Allegiance" = \'Empire\' and lower("name") = "name"  LIMIT 100'))
+a.delete_by_id("Items",7)
+#a.insert("Items",{'name' : "'помидор'",'id' : 'DEFAULT','type' : "'health'", 'value' : '12','class' : "'items'", 'price': '112'  })
+#print(a.get_by_any('SELECT "star type","name" FROM "Roze_Galactic_Empire"."Systems" WHERE "Allegiance" = \'Empire\' and lower("name") = "name"  LIMIT 100'))
