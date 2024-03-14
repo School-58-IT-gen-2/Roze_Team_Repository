@@ -36,7 +36,7 @@ class AdapterCSV:
     def insert_all(self,file):
         x = file.split(".")
         x = x[0]
-        with open(file, 'r') as f:
+        with open(file, 'r',encoding="utf-8" ) as f:
             data = csv.DictReader(f, delimiter=',')
             for row in data:
                 for i in row.keys():
@@ -46,4 +46,4 @@ class AdapterCSV:
 
 
 a = AdapterCSV()
-#a.insert_all("Items.csv")
+a.insert_all("Enemies.csv")
