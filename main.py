@@ -17,6 +17,8 @@ from prothesis.view.player_console_view import PlayerConsoleView
 from prothesis.view.player_tg_view import PlayerTGView
 from prothesis.model.postegress.adaptercsv import AdapterCSV
 
+import datetime as DT  
+
 new_player_info = PlayerInfo()
 
 player_view = PlayerTGView()#PlayerTGView(id=1827810009)
@@ -35,7 +37,7 @@ adapter_csv = AdapterCSV()
 
 print(player_view.message_info)
 
-adapter_csv.insert('Users', {'user_id': player_view.chat_id, 'user_nickname': player_view.message_info.chat.username, 'chat_id': player_view.message_info.chat.id, 'created': player_view.message_info.date, 'updated': player_view.message_info.date})
+adapter_csv.insert('Users', {'id': player_view.chat_id, 'user_nickname': player_view.message_info.chat.username, 'chat_id': player_view.message_info.chat.id, 'created': int(player_view.message_info.date.timestamp()), 'updated': int(player_view.message_info.date.timestamp())})
 game_controller = GameController(new_player_info, new_game_info, player_view)
 choice = game_controller.player_view.get_request_from_player('Добро пожаловать!', ['Загрузить игру', 'Новая игра'])
 if choice == '1':
