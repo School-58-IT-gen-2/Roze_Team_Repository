@@ -33,6 +33,7 @@ class AdapterCSV:
         print( f'INSERT INTO "Roze_Galactic_Empire"."{table}" ({", ".join([i for i in values.keys()])}) VALUES ({", ".join([self.__sql_format(i) for i in values.values()])})')
         if unic == False: request = f'INSERT INTO "Roze_Galactic_Empire"."{table}" ({", ".join([i for i in values.keys()])}) VALUES ({", ".join([self.__sql_format(i) for i in values.values()])})'
         else: request = f'INSERT INTO "Roze_Galactic_Empire"."{table}" ({", ".join([i for i in values.keys()])}) VALUES ({", ".join([self.__sql_format(i) for i in values.values()])})'
+            #if self.adapter.get_by_id('Users', values['id']) == []: 
         request_select = f'SELECT * FROM "Roze_Galactic_Empire"."{table}" '
         cursor = self.conn.cursor()
         cursor.execute(request)

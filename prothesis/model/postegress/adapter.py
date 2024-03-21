@@ -48,16 +48,19 @@ class AdapterDB:
         return data
     
     def update(self, table, request, id):
+        request_select = f'SELECT * FROM "Roze_Galactic_Empire"."{table}"'
         request = f'UPDATE "Roze_Galactic_Empire"."{table}" SET {request} WHERE id={id}'
         cursor = self.conn.cursor()
         cursor.execute(request)
+        cursor.execute(request_select)
+        self.conn.commit()
         data = cursor.fetchall()
         return data
 
     def insert(self, table, values):
         
-        print( f'INSERT INTO "Roze_Galactic_Empire"."{table}" ({", ".join([i for i in values.keys()])}) VALUES ({", ".join([i for i in values.values()])})')
-        request = f'INSERT INTO "Roze_Galactic_Empire"."{table}" ({", ".join([i for i in values.keys()])}) VALUES ({", ".join([i for i in values.values()])})'
+        print( f'INSERT INTO "Roze_Galactic_Empire"."{table}" ({", ".join([i for i in values.keys()])}) VALUES ({", ".join([str(i) for i in values.values()])})')
+        request = f'INSERT INTO "Roze_Galactic_Empire"."{table}" ({", ".join([i for i in values.keys()])}) VALUES ({", ".join([str(i) for i in values.values()])})'
         request_select = f'SELECT * FROM "Roze_Galactic_Empire"."{table}" '
         cursor = self.conn.cursor()
         cursor.execute(request)
