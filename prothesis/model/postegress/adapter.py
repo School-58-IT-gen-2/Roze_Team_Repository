@@ -74,7 +74,7 @@ class AdapterDB:
         data = cursor.fetchall()
         return data
     
-a = AdapterDB()
-a.delete_by_id("Items",7)
+#a = AdapterDB()
+#a.delete_by_id("Items",7)
 #a.insert("Items",{'name' : "'помидор'",'id' : 'DEFAULT','type' : "'health'", 'value' : '12','class' : "'items'", 'price': '112'  })
 #print(a.get_by_any('SELECT "star type","name" FROM "Roze_Galactic_Empire"."Systems" WHERE "Allegiance" = \'Empire\' and lower("name") = "name"  LIMIT 100'))

@@ -19,6 +19,7 @@ class PlayerTGView(PlayerView):
     def __init__(self, locale="RU", id=None):
         super().__init__(locale)
         self.update_id = None
+        self.message_info = None
         if id == None:
             self.chat_id = None
             while True:
@@ -52,6 +53,7 @@ class PlayerTGView(PlayerView):
                     message = update.message.text
                     if message in variants:
                         if get_id:
+                            self.message_info = update.message
                             return update.message.chat_id, message
                         return str(variants.index(message) + 1)
     
