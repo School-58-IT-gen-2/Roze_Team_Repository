@@ -1,0 +1,6 @@
+version: '3'
+services:
+  test: 
+    image: image_name:0.0.1
+    container_name: test
+    command: 'python main.py'                                         

@@ -1,0 +1,11 @@
+FROM python:3.11-slim
+WORKDIR /src
+
+COPY ../main.py ./main.py
+COPY docker/requirements.txt ./requirements.txt
+RUN pip install -r requirements.txt
+COPY docker/.env ./.env
+COPY . /src/ 
+
+
+CMD python main.py
