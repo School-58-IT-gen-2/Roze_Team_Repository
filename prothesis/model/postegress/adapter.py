@@ -20,8 +20,14 @@ class AdapterDB:
 			"""
             )
             return conn
-        except:
-            print("connection error")
+        except Exception as error:
+
+            print(f"connection error: {error}")
+
+    def __sql_format(self, value):
+        if value == None: return 'Null'
+        if type(value) == str: return f"'{value}'"
+        return str(value)
 
     def get_all(self, table_name: str):
         """посылаем запрос на подключение к конкретной таблице"""
@@ -58,9 +64,8 @@ class AdapterDB:
         return data
 
     def insert(self, table, values):
-        
-        print( f'INSERT INTO "Roze_Galactic_Empire"."{table}" ({", ".join([i for i in values.keys()])}) VALUES ({", ".join([str(i) for i in values.values()])})')
-        request = f'INSERT INTO "Roze_Galactic_Empire"."{table}" ({", ".join([i for i in values.keys()])}) VALUES ({", ".join([str(i) for i in values.values()])})'
+        print( f'INSERT INTO "Roze_Galactic_Empire"."{table}" ({", ".join([i for i in values.keys()])}) VALUES ({", ".join([self.__sql_format(i) for i in values.values()])})')
+        request = f'INSERT INTO "Roze_Galactic_Empire"."{table}" ({", ".join([i for i in values.keys()])}) VALUES ({", ".join([self.__sql_format(i) for i in values.values()])})'
         request_select = f'SELECT * FROM "Roze_Galactic_Empire"."{table}" '
         cursor = self.conn.cursor()
         cursor.execute(request)

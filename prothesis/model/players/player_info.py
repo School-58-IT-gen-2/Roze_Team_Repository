@@ -4,15 +4,15 @@ from prothesis.model.postegress.adapter import AdapterDB
 
 class PlayerInfo():
     def __init__(self):
-        self.air = 99
+        self.id = 1827810009
         self.health = 100
-        self.inventory = [['ингалятор', 'air', 25, 30]]
+        self.inventory = [2] #[['ингалятор', 'air', 25, 30]]
         self.money = 50
-        self.protez = 100
-        self.weapons = [['микроволновая п-ушка', 15, 1, 300, 'сбои'],['ПМ', 10, 4, 600, 'повреждение']]
+        self.protez = 1110
+        self.weapons = [1]#[['микроволновая п-ушка', 15, 1, 300, 'сбои'],['ПМ', 10, 4, 600, 'повреждение']]
         self.save = True #для проверки сейвов
-        self.km = 0
-        self.user = 1827810009
+        self.km = 37
+        self.air = 999
         self.sql_adapter = AdapterDB()
 
 
@@ -26,11 +26,23 @@ class PlayerInfo():
             self.sql_adapter.insert('Player_info', {'id':user_id, 'air':'DEFAULT', 'health':'DEFAULT', 'inventory':'DEFAULT', 'money':'DEFAULT', 'protez':'DEFAULT', 'weapons':'DEFAULT', 'save':'DEFAULT', 'km':'DEFAULT'})
 
     def load_sql(self):
-        print(self.sql_adapter.get_by_id('Player_info', id=self.user)[0][8])
-        self.air = self.sql_adapter.get_by_id('Player_info', id=self.user)[0][8]
 
-    def save_sql(self, user_id):
-        self.sql_adapter.update('Player_info', f'air = {self.air}', user_id)
+        x = 0
+        for i in list(vars(self).keys()):
+           if x <+ 8:
+               exec(f"self.{i} = self.sql_adapter.get_by_id('Player_info', id=self.id)[0][{x}]")
+               x += 1
+    
+    def save_sql(self):
+     #   self.sql_adapter.update('Player_info', f'air = {self.air}', user_id)
+        par = vars(self)
+        x = 0
+        for i in list(vars(self).keys()):
+            
+           if x <+ 8:
+               print(f"self.sql_adapter.update('Player_info', '{i} = {str(par[i]).replace('[','{').replace(']','}')}', {self.id})")
+               exec(f"self.sql_adapter.update('Player_info', '{i} = {str(par[i]).replace('[','{').replace(']','}')}', {self.id})")
+               x += 1
 
     def get_data(self):
         data = vars(self) #vars преобразует все атрибуты класса в один словарь

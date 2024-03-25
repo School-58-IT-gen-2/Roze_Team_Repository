@@ -34,11 +34,17 @@ new_game_info = StageInfo(stage_prologue='''"вы просыпаетесь по�
 custom_seed=False)
 
 adapter_csv = AdapterCSV()
-
-
-adapter_csv.insert('Users', {'id': player_view.chat_id, 'user_nickname': player_view.message_info.chat.username, 'chat_id': player_view.message_info.chat.id, 'created': int(player_view.message_info.date.timestamp()), 'updated': int(player_view.message_info.date.timestamp())}, unic=True)
+new_player_info.id  = player_view.chat_id
+if new_player_info.sql_adapter.get_by_id('Users', id=player_view.chat_id) == []:
+    new_player_info.sql_adapter.insert('Users', {'id': player_view.chat_id, 'user_nickname': player_view.message_info.chat.username, 'chat_id': player_view.message_info.chat.id, 'created': int(player_view.message_info.date.timestamp()), 'updated': int(player_view.message_info.date.timestamp())}) 
 new_player_info.new_sql(user_id=player_view.chat_id)
-new_player_info.load_sql()
+
+
+new_player_info.save_sql()
+
+
+ 
+
 
 print(new_player_info.air)
 game_controller = GameController(new_player_info, new_game_info, player_view)
