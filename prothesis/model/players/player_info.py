@@ -26,8 +26,8 @@ class PlayerInfo():
             self.sql_adapter.insert('Player_info', {'id':user_id, 'air':'DEFAULT', 'health':'DEFAULT', 'inventory':'DEFAULT', 'money':'DEFAULT', 'protez':'DEFAULT', 'weapons':'DEFAULT', 'save':'DEFAULT', 'km':'DEFAULT'})
 
     def load_sql(self):
-        print(self.sql_adapter.get_by_id('Player_info', id=self.user)[0][1])
-        self.air = self.sql_adapter.get_by_id('Player_info', id=self.user)[0][1]
+        print(self.sql_adapter.get_by_id('Player_info', id=self.user)[0][8])
+        self.air = self.sql_adapter.get_by_id('Player_info', id=self.user)[0][8]
 
     def save_sql(self, user_id):
         self.sql_adapter.update('Player_info', f'air = {self.air}', user_id)
