@@ -6,15 +6,14 @@ class PlayerInfo():
     def __init__(self):
         self.id = 1827810009
         self.health = 100
-        self.inventory = [2] #[['ингалятор', 'air', 25, 30]]
         self.money = 50
         self.protez = 1110
-        self.weapons = [1]#[['микроволновая п-ушка', 15, 1, 300, 'сбои'],['ПМ', 10, 4, 600, 'повреждение']]
         self.save = True #для проверки сейвов
         self.km = 37
-        self.air = 999
+        self.air = 9
+        self.inventory = [2,3,4] #[['ингалятор', 'air', 25, 30]]
+        self.weapons = [1,5]#[['микроволновая п-ушка', 15, 1, 300, 'сбои'],['ПМ', 10, 4, 600, 'повреждение']]
         self.sql_adapter = AdapterDB()
-
 
     def create_table(self):#неведомая хрень
         self.c.execute('''CREATE TABLE IF NOT EXISTS player_info
@@ -26,23 +25,37 @@ class PlayerInfo():
             self.sql_adapter.insert('Player_info', {'id':user_id, 'air':'DEFAULT', 'health':'DEFAULT', 'inventory':'DEFAULT', 'money':'DEFAULT', 'protez':'DEFAULT', 'weapons':'DEFAULT', 'save':'DEFAULT', 'km':'DEFAULT'})
 
     def load_sql(self):
-
         x = 0
         for i in list(vars(self).keys()):
-           if x <+ 8:
-               exec(f"self.{i} = self.sql_adapter.get_by_id('Player_info', id=self.id)[0][{x}]")
-               x += 1
-    
+           x += 1
+           if x < 8:
+               exec(f"self.{i} = self.sql_adapter.get_by_id('Player_info', id=self.id)[0][{x-1}]")
+        data = self.sql_adapter.get_by_player_id('Player_inventory','item_id',self.id)
+        for i in range(len(data)):
+            data[i] = data[i][0]
+        self.inventory = data
+        data = self.sql_adapter.get_by_player_id('Player_weapons','weapon_id',self.id)
+        for i in range(len(data)):
+            data[i] = data[i][0]
+        self.weapons = data
     def save_sql(self):
      #   self.sql_adapter.update('Player_info', f'air = {self.air}', user_id)
         par = vars(self)
         x = 0
         for i in list(vars(self).keys()):
-            
-           if x <+ 8:
-               print(f"self.sql_adapter.update('Player_info', '{i} = {str(par[i]).replace('[','{').replace(']','}')}', {self.id})")
-               exec(f"self.sql_adapter.update('Player_info', '{i} = {str(par[i]).replace('[','{').replace(']','}')}', {self.id})")
-               x += 1
+           x +=1
+           if x < 8:
+               print(f"self.sql_adapter.update('Player_info', '{i} = {par[i]}', {self.id})")
+               exec(f"self.sql_adapter.update('Player_info', '{i} = {par[i]}', {self.id})")
+        exec(f"self.sql_adapter.delete_by_player_id('Player_inventory',{self.id})")
+        exec(f"self.sql_adapter.delete_by_player_id('Player_weapons',{self.id})")
+        for i in self.inventory:
+            val = {'player_id' : f'{self.id}','item_id':f'{i}'}
+            exec(f"self.sql_adapter.insert('Player_inventory',{val})")
+        for i in self.weapons:
+            val = {'player_id' : f'{self.id}','weapon_id':f'{i}'}
+            exec(f"self.sql_adapter.insert('Player_weapons',{val})")
+
 
     def get_data(self):
         data = vars(self) #vars преобразует все атрибуты класса в один словарь

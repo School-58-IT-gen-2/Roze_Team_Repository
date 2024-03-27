@@ -43,9 +43,24 @@ class AdapterDB:
         cursor.execute(request)
         data = cursor.fetchall()
         return data
+    def get_by_player_id(self, table_name: str,key:str, id: int):
+        request = f'SELECT {key} FROM "Roze_Galactic_Empire"."{table_name}" WHERE player_id = {id}'
+        cursor = self.conn.cursor()
+        cursor.execute(request)
+        data = cursor.fetchall()
+        return data
     def delete_by_id(self, table_name: str, id: int):
         request_select = f'SELECT * FROM "Roze_Galactic_Empire"."{table_name}"'
         request = f'DELETE FROM "Roze_Galactic_Empire"."{table_name}" WHERE id = {id}'
+        cursor = self.conn.cursor()
+        cursor.execute(request)
+        cursor.execute(request_select)
+        self.conn.commit()
+        data = cursor.fetchall()
+        return data
+    def delete_by_player_id(self, table_name: str, id: int):
+        request_select = f'SELECT * FROM "Roze_Galactic_Empire"."{table_name}"'
+        request = f'DELETE FROM "Roze_Galactic_Empire"."{table_name}" WHERE player_id = {id}'
         cursor = self.conn.cursor()
         cursor.execute(request)
         cursor.execute(request_select)

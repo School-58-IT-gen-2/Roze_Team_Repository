@@ -40,7 +40,7 @@ if new_player_info.sql_adapter.get_by_id('Users', id=player_view.chat_id) == []:
 new_player_info.new_sql(user_id=player_view.chat_id)
 
 
-new_player_info.save_sql()
+new_player_info.load_sql()
 
 
  
