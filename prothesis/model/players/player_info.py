@@ -2,6 +2,7 @@ import sqlite3
 from prothesis.view.player_view import PlayerView
 from prothesis.model.postegress.adapter import AdapterDB
 
+
 class PlayerInfo():
     def __init__(self):
         self.id = 1827810009
@@ -30,7 +31,7 @@ class PlayerInfo():
            x += 1
            if x < 8:
                exec(f"self.{i} = self.sql_adapter.get_by_id('Player_info', id=self.id)[0][{x-1}]")
-        data = self.sql_adapter.get_by_player_id('Player_inventory','item_id',self.id)
+        data = self.sql_adapter.get_by_player_id('Player_inventory','id',self.id)
         for i in range(len(data)):
             data[i] = data[i][0]
         self.inventory = data
@@ -39,7 +40,7 @@ class PlayerInfo():
             data[i] = data[i][0]
         self.weapons = data
     def save_sql(self):
-     #   self.sql_adapter.update('Player_info', f'air = {self.air}', user_id)
+     #self.sql_adapter.update('Player_info', f'air = {self.air}', user_id)
         par = vars(self)
         x = 0
         for i in list(vars(self).keys()):

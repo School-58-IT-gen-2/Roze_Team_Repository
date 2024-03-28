@@ -35,6 +35,9 @@ custom_seed=False)
 
 adapter_csv = AdapterCSV()
 new_player_info.id  = player_view.chat_id
+new_game_info.id = player_view.chat_id
+new_game_info.new_seed()
+
 if new_player_info.sql_adapter.get_by_id('Users', id=player_view.chat_id) == []:
     new_player_info.sql_adapter.insert('Users', {'id': player_view.chat_id, 'user_nickname': player_view.message_info.chat.username, 'chat_id': player_view.message_info.chat.id, 'created': int(player_view.message_info.date.timestamp()), 'updated': int(player_view.message_info.date.timestamp())}) 
 new_player_info.new_sql(user_id=player_view.chat_id)

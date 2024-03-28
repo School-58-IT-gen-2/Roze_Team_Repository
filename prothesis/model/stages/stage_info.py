@@ -1,14 +1,20 @@
 import random as rand
+import sqlite3
+from prothesis.model.postegress.adapter import AdapterDB
+
+
 
 
 class StageInfo():
 
     def __init__(self, stage_prologue, stage_num=1, custom_seed=False):
+        self.id = 1
         self.stage_num = stage_num  #номер стадии
         self.stage_prologue = stage_prologue
         self.enemies_count = 5  #кол-во врагов на стадии
         self.events_count = 3  #кол-во событий на стадии
         self.npc_count = 3
+        self.sql_adapter = AdapterDB()
         if not custom_seed:
             self.seed = ['void'] * 61  #генерация карты (сначала заполняем все 60 мест пустыми местами)
             for i in range(1, self.enemies_count + 1):
@@ -29,3 +35,31 @@ class StageInfo():
             self.seed[4] = 'event'
             self.seed[5] = 'trader'
             self.seed[7] = 'npc'
+    def load_seed(self):
+        data = self.sql_adapter.get_by_player_id('Seed','place_in_seed',self.id)
+        for i in range(len(data)):
+            data[i] = data[i][0]
+        place = data
+        data = self.sql_adapter.get_by_player_id('Seed','text_place_in_seed',self.id)
+        for i in range(len(data)):
+            data[i] = data[i][0]
+        text = data
+        seed = []
+        for i in range(len(place)):
+            seed.append(0)
+        for i in range(len(place)):
+            seed[place[i]] = text[i]
+        self.seed = seed
+        return 1
+    def new_seed(self):
+        seed = self.seed
+        if self.sql_adapter.get_by_player_id('Seed','place_in_seed',self.id) == []:
+            for i in seed:
+                self.sql_adapter.insert('Seed', {'place_in_seed': f'{seed.index(i)}', 'player_id':f'{self.id}', 'text_place_in_seed': f'{i}'})
+                seed[seed.index(i)] = 0
+        else:
+            self.load_seed()
+
+
+
+

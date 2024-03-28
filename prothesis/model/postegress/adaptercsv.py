@@ -54,4 +54,4 @@ class AdapterCSV:
                 a.insert(x,row)
 
 a = AdapterCSV()
-a.insert_all("Enemies.csv")
+#a.insert_all("Enemies.csv")
