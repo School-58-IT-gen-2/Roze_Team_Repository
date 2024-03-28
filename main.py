@@ -4,6 +4,7 @@
 #from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
 #id Макар: 1827810009
 #id Виолетта: 1309198139
+#id Даня: 5548785472
 
 #бот PyZone: 6712575033:AAFi3-Juz0w3dlOSBNU4AAZDtYxwOAqrRTA
 #бот NoAir: 6068101345:AAGr0hpElzAEBwfoc7-yoUhd-QRD9Sd8vr4
@@ -14,6 +15,9 @@ from prothesis.model.stages.stage_info import StageInfo
 from prothesis.model.players.player_info import PlayerInfo
 from prothesis.view.player_console_view import PlayerConsoleView
 from prothesis.view.player_tg_view import PlayerTGView
+from prothesis.model.postegress.adaptercsv import AdapterCSV
+
+import datetime as DT  
 
 new_player_info = PlayerInfo()
 
@@ -29,8 +33,14 @@ new_game_info = StageInfo(stage_prologue='''"вы просыпаетесь по�
 вы чувствуете что ваш кислород на исходе. путешествие начинается."''',
 custom_seed=False)
 
+adapter_csv = AdapterCSV()
 
-print(player_view.chat_id)
+
+adapter_csv.insert('Users', {'id': player_view.chat_id, 'user_nickname': player_view.message_info.chat.username, 'chat_id': player_view.message_info.chat.id, 'created': int(player_view.message_info.date.timestamp()), 'updated': int(player_view.message_info.date.timestamp())}, unic=True)
+new_player_info.new_sql(user_id=player_view.chat_id)
+new_player_info.load_sql()
+
+print(new_player_info.air)
 game_controller = GameController(new_player_info, new_game_info, player_view)
 choice = game_controller.player_view.get_request_from_player('Добро пожаловать!', ['Загрузить игру', 'Новая игра'])
 if choice == '1':
@@ -59,7 +69,7 @@ def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Echo the user message."""
     return update.message.reply_text(update.message.text)
-
+1710783521
 
 def main() -> None:
     """Start the bot."""
