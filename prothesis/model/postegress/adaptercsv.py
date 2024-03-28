@@ -53,6 +53,5 @@ class AdapterCSV:
                         row[i] = f"'{row[i]}'"
                 a.insert(x,row)
 
-
-#a = AdapterCSV()
-#a.insert_all("NPC.csv")
+a = AdapterCSV()
+a.insert_all("Enemies.csv")
