@@ -47,6 +47,7 @@ else:
     new_player_info.load_sql()
     new_game_info.load_seed()
 
+player_view.send_response_to_player('Добро пожаловать в игру! Выберите действие:')
 game_controller.act()
     
 
