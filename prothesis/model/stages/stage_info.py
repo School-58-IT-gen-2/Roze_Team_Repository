@@ -1,6 +1,7 @@
 import random as rand
 import sqlite3
 from prothesis.model.postegress.adapter import AdapterDB
+import copy
 
 
 
@@ -52,13 +53,13 @@ class StageInfo():
         self.seed = seed
         return 1
     def new_seed(self):
-        seed = self.seed
-        if self.sql_adapter.get_by_player_id('Seed','place_in_seed',self.id) == []:
-            for i in seed:
-                self.sql_adapter.insert('Seed', {'place_in_seed': f'{seed.index(i)}', 'player_id':f'{self.id}', 'text_place_in_seed': f'{i}'})
-                seed[seed.index(i)] = 0
-        else:
-            self.load_seed()
+        seed = copy.copy(self.seed)
+        if self.sql_adapter.get_by_player_id('Seed','place_in_seed',self.id) != []:
+            self.sql_adapter.delete_by_player_id('Seed', self.id)
+        for i in seed:
+            self.sql_adapter.insert('Seed', {'place_in_seed': f'{seed.index(i)}', 'player_id':f'{self.id}', 'text_place_in_seed': f'{i}'})
+            seed[seed.index(i)] = 0
+            
 
 
 

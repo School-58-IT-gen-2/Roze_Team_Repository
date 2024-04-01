@@ -29,21 +29,24 @@ new_game_info = StageInfo(stage_prologue='''"вы просыпаетесь по�
 вы чувствуете что ваш кислород на исходе. путешествие начинается."''',
 custom_seed=False)
 
-adapter_csv = AdapterCSV()
 new_player_info.id  = player_view.chat_id
 new_game_info.id = player_view.chat_id
-new_game_info.new_seed()
 
 if new_player_info.sql_adapter.get_by_id('Users', id=player_view.chat_id) == []:
     new_player_info.sql_adapter.insert('Users', {'id': player_view.chat_id, 'user_nickname': player_view.message_info.chat.username, 'chat_id': player_view.message_info.chat.id, 'created': int(player_view.message_info.date.timestamp()), 'updated': int(player_view.message_info.date.timestamp())}) 
 new_player_info.new_sql(user_id=player_view.chat_id)
 
 
-new_player_info.load_sql()
-
 
 game_controller = GameController(new_player_info, new_game_info, player_view)
 choice = game_controller.player_view.get_request_from_player('Добро пожаловать!', ['Загрузить игру', 'Новая игра'])
-if choice == '1':
-    game_controller.load_from_file('save_test.json')
+if choice == '2':
+    player_view.send_response_to_player('Подождите, идёт генерация карты...')
+    new_game_info.new_seed()
+else:
+    new_player_info.load_sql()
+    new_game_info.load_seed()
+
+game_controller.act()
+    
 

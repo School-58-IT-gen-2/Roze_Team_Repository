@@ -25,7 +25,8 @@ class GameController():
             self.show_inventory()
             self.act()
         elif choice == '3':
-            self.save_to_file('save_test.json')
+            self.__player_info.save_sql()
+            self.player_view.send_response_to_player('Данные успешно сохраненны')
             self.act()
 
     def step(self):

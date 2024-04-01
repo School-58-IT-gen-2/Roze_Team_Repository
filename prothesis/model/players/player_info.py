@@ -8,10 +8,10 @@ class PlayerInfo():
         self.id = 1827810009
         self.health = 100
         self.money = 50
-        self.protez = 1110
+        self.protez = 0
         self.save = True #для проверки сейвов
-        self.km = 37
-        self.air = 9
+        self.km = 0
+        self.air = 100
         self.inventory = [2,3,4] #[['ингалятор', 'air', 25, 30]]
         self.weapons = [1,5]#[['микроволновая п-ушка', 15, 1, 300, 'сбои'],['ПМ', 10, 4, 600, 'повреждение']]
         self.sql_adapter = AdapterDB()
