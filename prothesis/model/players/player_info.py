@@ -2,15 +2,16 @@ import sqlite3
 from prothesis.view.player_view import PlayerView
 from prothesis.model.postegress.adapter import AdapterDB
 
+
 class PlayerInfo():
     def __init__(self):
         self.id = 1827810009
         self.health = 100
         self.money = 50
-        self.protez = 1110
+        self.protez = 0
         self.save = True #для проверки сейвов
-        self.km = 37
-        self.air = 9
+        self.km = 0
+        self.air = 100
         self.inventory = [2,3,4] #[['ингалятор', 'air', 25, 30]]
         self.weapons = [1,5]#[['микроволновая п-ушка', 15, 1, 300, 'сбои'],['ПМ', 10, 4, 600, 'повреждение']]
         self.sql_adapter = AdapterDB()
@@ -22,7 +23,7 @@ class PlayerInfo():
 
     def new_sql(self, user_id):
         if self.sql_adapter.get_by_id('Player_info', user_id) == []:
-            self.sql_adapter.insert('Player_info', {'id':user_id, 'air':'DEFAULT', 'health':'DEFAULT', 'inventory':'DEFAULT', 'money':'DEFAULT', 'protez':'DEFAULT', 'weapons':'DEFAULT', 'save':'DEFAULT', 'km':'DEFAULT'})
+            self.sql_adapter.insert('Player_info', {'id':user_id, 'air':'DEFAULT', 'health':'DEFAULT', 'money':'DEFAULT', 'protez':'DEFAULT', 'save':'DEFAULT', 'km':'DEFAULT'})
 
     def load_sql(self):
         x = 0
@@ -30,7 +31,7 @@ class PlayerInfo():
            x += 1
            if x < 8:
                exec(f"self.{i} = self.sql_adapter.get_by_id('Player_info', id=self.id)[0][{x-1}]")
-        data = self.sql_adapter.get_by_player_id('Player_inventory','item_id',self.id)
+        data = self.sql_adapter.get_by_player_id('Player_inventory','id',self.id)
         for i in range(len(data)):
             data[i] = data[i][0]
         self.inventory = data
@@ -39,7 +40,7 @@ class PlayerInfo():
             data[i] = data[i][0]
         self.weapons = data
     def save_sql(self):
-     #   self.sql_adapter.update('Player_info', f'air = {self.air}', user_id)
+     #self.sql_adapter.update('Player_info', f'air = {self.air}', user_id)
         par = vars(self)
         x = 0
         for i in list(vars(self).keys()):
