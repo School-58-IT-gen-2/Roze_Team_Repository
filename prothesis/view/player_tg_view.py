@@ -20,12 +20,14 @@ class PlayerTGView(PlayerView):
         super().__init__(locale)
         self.update_id = None
         self.message_info = None
+        print('Telegram bot launched, waiting for connection')
         if id == None:
             self.chat_id = None
             while True:
                 chat_id, text = self.get_request_from_player(variants=['/start'], get_id=True, create_buttons=False)
                 if text == '/start':
                     self.chat_id = chat_id
+                    print(f'Telegram new connection: {chat_id}')
                     break
         else:
             self.chat_id = id

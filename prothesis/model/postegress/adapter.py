@@ -22,7 +22,7 @@ class AdapterDB:
             return conn
         except Exception as error:
 
-            print(f"connection error: {error}")
+            print(f"SQL connection error: {error}")
 
     def __sql_format(self, value):
         if value == None: return 'Null'
