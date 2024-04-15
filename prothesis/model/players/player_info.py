@@ -1,6 +1,8 @@
 import sqlite3
 from prothesis.view.player_view import PlayerView
 from prothesis.model.postegress.adapter import AdapterDB
+from prothesis.model.item_class import Item
+from prothesis.model.weapon_class import Weapon
 
 
 class PlayerInfo():
@@ -12,8 +14,8 @@ class PlayerInfo():
         self.save = True #для проверки сейвов
         self.km = 0
         self.air = 100
-        self.inventory = [2,3,4] #[['ингалятор', 'air', 25, 30]]
-        self.weapons = [1,5]#[['микроволновая п-ушка', 15, 1, 300, 'сбои'],['ПМ', 10, 4, 600, 'повреждение']]
+        self.inventory = [Item(*[1, 'ингалятор', 'air', 'item',  25, 30])]
+        self.weapons = [Weapon(*[4, 'микроволновая п-ушка', 15, 1, 'weapon', 'сбои', 300]), Weapon(*[3, 'ПМ', 10, 4, 'weapon', 'повреждение', 600])]
         self.sql_adapter = AdapterDB()
 
     def create_table(self):#неведомая хрень
@@ -31,16 +33,18 @@ class PlayerInfo():
            x += 1
            if x < 8:
                exec(f"self.{i} = self.sql_adapter.get_by_id('Player_info', id=self.id)[0][{x-1}]")
-        data = self.sql_adapter.get_by_player_id('Player_inventory','id',self.id)
-        for i in range(len(data)):
-            data[i] = data[i][0]
+        items_id = self.sql_adapter.get_by_player_id('Player_inventory','id',self.id)
+        data = []
+        for i in range(len(items_id)):
+            items_id[i] = items_id[i][0]
+        for i in items_id:
+            data.append(self.sql_adapter.get_by_id('Items', i))
         self.inventory = data
-        data = self.sql_adapter.get_by_player_id('Player_weapons','weapon_id',self.id)
+        '''data = self.sql_adapter.get_by_player_id('Player_weapons','weapon_id',self.id)
         for i in range(len(data)):
             data[i] = data[i][0]
-        self.weapons = data
+        self.weapons = data'''
     def save_sql(self):
-     #self.sql_adapter.update('Player_info', f'air = {self.air}', user_id)
         par = vars(self)
         x = 0
         for i in list(vars(self).keys()):
@@ -51,10 +55,12 @@ class PlayerInfo():
         exec(f"self.sql_adapter.delete_by_player_id('Player_inventory',{self.id})")
         exec(f"self.sql_adapter.delete_by_player_id('Player_weapons',{self.id})")
         for i in self.inventory:
-            val = {'player_id' : f'{self.id}','item_id':f'{i}'}
+            item_id = i.id
+            val = {'player_id' : f'{self.id}','item_id':f'{item_id}'}
             exec(f"self.sql_adapter.insert('Player_inventory',{val})")
         for i in self.weapons:
-            val = {'player_id' : f'{self.id}','weapon_id':f'{i}'}
+            weapon_id = i.id
+            val = {'player_id' : f'{self.id}','weapon_id':f'{weapon_id}'}
             exec(f"self.sql_adapter.insert('Player_weapons',{val})")
 
 
