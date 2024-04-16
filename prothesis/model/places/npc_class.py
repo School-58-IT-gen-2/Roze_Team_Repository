@@ -148,23 +148,23 @@ class NPC():
         product = None
         while len(self.products) != 0 and product != '':
             for index in range(len(products)):
-                self.player_view.send_response_to_player(f'{products[index][0]} - {products[index][-1]}k')
-            variants = [self.products[index][0] for index in range(len(self.products))]
+                self.player_view.send_response_to_player(f'{products[index].name} - {products[index].price}k')
+            variants = [self.products[index].name for index in range(len(self.products))]
             variants.append('конец торговли')
             product = self.player_view.get_request_from_player('Что желаете приобрести?', variants)
             if product == str(len(self.products) + 1):
                 break
-            elif products[int(product) - 1][-1] <= player_info.money:
-                if products[int(product)-1][3] == 'item':
+            elif products[int(product) - 1].price <= player_info.money:
+                if products[int(product)-1].type == 'item':
                     player_info.money -= products[int(product) - 1][-1]
                     player_info.inventory.append(products[int(product) - 1])
-                    self.player_view.send_response_to_player(f'Вы купили {self.products.pop(int(product) - 1)[0]}')
+                    self.player_view.send_response_to_player(f'Вы купили {self.products.pop(int(product) - 1).name}')
                     self.player_view.send_response_to_player(f'Ваш баланс: {player_info.money}')
                     product = ''
-                elif products[int(product)-1][3] == 'weapon':
-                    player_info.money -= products[int(product) - 1][-1]
+                elif products[int(product)-1].type == 'weapon':
+                    player_info.money -= products[int(product) - 1].price
                     player_info.weapons.append(products[int(product) - 1])
-                    self.player_view.send_response_to_player(f'Вы купили {self.products.pop(int(product) - 1)[0]}')
+                    self.player_view.send_response_to_player(f'Вы купили {self.products.pop(int(product) - 1).name}')
                     self.player_view.send_response_to_player(f'Ваш баланс: {player_info.money}')
                     product = ''
             else:

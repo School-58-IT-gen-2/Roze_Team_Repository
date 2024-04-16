@@ -43,7 +43,25 @@ class GameController():
         self.act()
 
     def show_inventory(self):
+        x = []
+        for i in self.__player_info.inventory:
+            x.append(f"{self.__player_info.inventory.index(i)}: {i[0][0]} {i[0][2]} {i[0][3]}")
         self.player_view.send_response_to_player(f'Ваш запас воздуха: {self.__player_info.air}%')
+        self.player_view.send_response_to_player(f'Ваш инвентарь:')
+        choice = self.player_view.get_request_from_player('Cделайте выбор:', x)
+        print(choice)
+        y = x[int(choice)-1]
+        type = y.split(" ")[2]
+        print(type)
+        value = y.split(" ")[3]
+        print(y)
+        self.__player_info.inventory.pop(int(y[0]))
+        if type == 'Air' or type == 'air' :
+            self.__player_info.air += int(value)
+        else:
+            self.__player_info.health += int(value)
+        self.player_view.send_response_to_player(f'Ваш запас воздуха: {self.__player_info.air}%')
+        self.player_view.send_response_to_player(f'Ваше здоровье: {self.__player_info.health}')
     
     def save_to_file(self, filename):
         data = self.__player_info.get_data()

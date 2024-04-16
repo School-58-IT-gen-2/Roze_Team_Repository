@@ -33,7 +33,7 @@ class PlayerInfo():
            x += 1
            if x < 8:
                exec(f"self.{i} = self.sql_adapter.get_by_id('Player_info', id=self.id)[0][{x-1}]")
-        items_id = self.sql_adapter.get_by_player_id('Player_inventory','id',self.id)
+        items_id = self.sql_adapter.get_by_player_id('Player_inventory','item_id',self.id)
         data = []
         for i in range(len(items_id)):
             items_id[i] = items_id[i][0]
