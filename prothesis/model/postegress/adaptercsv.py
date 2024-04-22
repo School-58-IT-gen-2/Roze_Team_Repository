@@ -1,5 +1,7 @@
 from prothesis.model.postegress.adapter import AdapterDB
 import psycopg2
+from dotenv import load_dotenv
+import os
 import csv
 class AdapterCSV:
     def __init__(self) -> None:
@@ -9,15 +11,19 @@ class AdapterCSV:
 
     def __get_connect(self):
         """подключение к нашей базе"""
+        load_dotenv()
+        sql_conect_data = os.getenv('sql_conect_data')
+        sql_conect_data = sql_conect_data.split(',')
+        print(sql_conect_data)
         try:
             conn = psycopg2.connect(
-                """
-				host=rc1d-9cjee2y71olglqhg.mdb.yandexcloud.net
-				port=6432
-				dbname=sch58_db
-				user=Admin
-				password=atdhfkm2024
-				target_session_attrs=read-write
+                f"""
+				host={sql_conect_data[0]}
+				port={sql_conect_data[1]}
+				dbname={sql_conect_data[2]}
+				user={sql_conect_data[3]}
+				password={sql_conect_data[4]}
+				target_session_attrs={sql_conect_data[5]}
 			"""
             )
             return conn

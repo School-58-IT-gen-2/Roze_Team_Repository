@@ -4,7 +4,6 @@ from prothesis.model.postegress.adapter import AdapterDB
 from prothesis.model.item_class import Item
 from prothesis.model.weapon_class import Weapon
 
-
 class PlayerInfo():
     def __init__(self):
         self.id = 1827810009
@@ -20,7 +19,7 @@ class PlayerInfo():
 
     def create_table(self):#неведомая хрень
         self.c.execute('''CREATE TABLE IF NOT EXISTS player_info
-                         (air INTEGER, health INTEGER, inventory TEXT, money INTEGER, protez INTEGER, weapons TEXT, save INTEGER, km INTEGER)''')
+                         (air INTEGER, health INTEGER, money INTEGER, protez INTEGER, save INTEGER, km INTEGER)''')
         self.conn.commit()
 
     def new_sql(self, user_id):
@@ -33,7 +32,7 @@ class PlayerInfo():
            x += 1
            if x < 8:
                exec(f"self.{i} = self.sql_adapter.get_by_id('Player_info', id=self.id)[0][{x-1}]")
-        items_id = self.sql_adapter.get_by_player_id('Player_inventory','item_id',self.id)
+        items_id = self.sql_adapter.get_by_player_id('Player_inventory','id',self.id)
         data = []
         for i in range(len(items_id)):
             items_id[i] = items_id[i][0]
@@ -48,15 +47,16 @@ class PlayerInfo():
         par = vars(self)
         x = 0
         for i in list(vars(self).keys()):
-           x +=1
+           x += 1
            if x < 8:
                print(f"self.sql_adapter.update('Player_info', '{i} = {par[i]}', {self.id})")
                exec(f"self.sql_adapter.update('Player_info', '{i} = {par[i]}', {self.id})")
-        exec(f"self.sql_adapter.delete_by_player_id('Player_inventory',{self.id})")
+        #exec(f"self.sql_adapter.delete_by_player_id('Player_inventory',{self.id})")
         exec(f"self.sql_adapter.delete_by_player_id('Player_weapons',{self.id})")
+        exec(f"self.sql_adapter.delete_by_player_id('Player_inventory',{self.id})")
         for i in self.inventory:
             item_id = i.id
-            val = {'player_id' : f'{self.id}','item_id':f'{item_id}'}
+            val = {'id': 'DEFAULT','player_id' : f'{self.id}','item_id':f'{item_id}'}
             exec(f"self.sql_adapter.insert('Player_inventory',{val})")
         for i in self.weapons:
             weapon_id = i.id
