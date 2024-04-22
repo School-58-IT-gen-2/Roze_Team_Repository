@@ -11,7 +11,6 @@ load_dotenv()
 sql_conect_data = os.getenv('sql_conect_data')
 sql_conect_data = sql_conect_data.split(',')
 
-print(sql_conect_data)
 try:
     conn = psycopg2.connect(
         f"""
