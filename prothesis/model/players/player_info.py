@@ -13,7 +13,7 @@ class PlayerInfo():
         self.save = True #для проверки сейвов
         self.km = 0
         self.air = 100
-        self.inventory = [Item(*[1, 'ингалятор', 'air', 'item',  25, 30])]
+        self.inventory = [Item(*['ингалятор',1, 'air', 25,'item',  30])]
         self.weapons = [Weapon(*[4, 'микроволновая п-ушка', 15, 1, 'weapon', 'сбои', 300]), Weapon(*[3, 'ПМ', 10, 4, 'weapon', 'повреждение', 600])]
         self.sql_adapter = AdapterDB()
 
@@ -32,17 +32,29 @@ class PlayerInfo():
            x += 1
            if x < 8:
                exec(f"self.{i} = self.sql_adapter.get_by_id('Player_info', id=self.id)[0][{x-1}]")
-        items_id = self.sql_adapter.get_by_player_id('Player_inventory','id',self.id)
+        items_id = self.sql_adapter.get_by_player_id('Player_inventory','item_id',self.id)
         data = []
         for i in range(len(items_id)):
             items_id[i] = items_id[i][0]
         for i in items_id:
-            data.append(self.sql_adapter.get_by_id('Items', i))
+            b = self.sql_adapter.get_by_id('Items', i)
+            a=[]
+            for j in range(6):
+                a.append(b[0][j])
+            data.append(Item(*a))
         self.inventory = data
-        '''data = self.sql_adapter.get_by_player_id('Player_weapons','weapon_id',self.id)
-        for i in range(len(data)):
-            data[i] = data[i][0]
-        self.weapons = data'''
+        weapons_id = self.sql_adapter.get_by_player_id('Player_weapons','weapon_id',self.id)
+        data = []
+        for i in range(len(weapons_id)):
+            weapons_id[i] = weapons_id[i][0]
+        for i in weapons_id:
+            b = self.sql_adapter.get_by_id('Weapons', i)
+            a=[]
+            for j in range(6):
+                a.append(b[0][j])
+            data.append(Weapon(*a))
+        self.weapons = data
+        print(data)
     def save_sql(self):
         par = vars(self)
         x = 0
