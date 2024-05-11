@@ -25,7 +25,8 @@ class GameController():
             self.show_inventory()
             self.act()
         elif choice == '3':
-            self.save_to_file('save_test.json')
+            self.__player_info.save_sql()
+            self.player_view.send_response_to_player('Данные успешно сохраненны')
             self.act()
 
     def step(self):
@@ -42,8 +43,30 @@ class GameController():
         self.act()
 
     def show_inventory(self):
-        self.player_view.send_response_to_player(f'Ваш запас воздуха: {self.__player_info.air}%')
-    
+        print(self.__player_info.inventory)
+        if self.__player_info.inventory == [] or self.__player_info.inventory[0] == []:
+            self.player_view.send_response_to_player(f'Ваш инвентарь пуст.')
+        else:
+            x = []
+            for i in self.__player_info.inventory:
+                x.append(f"{self.__player_info.inventory.index(i) + 1}: {i.name} {i.type} {i.value}")
+            self.player_view.send_response_to_player(f'Ваш запас воздуха: {self.__player_info.air}%')
+            self.player_view.send_response_to_player(f'Ваш инвентарь:')
+            choice = self.player_view.get_request_from_player('Cделайте выбор:', x)
+            print(choice)
+            y = x[int(choice)-1]
+            print(y)
+            type = y.split(" ")[2]
+            print(type)
+            value = y.split(" ")[3]
+            print(y)
+            self.__player_info.inventory.pop(int(y[0])-1)
+            if type == 'Air' or type == 'air' :
+                self.__player_info.air += int(value)
+            else:
+                self.__player_info.health += int(value)
+            self.player_view.send_response_to_player(f'Ваш запас воздуха: {self.__player_info.air}%')
+            self.player_view.send_response_to_player(f'Ваше здоровье: {self.__player_info.health}')
     def save_to_file(self, filename):
         data = self.__player_info.get_data()
         with open(filename, "w") as file:

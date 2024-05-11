@@ -20,8 +20,14 @@ class AdapterDB:
 			"""
             )
             return conn
-        except:
-            print("connection error")
+        except Exception as error:
+
+            print(f"SQL connection error: {error}")
+
+    def __sql_format(self, value):
+        if value == None: return 'Null'
+        if type(value) == str and value not in ['DEFAULT']: return f"'{value}'"
+        return str(value)
 
     def get_all(self, table_name: str):
         """посылаем запрос на подключение к конкретной таблице"""
@@ -37,9 +43,24 @@ class AdapterDB:
         cursor.execute(request)
         data = cursor.fetchall()
         return data
+    def get_by_player_id(self, table_name: str,key:str, id: int):
+        request = f'SELECT {key} FROM "Roze_Galactic_Empire"."{table_name}" WHERE player_id = {id}'
+        cursor = self.conn.cursor()
+        cursor.execute(request)
+        data = cursor.fetchall()
+        return data
     def delete_by_id(self, table_name: str, id: int):
         request_select = f'SELECT * FROM "Roze_Galactic_Empire"."{table_name}"'
         request = f'DELETE FROM "Roze_Galactic_Empire"."{table_name}" WHERE id = {id}'
+        cursor = self.conn.cursor()
+        cursor.execute(request)
+        cursor.execute(request_select)
+        self.conn.commit()
+        data = cursor.fetchall()
+        return data
+    def delete_by_player_id(self, table_name: str, id: int):
+        request_select = f'SELECT * FROM "Roze_Galactic_Empire"."{table_name}"'
+        request = f'DELETE FROM "Roze_Galactic_Empire"."{table_name}" WHERE player_id = {id}'
         cursor = self.conn.cursor()
         cursor.execute(request)
         cursor.execute(request_select)
@@ -58,9 +79,8 @@ class AdapterDB:
         return data
 
     def insert(self, table, values):
-        
-        print( f'INSERT INTO "Roze_Galactic_Empire"."{table}" ({", ".join([i for i in values.keys()])}) VALUES ({", ".join([str(i) for i in values.values()])})')
-        request = f'INSERT INTO "Roze_Galactic_Empire"."{table}" ({", ".join([i for i in values.keys()])}) VALUES ({", ".join([str(i) for i in values.values()])})'
+        print( f'INSERT INTO "Roze_Galactic_Empire"."{table}" ({", ".join([i for i in values.keys()])}) VALUES ({", ".join([self.__sql_format(i) for i in values.values()])})')
+        request = f'INSERT INTO "Roze_Galactic_Empire"."{table}" ({", ".join([i for i in values.keys()])}) VALUES ({", ".join([self.__sql_format(i) for i in values.values()])})'
         request_select = f'SELECT * FROM "Roze_Galactic_Empire"."{table}" '
         cursor = self.conn.cursor()
         cursor.execute(request)

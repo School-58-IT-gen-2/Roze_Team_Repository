@@ -1,20 +1,29 @@
 import psycopg2
-
+import os
+from dotenv import load_dotenv
 ''' 
 любые запросы хорошо чекать на ошибки, поскольку полеты данных - вещь непредсказуемая. 
 Если данные не летят/не изменяются, это не всегда очевидно. 
 А проверка на подключение поможет искать ошибки миллион лет, когда их на самом деле нет, вы просто до базы достучаться не можете 
     '''
     # подключение к нашей базе
-conn = psycopg2.connect("""
-    host=rc1d-9cjee2y71olglqhg.mdb.yandexcloud.net
-    port=6432
-    sslmode=verify-full
-    dbname=sch58_db
-    user=Admin
-    password=atdhfkm2024
-    target_session_attrs=read-write
-""")
+load_dotenv()
+sql_conect_data = os.getenv('sql_conect_data')
+sql_conect_data = sql_conect_data.split(',')
+
+try:
+    conn = psycopg2.connect(
+        f"""
+			host={sql_conect_data[0]}
+			port={sql_conect_data[1]}
+			dbname={sql_conect_data[2]}
+			user={sql_conect_data[3]}
+			password={sql_conect_data[4]}
+			target_session_attrs={sql_conect_data[5]}
+	"""
+    )
+except:
+    print("connection error postgres")
 
 # посылаем запрос на подключение к конкретной таблице
 request = 'SELECT * FROM "Roze_Galactic_Empire"."NPS"' 
