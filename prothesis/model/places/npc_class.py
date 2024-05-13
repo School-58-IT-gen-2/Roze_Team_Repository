@@ -54,7 +54,7 @@ class NPC():
         period_dmg = 3
         period_dmg_counter = 0
         block = 1
-        change_weapon = int(self.player_view.get_request_from_player('желаете сменить оружее?', [self.player_info.weapons[i][0] for i in range(len(self.player_info.weapons))]))
+        change_weapon = int(self.player_view.get_request_from_player('желаете сменить оружее?', [self.player_info.weapons[i].name for i in range(len(self.player_info.weapons))]))
         player_weapon = self.player_info.weapons[change_weapon - 1]
         self.player_view.send_response_to_player('--------БОЙ--------')
         time.sleep(1)
@@ -64,12 +64,12 @@ class NPC():
                 choice = []
                 choice1 = self.player_view.get_request_from_player(
                         f'\nЧто собираешься делать?(выбери первое действие)',
-                        [f'атака({player_weapon[0]})', 'блок(50%)', 'лечение(бинты)'],
+                        [f'атака({player_weapon.name})', 'блок(50%)', 'лечение(бинты)'],
                         test=False
                     )
                 choice2 = self.player_view.get_request_from_player(
                         f'\nЧто собираешься делать?(выбери второе действие)',
-                        [f'атака({player_weapon[0]})', 'блок(50%)', 'лечение(бинты)'],
+                        [f'атака({player_weapon.name})', 'блок(50%)', 'лечение(бинты)'],
                         test=False
                     )
                 choice.append(choice1)
@@ -78,8 +78,8 @@ class NPC():
                     for i in range(2):
                         if choice[i] == '1':
                             damage = [
-                                int(player_weapon[1] * (0.5 + rand.random()) *
-                                    block) for _ in range(player_weapon[2])
+                                int(player_weapon.damage * (0.5 + rand.random()) *
+                                    block) for _ in range(player_weapon.attacks)
                             ]
                             health -= sum(damage)
                             self.player_view.send_response_to_player(f'нанесено {" + ".join(map(str, damage))}')
@@ -87,14 +87,12 @@ class NPC():
                                 f'{self.name} имеет {max(0, health)} здоровья\n'
                             )
                             time.sleep(1)
-                            if self.dmgtype == player_weapon[
-                                    4] and rand.random() > 0.6:
+                            if self.dmgtype == player_weapon.damage_type and rand.random() > 0.6:
                                 period_dmg_counter = 3
-                            if self.dmgtype == player_weapon[
-                                    4] and period_dmg_counter != 0:
+                            if self.dmgtype == player_weapon.damage_type and period_dmg_counter != 0:
                                 health -= period_dmg
                                 self.player_view.send_response_to_player(
-                                    f'вы наложили статус: {player_weapon[4]}, периодический урон - 3\n осталось этапов - {period_dmg_counter}'
+                                    f'вы наложили статус: {player_weapon.damage_type}, периодический урон - 3\n осталось этапов - {period_dmg_counter}'
                                 )
                                 self.player_view.send_response_to_player(
                                     f'{self.name} имеет {max(0, health)} здоровья'
