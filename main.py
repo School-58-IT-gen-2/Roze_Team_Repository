@@ -12,6 +12,7 @@ from prothesis.model.players.player_info import PlayerInfo
 from prothesis.view.player_console_view import PlayerConsoleView
 from prothesis.view.player_tg_view import PlayerTGView
 from prothesis.model.postegress.adaptercsv import AdapterCSV
+from prothesis.model.item_class import Item
 
 import datetime as DT  
 
@@ -37,7 +38,6 @@ if new_player_info.sql_adapter.get_by_id('Users', id=player_view.chat_id) == []:
 new_player_info.new_sql(user_id=player_view.chat_id)
 
 
-
 game_controller = GameController(new_player_info, new_game_info, player_view)
 choice = game_controller.player_view.get_request_from_player('Добро пожаловать!', ['Загрузить игру', 'Новая игра'])
 if choice == '2':
@@ -46,6 +46,8 @@ if choice == '2':
 else:
     new_player_info.load_sql()
     new_game_info.load_seed()
+
+print(new_player_info.inventory)
 
 player_view.send_response_to_player('Добро пожаловать в игру! Выберите действие:')
 game_controller.act()
