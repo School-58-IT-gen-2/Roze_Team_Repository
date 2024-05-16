@@ -26,7 +26,7 @@ except:
     print("connection error postgres")
 
 # посылаем запрос на подключение к конкретной таблице
-request = 'SELECT * FROM "Roze_Galactic_Empire"."NPS"' 
+request = 'SELECT * FROM "Roze_Team"."NPS"' 
 
 # уснанавливаем связь с базой для выполнения запросов
 cursor = conn.cursor()                                 
@@ -39,7 +39,7 @@ data = cursor.fetchall()
 
 print(data)
 
-request_update = 'UPDATE "Roze_Galactic_Empire"."Planets" SET "Name"=\'Earth\', "System"=2, "Population"=10000000, "Position"=3, "Type"=2 WHERE id=2'
+request_update = 'UPDATE "Roze_Team"."Planets" SET "Name"=\'Earth\', "System"=2, "Population"=10000000, "Position"=3, "Type"=2 WHERE id=2'
 
 # выполняем запрос
 cursor.execute(request_update)
