@@ -11,7 +11,6 @@ from prothesis.model.stages.stage_info import StageInfo
 from prothesis.model.players.player_info import PlayerInfo
 from prothesis.view.player_console_view import PlayerConsoleView
 from prothesis.view.player_tg_view import PlayerTGView
-from prothesis.model.postegress.adaptercsv import AdapterCSV
 from prothesis.model.item_class import Item
 
 import datetime as DT  

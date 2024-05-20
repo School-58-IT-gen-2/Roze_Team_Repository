@@ -46,8 +46,8 @@ class NPC():
                 choice = '1'
 
     def fight(self):
-
-        enemy_weapon = self.weapons[0]
+        
+        enemy_weapon = self.weapons[0]  
         player_weapon = self.player_info.weapons[0]
         turn = True
         health = self.health
@@ -58,7 +58,7 @@ class NPC():
         player_weapon = self.player_info.weapons[change_weapon - 1]
         self.player_view.send_response_to_player('--------БОЙ--------')
         time.sleep(1)
-        self.player_view.send_response_to_player(f'{self.name} готовит {enemy_weapon[0]} для атаки...')
+        self.player_view.send_response_to_player(f'{self.name} готовит {enemy_weapon.name} для атаки...')
         while health > 0:
             if turn:
                 choice = []
