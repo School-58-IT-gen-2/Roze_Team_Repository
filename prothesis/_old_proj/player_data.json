@@ -1,9 +1,0 @@
-data = {
-    "name": player.name,
-    "air": player.air,
-    "health": player.health,
-    "inventory": player.inventory,
-    "money": player.money,
-    "protez": player.protez,
-    "weapons": player.weapons
-}
