@@ -146,4 +146,5 @@ class Enemy():
             self.player_info.money += mny
             self.player_view.send_response_to_player(f'ваш баланс: {self.player_info.money}')
         else:
+            self.player_view.send_response_to_player(f' {self.name} не в настроении,на вас напали!!!')
             self.fight()

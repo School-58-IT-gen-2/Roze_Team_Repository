@@ -59,8 +59,3 @@ class StageInfo():
         for i in seed:
             self.sql_adapter.insert('Seed', {'place_in_seed': f'{seed.index(i)}', 'player_id':f'{self.id}', 'text_place_in_seed': f'{i}'})
             seed[seed.index(i)] = 0
-            
-
-
-
-

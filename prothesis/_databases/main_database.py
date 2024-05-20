@@ -1,15 +1,3 @@
-'''from NPC_class import NPC
-from Event_class import Event1
-from Event_class import Event2
-from Event_class import Event3
-from Event_class import Event4
-from Event_class import Event5
-from Event_class import Event6
-#БАЗА ДАННЫХ ДЛЯ СОБЫТИЙ
-events_for_stages = {1:[Event1(), Event2('','','',''), Event3('','','',''), Event4(), Event5('','','',''), Event6()]}
-
-
-'''
 from prothesis.model.places.event_class import Common_event
 from prothesis.model.places.event_class import Set_act
 from prothesis.model.places.event_class import Text_act
@@ -32,9 +20,6 @@ npcs_random = {1:[Sage, Trasher]}
 
 
 
-
-
-
 #БАЗА ДАННЫХ ДЛЯ ВРАГОВ
 Toster = Enemy('хлебоподжариватель', 'сбои', 100, all_weapons['кулак'], 5, 'loot')
 Archives = Enemy('компьютер из библиотеки', 'сбои', 50, all_weapons['кулак'], 10, 'loot')
@@ -42,10 +27,6 @@ Bandit = Enemy('бандит', 'кровотечение', 100, all_weapons['к�
 Wanderer = Enemy('бродяга','кровотечение', 100, all_weapons['кинжал пораженный коррозией'], 5, 'loot')
 
 enemies_for_stages = {1:[Toster, Archives, Bandit, Wanderer]}
-
-
-
-
 
 
 #БАЗА ДАННЫХ ДЛЯ СОБЫТИЙ
