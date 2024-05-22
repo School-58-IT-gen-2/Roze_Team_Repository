@@ -1,8 +1,8 @@
 import random as rand
 import time
-import sys
 from prothesis._databases.items_database import all_weapons
 from prothesis._databases.items_database import items
+from prothesis.model.weapon_class import Weapon
 from prothesis.model.players.player_info import PlayerInfo
 from prothesis.view.player_view import PlayerView
 
@@ -58,7 +58,7 @@ class NPC():
         player_weapon = self.player_info.weapons[change_weapon - 1]
         self.player_view.send_response_to_player('--------БОЙ--------')
         time.sleep(1)
-        self.player_view.send_response_to_player(f'{self.name} готовит {enemy_weapon[0]} для атаки...')
+        self.player_view.send_response_to_player(f'{self.name} готовит {enemy_weapon.name} для атаки...')
         while health > 0:
             if turn:
                 choice = []

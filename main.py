@@ -1,26 +1,23 @@
-#id Макар: 1827810009
-#id Виолетта: 1309198139
-#id Даня: 5548785472
-
-#бот PyZone: 6712575033:AAFi3-Juz0w3dlOSBNU4AAZDtYxwOAqrRTA
-#бот NoAir: 6068101345:AAGr0hpElzAEBwfoc7-yoUhd-QRD9Sd8vr4
-
-from prothesis.view.player_view import PlayerView
 from prothesis.controller.game_controller import GameController
 from prothesis.model.stages.stage_info import StageInfo
 from prothesis.model.players.player_info import PlayerInfo
-from prothesis.view.player_console_view import PlayerConsoleView
-from prothesis.view.player_tg_view import PlayerTGView
-from prothesis.model.postegress.adaptercsv import AdapterCSV
-from prothesis.model.item_class import Item
+from prothesis.view.player_tg_view import PlayerTGView, Thread
+from prothesis.view.global_tg_view import GlobalTGView
 
-import datetime as DT  
 
-new_player_info = PlayerInfo()
 
-player_view = PlayerTGView()#PlayerTGView(id=1827810009)
+global_view = GlobalTGView() #класс для принятия запросов от всех игроков
+current_players = [] #список всех игроков, вошедших в игру
 
-new_game_info = StageInfo(stage_prologue='''"вы просыпаетесь посреди пустоты. 
+
+
+def start_game():
+    '''Набор операций для запуска игры для игрока'''
+
+    #Классы отвечающие за связь с тг ботом, информацию о игроке и информацию о текущей стадии игры
+    new_player_view = PlayerTGView(global_view, chat_id=global_view.last_chat_id)
+    new_player_info = PlayerInfo()
+    new_game_info = StageInfo(stage_prologue='''"вы просыпаетесь посреди пустоты. 
 песок, металлические обломки, все это вы уже видели однажды. 
 вы чувствуете как горячий воздух наполняет ваше горло...горло? 
 вы осматриваете себя и замечаете странные трубки в вашей груди и шее. 
@@ -29,27 +26,61 @@ new_game_info = StageInfo(stage_prologue='''"вы просыпаетесь по�
 надо добраться до ближайшего населенного пункта как можно скорее, 
 вы чувствуете что ваш кислород на исходе. путешествие начинается."''',
 custom_seed=False)
-
-new_player_info.id  = player_view.chat_id
-new_game_info.id = player_view.chat_id
-
-if new_player_info.sql_adapter.get_by_id('Users', id=player_view.chat_id) == []:
-    new_player_info.sql_adapter.insert('Users', {'id': player_view.chat_id, 'user_nickname': player_view.message_info.chat.username, 'chat_id': player_view.message_info.chat.id, 'created': int(player_view.message_info.date.timestamp()), 'updated': int(player_view.message_info.date.timestamp())}) 
-new_player_info.new_sql(user_id=player_view.chat_id)
-
-
-game_controller = GameController(new_player_info, new_game_info, player_view)
-choice = game_controller.player_view.get_request_from_player('Добро пожаловать!', ['Загрузить игру', 'Новая игра'])
-if choice == '2':
-    player_view.send_response_to_player('Подождите, идёт генерация карты...')
-    new_game_info.new_seed()
-else:
-    new_player_info.load_sql()
-    new_game_info.load_seed()
-
-print(new_player_info.inventory)
-
-player_view.send_response_to_player('Добро пожаловать в игру! Выберите действие:')
-game_controller.act()
     
+    #запись id игрока
+    new_player_info.id  = new_player_view.chat_id
+    new_game_info.id = new_player_view.chat_id
 
+    #формирование GameController из всего этого
+    game_controller = GameController(new_player_info, new_game_info, new_player_view)
+
+    #добавление игрока в базу данных, если его там нет
+    if new_player_info.sql_adapter.get_by_id('Users', id=new_player_view.chat_id) == []:
+        new_player_info.sql_adapter.insert('Users', {'id': new_player_view.chat_id, 'user_nickname': new_player_view.message_info.chat.username, 'chat_id': new_player_view.message_info.chat.id, 'created': int(new_player_view.message_info.date.timestamp()), 'updated': int(new_player_view.message_info.date.timestamp())}) 
+    new_player_info.new_sql(user_id=new_player_view.chat_id)
+
+    #загрузка сохранения или создание новой игры по желанию игрока
+    choice = game_controller.player_view.get_request_from_player('Добро пожаловать!', ['Загрузить игру', 'Новая игра'])
+    if choice == '2':
+        new_player_view.send_response_to_player('Подождите, идёт генерация карты...')
+        new_game_info.new_seed()
+    else:
+        new_player_info.load_sql()
+        new_game_info.load_seed()
+    
+    #запуск игры
+    new_player_view.send_response_to_player('Добро пожаловать в игру! Выберите действие:')
+    game_controller.act()
+
+
+#вечный цикл ожидания новых игроков
+while True:
+
+    id = global_view.waiting_for_new_player(current_players)
+    if id not in current_players:
+        current_players.append(id)
+        Thread(target=start_game).start()
+
+'''def waiting_for_new_players():
+    threadings = []
+    threading = Thread(target=global_view.waiting_for_new_player())
+    threadings.append(threading)
+    threadings[-1].start()
+
+    while True:
+        if not threadings[-1].is_alive():
+            Thread(target=start_game).start()
+            print('Ожидание других игроков...')
+            threading = Thread(target=global_view.waiting_for_new_player())
+            threadings.append(threading)
+            threadings[-1].start()
+
+
+Thread(target=waiting_for_new_players()).start()
+'''
+#id Макар: 1827810009
+#id Виолетта: 1309198139
+#id Даня: 5548785472
+
+#бот PyZone: 6712575033:AAFi3-Juz0w3dlOSBNU4AAZDtYxwOAqrRTA
+#бот NoAir: 6068101345:AAGr0hpElzAEBwfoc7-yoUhd-QRD9Sd8vr4
