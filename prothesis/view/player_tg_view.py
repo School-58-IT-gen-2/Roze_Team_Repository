@@ -17,9 +17,10 @@ bot = Bot(token=token)
 
 
 class PlayerTGView(PlayerView):
-    def __init__(self, global_tg_view, locale="RU", chat_id=None):
+    def __init__(self, global_tg_view, locale="RU", chat_id=None, message_info=None):
         super().__init__(locale)
         self.chat_id = chat_id
+        self.message_info = message_info
         self.global_tg_view = global_tg_view
         '''
         if id == None:
@@ -41,12 +42,12 @@ class PlayerTGView(PlayerView):
         reply_markup = ReplyKeyboardMarkup(custom_keyboard)
         bot.send_message(self.chat_id, text=text, reply_markup=reply_markup)
 
-    def get_request_from_player(self, text: str = None, variants: list = ['Да', 'Нет'], get_id=False, create_buttons=True):
+    def get_request_from_player(self, text: str = None, variants: list = ['Да', 'Нет'], get_id=False, create_buttons=True, test=None):
         if text is not None and not create_buttons:
             bot.send_message(self.chat_id, text)
         elif create_buttons:
             self.create_buttons(text, variants)
-        
+            
         choice = self.global_tg_view.get_request(variants=variants, get_id=get_id, chat_id=self.chat_id)
         self.global_tg_view.last_message = {'':0}
         return choice

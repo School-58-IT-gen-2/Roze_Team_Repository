@@ -15,7 +15,7 @@ def start_game():
     '''Набор операций для запуска игры для игрока'''
 
     #Классы отвечающие за связь с тг ботом, информацию о игроке и информацию о текущей стадии игры
-    new_player_view = PlayerTGView(global_view, chat_id=global_view.last_chat_id)
+    new_player_view = PlayerTGView(global_view, chat_id=global_view.last_chat_id, message_info=global_view.last_message_info)
     new_player_info = PlayerInfo()
     new_game_info = StageInfo(stage_prologue='''"вы просыпаетесь посреди пустоты. 
 песок, металлические обломки, все это вы уже видели однажды. 

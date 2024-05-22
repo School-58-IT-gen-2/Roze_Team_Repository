@@ -14,7 +14,7 @@ class GlobalTGView():
     def __init__(self):
         self.update_id = None
         self.last_chat_id = None
-        self.message_info = None
+        self.last_message_info = None
         self.last_message = {'':0} #ключ - текст последнего сообщения, значение - айди автора последнего сообщения
         Thread(target=self.get_updates).start()
         print('Telegram bot launched, waiting for connection')
