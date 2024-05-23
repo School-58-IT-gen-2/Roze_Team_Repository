@@ -43,7 +43,6 @@ class GameController():
         self.act()
 
     def show_inventory(self):
-        print(self.__player_info.inventory)
         if self.__player_info.inventory == [] or self.__player_info.inventory[0] == []:
             self.player_view.send_response_to_player(f'Ваш инвентарь пуст.')
         else:
@@ -53,13 +52,9 @@ class GameController():
             self.player_view.send_response_to_player(f'Ваш запас воздуха: {self.__player_info.air}%')
             self.player_view.send_response_to_player(f'Ваш инвентарь:')
             choice = self.player_view.get_request_from_player('Cделайте выбор:', x)
-            print(choice)
             y = x[int(choice)-1]
-            print(y)
             type = y.split(" ")[2]
-            print(type)
             value = y.split(" ")[3]
-            print(y)
             self.__player_info.inventory.pop(int(y[0])-1)
             if type == 'Air' or type == 'air' :
                 self.__player_info.air += int(value)

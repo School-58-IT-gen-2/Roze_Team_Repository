@@ -1,11 +1,10 @@
 import random as rand
 import time
-import sys
 from prothesis._databases.items_database import all_weapons
 from prothesis._databases.items_database import items
+from prothesis.model.weapon_class import Weapon
 from prothesis.model.players.player_info import PlayerInfo
 from prothesis.view.player_view import PlayerView
-
 class NPC():
 
     def __init__(self, name, aggressive = False, products = [], money = 0, health = 100, weapons = [all_weapons['кулак']], dialogue = {}, texture=None):
@@ -64,12 +63,12 @@ class NPC():
                 choice = []
                 choice1 = self.player_view.get_request_from_player(
                         f'\nЧто собираешься делать?(выбери первое действие)',
-                        [f'атака({player_weapon.name})', 'блок(50%)', 'лечение(бинты)'],
+                        [f'атака({player_weapon.name})', 'блок(50%)', 'лечение'],
                         test=False
                     )
                 choice2 = self.player_view.get_request_from_player(
                         f'\nЧто собираешься делать?(выбери второе действие)',
-                        [f'атака({player_weapon.name})', 'блок(50%)', 'лечение(бинты)'],
+                        [f'атака({player_weapon.name})', 'блок(50%)', 'лечение'],
                         test=False
                     )
                 choice.append(choice1)
@@ -106,10 +105,25 @@ class NPC():
                             )
 
                         if choice[i] == '3':
-                            self.player_info.health = min(100, self.player_info.health + 25)
-                            self.player_view.send_response_to_player(
-                                f'вы успешно воостановили здоровье. ХП = {self.player_info.health}\n'
-                            )
+                            if self.player_info.inventory == [] or self.player_info.inventory[0] == []:
+                                self.player_view.send_response_to_player(f'Ваш инвентарь пуст.')
+                            else:
+                                x = []
+                                for i in self.player_info.inventory:
+                                    x.append(f"{self.player_info.inventory.index(i) + 1}: {i.name} {i.type} {i.value}")
+                                self.player_view.send_response_to_player(f'Ваш запас воздуха: {self.player_info.air}%')
+                                self.player_view.send_response_to_player(f'Ваш инвентарь:')
+                                choice = self.player_view.get_request_from_player('Cделайте выбор:', x)
+                                y = x[int(choice)-1]
+                                type = y.split(" ")[2]
+                                value = y.split(" ")[3]
+                                self.player_info.inventory.pop(int(y[0])-1)
+                                if type == 'Air' or type == 'air' :
+                                    self.player_info.air += int(value)
+                                else:
+                                    self.player_info.health += int(value)
+                                self.player_view.send_response_to_player(f'Ваш запас воздуха: {self.player_info.air}%')
+                                self.player_view.send_response_to_player(f'Ваше здоровье: {self.player_info.health}')                    
             else:
                 time.sleep(1)
                 self.player_view.send_response_to_player(f'\n{self.name} атакует!')
@@ -150,9 +164,11 @@ class NPC():
             variants = [self.products[index].name for index in range(len(self.products))]
             variants.append('конец торговли')
             product = self.player_view.get_request_from_player('Что желаете приобрести?', variants)
+            print(product)
             if product == str(len(self.products) + 1):
                 break
             elif products[int(product) - 1].price <= player_info.money:
+                print("я тут")
                 if products[int(product)-1].type == 'item':
                     player_info.money -= products[int(product) - 1][-1]
                     player_info.inventory.append(products[int(product) - 1])

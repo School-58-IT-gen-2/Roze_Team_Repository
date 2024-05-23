@@ -3,6 +3,7 @@ from prothesis.view.player_view import PlayerView
 from prothesis.model.postegress.adapter import AdapterDB
 from prothesis.model.item_class import Item
 from prothesis.model.weapon_class import Weapon
+from prothesis._databases.items_database import all_weapons,items
 
 class PlayerInfo():
     def __init__(self):
@@ -13,8 +14,8 @@ class PlayerInfo():
         self.save = True #для проверки сейвов
         self.km = 0
         self.air = 100
-        self.inventory = [Item(*['ингалятор',1, 'air', 25,'item',  30])]
-        self.weapons = [Weapon(*[4, 'микроволновая п-ушка', 15, 1, 'weapon', 'сбои', 300]), Weapon(*[3, 'ПМ', 10, 4, 'weapon', 'повреждение', 600])]
+        self.inventory = [items["ингалятор"]]
+        self.weapons = [all_weapons['микроволновая п-ушка']]
         self.sql_adapter = AdapterDB()
 
     def create_table(self):#неведомая хрень
@@ -61,7 +62,6 @@ class PlayerInfo():
         for i in list(vars(self).keys()):
            x += 1
            if x < 8:
-               print(f"self.sql_adapter.update('Player_info', '{i} = {par[i]}', {self.id})")
                exec(f"self.sql_adapter.update('Player_info', '{i} = {par[i]}', {self.id})")
         #exec(f"self.sql_adapter.delete_by_player_id('Player_inventory',{self.id})")
         exec(f"self.sql_adapter.delete_by_player_id('Player_weapons',{self.id})")
@@ -72,7 +72,7 @@ class PlayerInfo():
             exec(f"self.sql_adapter.insert('Player_inventory',{val})")
         for i in self.weapons:
             weapon_id = i.id
-            val = {'player_id' : f'{self.id}','weapon_id':f'{weapon_id}'}
+            val = {'id': 'DEFAULT','player_id' : f'{self.id}','weapon_id':f'{weapon_id}'}
             exec(f"self.sql_adapter.insert('Player_weapons',{val})")
 
 

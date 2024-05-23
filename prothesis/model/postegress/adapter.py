@@ -79,7 +79,6 @@ class AdapterDB:
         return data
 
     def insert(self, table, values):
-        print( f'INSERT INTO "Roze_Team"."{table}" ({", ".join([i for i in values.keys()])}) VALUES ({", ".join([self.__sql_format(i) for i in values.values()])})')
         request = f'INSERT INTO "Roze_Team"."{table}" ({", ".join([i for i in values.keys()])}) VALUES ({", ".join([self.__sql_format(i) for i in values.values()])})'
         request_select = f'SELECT * FROM "Roze_Team"."{table}" '
         cursor = self.conn.cursor()
