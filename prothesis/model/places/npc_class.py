@@ -115,8 +115,8 @@ class NPC():
                 self.player_view.send_response_to_player(f'\n{self.name} атакует!')
                 time.sleep(1)
                 damage = [
-                    int(enemy_weapon[1] * (0.5 + rand.random()) * block)
-                    for _ in range(enemy_weapon[2])
+                    int(enemy_weapon.damage * (0.5 + rand.random()) * block)
+                    for _ in range(enemy_weapon.attacks)
                 ]
                 self.player_view.send_response_to_player(f'нанесено {" + ".join(map(str, damage))} урона')
                 self.player_info.health -= sum(damage)

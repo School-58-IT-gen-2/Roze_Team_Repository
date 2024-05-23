@@ -131,7 +131,7 @@ class Enemy():
             mny = round(self.money * (0.5 + rand.random()), 2)
             self.player_view.send_response_to_player(f'{self.name}, погибает, вы получаете {mny}$ и ингалятор')
             self.player_info.money += mny
-            self.player_info.inventory.append(Item(*['ингалятор',1, 'air', 25,'item',  30]))
+            self.player_info.inventory.append(Item(*[1, 'ингалятор', 'air', 'item', 25, 30]))
 
     def escape(self):
         if rand.randint(1, 2) > 0.5:

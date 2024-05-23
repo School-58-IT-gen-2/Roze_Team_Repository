@@ -38,8 +38,8 @@ class GlobalTGView():
             for update in updates:
                 if update.message is not None and update.message.text is not None:
                     self.update_id = update.update_id + 1
-                    message = update.message.text
                     self.last_message = {update.message.text:update.message.chat_id}
+                    self.last_message_info = update.message
                     print(self.last_message)
                     '''
                     if message == '/start':

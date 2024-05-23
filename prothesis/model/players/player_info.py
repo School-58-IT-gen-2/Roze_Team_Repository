@@ -54,7 +54,6 @@ class PlayerInfo():
                 a.append(b[0][j])
             data.append(Weapon(*a))
         self.weapons = data
-        print(data)
     def save_sql(self):
         par = vars(self)
         x = 0
