@@ -147,7 +147,11 @@ class NPC():
             self.player_info.money += mny
             if len(self.products) != 0:
                 self.player_view.send_response_to_player('также вы подбираете предметы что уцелели после вашей атаки')
-                self.player_info.inventory.append(rand.choice(self.products))
+                rnd_product = rand.choice(self.products)
+                if rnd_product.cls == 'item':
+                    self.player_info.inventory.append(rnd_product)
+                else:
+                    self.player_info.weapons.append(rnd_product)
             self.leave()
 	
     def trade(self, player_info):

@@ -17,7 +17,7 @@ class GlobalTGView():
         self.last_message_info = None
         self.last_message = {'':0} #ключ - текст последнего сообщения, значение - айди автора последнего сообщения
         Thread(target=self.get_updates).start()
-        print('Telegram bot launched, waiting for connection')
+        print('\033[0;34mTelegram bot launched, waiting for connection\033[0;37m')
 
     def get_request(self, variants: list = ['Да', 'Нет'], get_id=False, chat_id=None, current_players=[]):
         while True:
@@ -27,7 +27,7 @@ class GlobalTGView():
                 if get_id:
                     if player_id not in current_players:
                         self.last_chat_id = player_id
-                        print(f'Telegram new connection: {player_id}')
+                        print(f'\033[0;34mTelegram new connection: {player_id}\033[0;37m')
                         return player_id
                 elif player_id == chat_id:
                     return str(variants.index(text) + 1)
@@ -40,7 +40,7 @@ class GlobalTGView():
                     self.update_id = update.update_id + 1
                     self.last_message = {update.message.text:update.message.chat_id}
                     self.last_message_info = update.message
-                    print(self.last_message)
+                    print('\033[0;32m' + str(self.last_message) + '\033[0;37m')
                     '''
                     if message == '/start':
                             self.last_chat_id = update.message.chat_id

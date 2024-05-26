@@ -3,8 +3,8 @@ from prothesis.model.weapon_class import Weapon
 
 #БАЗА ДАННЫХ ДЛЯ ПРЕДМЕТОВ
 items = {
-    'бинты': Item(*[2, 'бинты', 'health', 25, 'item', 20]),
-    'ингалятор': Item(*[1, 'ингалятор', 'air', 25, 'item', 30])
+    'бинты': Item(*[2, 'бинты', 'health', 'item', 25, 20]),
+    'ингалятор': Item(*[1, 'ингалятор', 'air', 'item', 25, 30])
 }
 #БАЗА ДАННЫХ ДЛЯ ОРУЖИЯ
 all_weapons = {
