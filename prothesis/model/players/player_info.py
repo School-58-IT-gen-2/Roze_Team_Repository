@@ -1,4 +1,3 @@
-import sqlite3
 from prothesis.view.player_view import PlayerView
 from prothesis.model.postegress.adapter import AdapterDB
 from prothesis.model.item_class import Item
@@ -28,33 +27,22 @@ class PlayerInfo():
             self.sql_adapter.insert('Player_info', {'id':user_id, 'air':'DEFAULT', 'health':'DEFAULT', 'money':'DEFAULT', 'protez':'DEFAULT', 'save':'DEFAULT', 'km':'DEFAULT'})
 
     def load_sql(self):
-        x = 0
-        for i in list(vars(self).keys()):
-           x += 1
-           if x < 8:
-               exec(f"self.{i} = self.sql_adapter.get_by_id('Player_info', id=self.id)[0][{x-1}]")
+
+        for i in range(7):
+            exec(f"self.{list(vars(self).keys())[i]} = self.sql_adapter.get_by_id('Player_info', id=self.id)[0][{i}]")
+    
         items_id = self.sql_adapter.get_by_player_id('Player_inventory','item_id',self.id)
-        data = []
-        for i in range(len(items_id)):
-            items_id[i] = items_id[i][0]
+        self.inventory = []
         for i in items_id:
-            b = self.sql_adapter.get_by_id('Items', i)
-            a=[]
-            for j in range(6):
-                a.append(b[0][j])
-            data.append(Item(*a))
-        self.inventory = data
+            b = self.sql_adapter.get_by_id('Items', i[0])[0]
+            self.inventory.append(Item(name=b[0], id=b[1], type=b[2], value=b[3], cls=b[4], price=b[5]))
+        
         weapons_id = self.sql_adapter.get_by_player_id('Player_weapons','weapon_id',self.id)
-        data = []
-        for i in range(len(weapons_id)):
-            weapons_id[i] = weapons_id[i][0]
+        self.weapons = []
         for i in weapons_id:
-            b = self.sql_adapter.get_by_id('Weapons', i)
-            a=[]
-            for j in range(6):
-                a.append(b[0][j])
-            data.append(Weapon(*a))
-        self.weapons = data
+            b = self.sql_adapter.get_by_id('Weapons', i[0])[0]
+            self.weapons.append(Weapon(*b))
+
     def save_sql(self):
         par = vars(self)
         x = 0

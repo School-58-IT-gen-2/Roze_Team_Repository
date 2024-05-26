@@ -51,7 +51,6 @@ class StageInfo():
         for i in range(len(place)):
             seed[place[i]] = text[i]
         self.seed = seed
-        return 1
     def new_seed(self):
         seed = copy.copy(self.seed)
         if self.sql_adapter.get_by_player_id('Seed','place_in_seed',self.id) != []:
