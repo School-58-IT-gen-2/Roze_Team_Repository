@@ -173,13 +173,13 @@ class NPC():
                 break
             elif products[int(product) - 1].price <= player_info.money:
                 print("я тут")
-                if products[int(product)-1].type == 'item':
-                    player_info.money -= products[int(product) - 1][-1]
+                if products[int(product)-1].cls == 'item':
+                    player_info.money -= products[int(product) - 1].price
                     player_info.inventory.append(products[int(product) - 1])
                     self.player_view.send_response_to_player(f'Вы купили {self.products.pop(int(product) - 1).name}')
                     self.player_view.send_response_to_player(f'Ваш баланс: {player_info.money}')
                     product = ''
-                elif products[int(product)-1].type == 'weapon':
+                elif products[int(product)-1].cls == 'weapon':
                     player_info.money -= products[int(product) - 1].price
                     player_info.weapons.append(products[int(product) - 1])
                     self.player_view.send_response_to_player(f'Вы купили {self.products.pop(int(product) - 1).name}')
