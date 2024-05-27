@@ -21,10 +21,10 @@ npcs_random = {1:[Sage, Trasher]}
 
 
 #БАЗА ДАННЫХ ДЛЯ ВРАГОВ
-Toster = Enemy('хлебоподжариватель', 'сбои', 100, all_weapons['кулак'], 5, 'loot')
-Archives = Enemy('компьютер из библиотеки', 'сбои', 50, all_weapons['кулак'], 10, 'loot')
-Bandit = Enemy('бандит', 'кровотечение', 100, all_weapons['кинжал пораженный коррозией'], 15, 'loot')
-Wanderer = Enemy('бродяга','кровотечение', 100, all_weapons['кинжал пораженный коррозией'], 5, 'loot')
+Toster = Enemy('хлебоподжариватель', 'сбои', 100, all_weapons['кулак'], 5, 'loot', texture='prothesis/_databases/photos_database/Toaster.jpg')
+Archives = Enemy('компьютер из библиотеки', 'сбои', 50, all_weapons['кулак'], 10, 'loot', texture='prothesis/_databases/photos_database/Toaster.jpg')
+Bandit = Enemy('бандит', 'кровотечение', 100, all_weapons['кинжал пораженный коррозией'], 15, 'loot', texture='prothesis/_databases/photos_database/Bandit.jpg')
+Wanderer = Enemy('бродяга','кровотечение', 100, all_weapons['кинжал пораженный коррозией'], 5, 'loot', texture='prothesis/_databases/photos_database/Bandit.jpg')
 
 enemies_for_stages = {1:[Toster, Archives, Bandit, Wanderer]}
 

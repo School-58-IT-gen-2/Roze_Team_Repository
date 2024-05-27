@@ -18,7 +18,8 @@ class Enemy():
                  weapons,
                  money,
                  loot,
-                 aggressive=False):
+                 aggressive=False,
+                 texture=None):
         
         self.name = name
         self.dmgtype = dmgtype
@@ -27,12 +28,15 @@ class Enemy():
         self.money = money
         self.loot = loot
         self.aggressive = aggressive
+        self.texture = texture
         self.player_view = PlayerView()
         self.player_info = PlayerInfo()
 
     def meeting(self, player_view, player_info):
         self.player_info = player_info
         self.player_view = player_view
+        if self.texture != None:
+            self.player_view.send_photo(self.texture)
         fght_or_frnd = self.player_view.get_request_from_player(f'перед вами {self.name}, что вы будете делать?',  ['переубеждение', 'сражение', 'побег'])
         if fght_or_frnd == '1':
             self.spare()
@@ -148,7 +152,7 @@ class Enemy():
             self.player_info.inventory.append(items['ингалятор'])
 
     def escape(self):
-        if rand.randint(1, 2) > 0.5:
+        if rand.randint(1, 2) > 0.35:
             self.player_view.send_response_to_player('Вы успешно сбежали')
         else:
             self.fight()

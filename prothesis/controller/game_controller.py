@@ -98,7 +98,7 @@ class GameController():
 
     def start(self):
         self.player_view.way_report(self.__player_info.km, 'НАЧАЛО', self.__stage_info.stage_prologue)
-        self.player_view.send_photo('prothesis/_databases/photos_database/Hero.jpg')
+        self.player_view.send_photo('prothesis/_databases/photos_database/Hero2.jpg')
 
     def death(self):
         self.player_view.way_report(self.__player_info.km, 'СМЕРТЬ', 'В глазах темнеет... Кажется это конец....')
