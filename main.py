@@ -39,14 +39,22 @@ custom_seed=False)
         new_player_info.sql_adapter.insert('Users', {'id': new_player_view.chat_id, 'user_nickname': new_player_view.message_info.chat.username, 'chat_id': new_player_view.message_info.chat.id, 'created': int(new_player_view.message_info.date.timestamp()), 'updated': int(new_player_view.message_info.date.timestamp())}) 
     new_player_info.new_sql(user_id=new_player_view.chat_id)
 
+    game_controller.player_view.send_response_to_player('Добро пожаловать!')
+
     #загрузка сохранения или создание новой игры по желанию игрока
-    choice = game_controller.player_view.get_request_from_player('Добро пожаловать!', ['Загрузить игру', 'Новая игра'])
-    if choice == '2':
-        new_player_view.send_response_to_player('Подождите, идёт генерация карты...')
-        new_game_info.new_seed()
-    else:
-        new_player_info.load_sql()
-        new_game_info.load_seed()
+    while True:
+        choice = game_controller.player_view.get_request_from_player(text='Выберете', variants=['Загрузить игру', 'Новая игра'])
+        if choice == '2':
+            new_player_view.send_response_to_player('Подождите, идёт генерация карты...')
+            new_game_info.new_seed()
+            break
+        else:
+            if game_controller.player_view.chat_id in []:
+                new_player_info.load_sql()
+                new_game_info.load_seed()
+                break
+            else:
+                game_controller.player_view.send_response_to_player('На данный момент у вас нет сохранений')
     
     #запуск игры
     new_player_view.send_response_to_player('Добро пожаловать в игру! Выберите действие:')

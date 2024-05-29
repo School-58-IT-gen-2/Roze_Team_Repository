@@ -37,10 +37,11 @@ class PlayerTGView(PlayerView):
     def send_response_to_player(self, response):
         bot.send_message(self.chat_id, response)
 
-    def create_buttons(self, text='', buttons=[]):
+    def create_buttons(self, text=None, buttons=[]):
         custom_keyboard = [[btn] for btn in buttons]
         reply_markup = ReplyKeyboardMarkup(custom_keyboard)
-        bot.send_message(self.chat_id, text=text, reply_markup=reply_markup)
+        if text is not None:
+            bot.send_message(self.chat_id, text=text, reply_markup=reply_markup)
 
     def get_request_from_player(self, text: str = None, variants: list = ['Да', 'Нет'], get_id=False, create_buttons=True, test=None):
         if text is not None and not create_buttons:

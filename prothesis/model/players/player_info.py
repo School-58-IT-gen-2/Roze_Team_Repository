@@ -14,13 +14,8 @@ class PlayerInfo():
         self.km = 0
         self.air = 100
         self.inventory = [items["ингалятор"]]
-        self.weapons = [all_weapons['микроволновая п-ушка']]
+        self.weapons = [all_weapons['кулак'], all_weapons['ПМ']]
         self.sql_adapter = AdapterDB()
-
-    def create_table(self):#неведомая хрень
-        self.c.execute('''CREATE TABLE IF NOT EXISTS player_info
-                         (air INTEGER, health INTEGER, money INTEGER, protez INTEGER, save INTEGER, km INTEGER)''')
-        self.conn.commit()
 
     def new_sql(self, user_id):
         if self.sql_adapter.get_by_id('Player_info', user_id) == []:
