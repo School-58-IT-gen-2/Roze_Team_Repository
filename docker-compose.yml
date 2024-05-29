@@ -1,7 +1,7 @@
 version: '3'
 services: 
   no_way_back:
-    image: timofey01/no_way_back:0.4
+    image: timofey01/no_way_back:0.6
     container_name: no_way_back
     env_file: .env
     command: 'python main.py'
