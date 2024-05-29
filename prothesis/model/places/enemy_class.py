@@ -155,6 +155,7 @@ class Enemy():
         if rand.randint(1, 2) > 0.35:
             self.player_view.send_response_to_player('Вы успешно сбежали')
         else:
+            self.player_view.send_response_to_player(f' {self.name} догнал вас! Сбежать не удалось')
             self.fight()
     
     def spare(self):
