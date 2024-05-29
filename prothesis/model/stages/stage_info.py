@@ -14,7 +14,7 @@ class StageInfo():
         self.stage_prologue = stage_prologue
         self.enemies_count = 5  #кол-во врагов на стадии
         self.events_count = 3  #кол-во событий на стадии
-        self.npc_count = 3
+        self.npc_count = 2
         self.sql_adapter = AdapterDB()
         if not custom_seed:
             self.seed = ['void'] * 61  #генерация карты (сначала заполняем все 60 мест пустыми местами)

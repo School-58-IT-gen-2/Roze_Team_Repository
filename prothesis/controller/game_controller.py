@@ -80,12 +80,14 @@ class GameController():
         self.player_view.way_report(self.__player_info.km, 'ПУСТО', '"кажется здесь пусто"')
         
     def npc(self):
-        sage = rand.choice(npcs_random[self.__stage_info.stage_num])
-        sage.meeting(self.player_view, self.__player_info)
+        npc = rand.choice(npcs_random[self.__stage_info.stage_num])
+        npc.meeting(self.player_view, self.__player_info)
+        npcs_random[self.__stage_info.stage_num].remove(npc)
 
     def trader(self):
         trader = rand.choice(npcs_for_stages[self.__stage_info.stage_num])
         trader.meeting(self.player_view, self.__player_info)
+        npcs_for_stages[self.__stage_info.stage_num].remove(trader)
 
     def enemy(self):
         self.player_view.way_report(self.__player_info.km, 'НАПАДЕНИЕ', '"кажется на вас напали!"')
