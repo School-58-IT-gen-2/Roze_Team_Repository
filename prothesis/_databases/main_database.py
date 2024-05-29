@@ -1,6 +1,7 @@
 from prothesis.model.places.event_class import Common_event
 from prothesis.model.places.event_class import Set_act
 from prothesis.model.places.event_class import Text_act
+from prothesis.model.places.event_class import Photo_act
 from prothesis.model.places.event_class import Choice_act
 from prothesis.model.places.event_class import Random_choice_act
 from prothesis.model.places.npc_class import NPC
@@ -32,7 +33,7 @@ enemies_for_stages = {1:[Toster, Archives, Bandit, Wanderer]}
 #БАЗА ДАННЫХ ДЛЯ СОБЫТИЙ
 Snake_event = Common_event('Запретный плод.', 'Вы встречаете механическую змею', 
                            [
-                               Text_act('К вам подходит робо-змея и предлагает купить Яблоко за 25 Кредитов'),
+                               Photo_act('К вам подходит робо-змея и предлагает купить Яблоко за 25 Кредитов', 'prothesis/_databases/photos_database/Snake.jpg'),
                                Choice_act('Вы бы предпочли...', 
                                           {
                                               'Отказаться': Text_act('Безопасность важнее риска, вы уходите, змей исчезает.'),
