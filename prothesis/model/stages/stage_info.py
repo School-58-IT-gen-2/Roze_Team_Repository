@@ -22,7 +22,7 @@ class StageInfo():
                 self.seed[i * rand.randint(1, 60 // self.enemies_count - 1)] = 'enemy'  #равномерно, рандомно добавляем позиции с врагами
             for i in range(1, self.events_count + 1):
                 self.seed[i * rand.randint(1, 60 // self.events_count - 1)] = 'event'  #равномерно, рандомно добавляем позиции с событиями
-            for i in range(1, self.events_count + 1):
+            for i in range(1, self.npc_count):
                 self.seed[i * rand.randint(1, 60 // self.npc_count - 1)] = 'npc'
             self.seed[1] = 'start'
             self.seed[2] = 'npc'
