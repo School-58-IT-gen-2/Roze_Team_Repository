@@ -1,6 +1,8 @@
 import psycopg2
+import os
 
-
+sql_conect_data = os.getenv('sql_conect_data')
+sql_conect_data = sql_conect_data.split(",")
 class AdapterDB:
     def __init__(self) -> None:
         self.conn = self.__get_connect()
@@ -10,13 +12,13 @@ class AdapterDB:
         """подключение к нашей базе"""
         try:
             conn = psycopg2.connect(
-                """
-				host=rc1d-9cjee2y71olglqhg.mdb.yandexcloud.net
-				port=6432
-				dbname=sch58_db
-				user=Admin
-				password=atdhfkm2024
-				target_session_attrs=read-write
+                f"""
+				host={sql_conect_data[0]}
+				port={sql_conect_data[1]}
+				dbname={sql_conect_data[2]}
+				user={sql_conect_data[3]}
+				password={sql_conect_data[4]}
+				target_session_attrs={sql_conect_data[5]}
 			"""
             )
             return conn

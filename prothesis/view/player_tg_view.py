@@ -7,12 +7,13 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from telegram import Update
 from telegram.ext import CallbackContext
 from typing import List
+import os
 
 
 
-
+x = os.getenv('token')
 #ПРИМЕР МИШИ
-token = "6712575033:AAFi3-Juz0w3dlOSBNU4AAZDtYxwOAqrRTA"
+token = x
 bot = Bot(token=token)
 
 
