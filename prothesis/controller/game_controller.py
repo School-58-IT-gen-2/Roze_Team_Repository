@@ -43,12 +43,14 @@ class GameController():
         self.act()
 
     def show_inventory(self):
+        a = 0
         if self.__player_info.inventory == [] or self.__player_info.inventory[0] == []:
             self.player_view.send_response_to_player(f'Ваш инвентарь пуст.')
         else:
             x = []
             for i in self.__player_info.inventory:
-                x.append(f"{self.__player_info.inventory.index(i) + 1}: {i.name} {i.type} {i.value}")
+                a += 1
+                x.append(f"{a}: {i.name} {i.type} {i.value}")
             x.append("отмена")
             self.player_view.send_response_to_player(f'Ваш запас воздуха: {self.__player_info.air}%')
             self.player_view.send_response_to_player(f'Ваш инвентарь:')

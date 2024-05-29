@@ -43,7 +43,7 @@ custom_seed=False)
 
     #загрузка сохранения или создание новой игры по желанию игрока
     while True:
-        choice = game_controller.player_view.get_request_from_player(text='Выберете', variants=['Загрузить игру', 'Новая игра'])
+        choice = game_controller.player_view.get_request_from_player(text='Выберите опцию', variants=['Загрузить игру', 'Новая игра'])
         if choice == '2':
             new_player_view.send_response_to_player('Подождите, идёт генерация карты...')
             new_game_info.new_seed()

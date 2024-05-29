@@ -110,9 +110,11 @@ class NPC():
                             if self.player_info.inventory == [] or self.player_info.inventory[0] == []:
                                 self.player_view.send_response_to_player(f'Ваш инвентарь пуст.')
                             else:
+                                a = 0
                                 x = []
                                 for j in self.player_info.inventory:
-                                    x.append(f"{self.player_info.inventory.index(j) + 1}: {j.name} {j.type} {j.value}")
+                                    a += 1
+                                    x.append(f"{a}: {j.name} {j.type} {j.value}")
                                 self.player_view.send_response_to_player(f'Ваш запас воздуха: {self.player_info.air}%')
                                 self.player_view.send_response_to_player(f'Ваш инвентарь:')
                                 choice = self.player_view.get_request_from_player('Cделайте выбор:', x)
@@ -174,7 +176,6 @@ class NPC():
             if product == str(len(self.products) + 1):
                 break
             elif products[int(product) - 1].price <= player_info.money:
-                print("я тут")
                 if products[int(product)-1].cls == 'item':
                     player_info.money -= products[int(product) - 1].price
                     player_info.inventory.append(products[int(product) - 1])
