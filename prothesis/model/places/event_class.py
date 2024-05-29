@@ -37,6 +37,17 @@ class Text_act(Act):
         super().execute(player_view, player_info)
         self.player_view.send_response_to_player(self.description)
 
+class Photo_act(Act):
+    def __init__(self, description='', photo=None):
+        super().__init__(description)
+        self.photo = photo
+    
+    def execute(self, player_view, player_info):
+        super().execute(player_view, player_info)
+        self.player_view.send_response_to_player(self.description)
+        if self.photo != None:
+            self.player_view.send_photo(self.photo)
+
 class Set_act(Act):
     def __init__(self, parameters, description=''):
         super().__init__(description)
