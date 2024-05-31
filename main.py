@@ -49,7 +49,7 @@ custom_seed=False)
             new_game_info.new_seed()
             break
         else:
-            if game_controller.player_view.chat_id in []:
+            if new_player_info.sql_adapter.get_by_player_id('Seed', 'id', id=new_player_info.id) != []:
                 new_player_info.load_sql()
                 new_game_info.load_seed()
                 break
