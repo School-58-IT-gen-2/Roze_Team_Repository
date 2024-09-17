@@ -1,7 +1,7 @@
 import psycopg2
 import os
 
-sql_conect_data = os.getenv('sql_conect_data')
+sql_conect_data = str(os.getenv('sql_conect_data'))
 sql_conect_data = sql_conect_data.split(",")
 class AdapterDB:
     def __init__(self) -> None:
