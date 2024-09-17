@@ -86,9 +86,3 @@ while True:
 
 Thread(target=waiting_for_new_players()).start()
 '''
-#id Макар: 1827810009
-#id Виолетта: 1309198139
-#id Даня: 5548785472
-
-#бот PyZone: 6712575033:AAFi3-Juz0w3dlOSBNU4AAZDtYxwOAqrRTA
-#бот NoAir: 6068101345:AAGr0hpElzAEBwfoc7-yoUhd-QRD9Sd8vr4
