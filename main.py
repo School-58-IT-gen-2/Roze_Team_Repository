@@ -1,8 +1,13 @@
+from dotenv import load_dotenv
+
+load_dotenv()
+
 from prothesis.controller.game_controller import GameController
 from prothesis.model.stages.stage_info import StageInfo
 from prothesis.model.players.player_info import PlayerInfo
 from prothesis.view.player_tg_view import PlayerTGView, Thread
 from prothesis.view.global_tg_view import GlobalTGView
+
 
 
 
