@@ -24,13 +24,14 @@ class PlayerInfo():
     def load_sql(self):
 
         for i in range(7):
+            print(f"self.{list(vars(self).keys())[i]} = self.sql_adapter.get_by_id('Player_info', id=self.id)[0][{i}]")
             exec(f"self.{list(vars(self).keys())[i]} = self.sql_adapter.get_by_id('Player_info', id=self.id)[0][{i}]")
     
         items_id = self.sql_adapter.get_by_player_id('Player_inventory','item_id',self.id)
         self.inventory = []
         for i in items_id:
             b = self.sql_adapter.get_by_id('Items', i[0])[0]
-            self.inventory.append(Item(name=b[0], id=b[1], type=b[2], value=b[3], cls=b[4], price=b[5]))
+            self.inventory.append(Item(name=b[1], id=b[0], type=b[2], value=b[3], cls=b[4], price=b[5]))
         
         weapons_id = self.sql_adapter.get_by_player_id('Player_weapons','weapon_id',self.id)
         self.weapons = []
