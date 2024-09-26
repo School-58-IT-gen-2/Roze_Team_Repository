@@ -7,6 +7,7 @@ from prothesis.model.stages.stage_info import StageInfo
 from prothesis.model.players.player_info import PlayerInfo
 from prothesis.view.player_tg_view import PlayerTGView, Thread
 from prothesis.view.global_tg_view import GlobalTGView
+import time
 
 
 
@@ -69,6 +70,7 @@ custom_seed=False)
 #вечный цикл ожидания новых игроков
 while True:
 
+    time.sleep(0.1)
     id = global_view.waiting_for_new_player(current_players)
     if id not in current_players:
         current_players.append(id)
